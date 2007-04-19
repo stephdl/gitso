@@ -73,7 +73,6 @@ class Connect:
 		aboutDialog.set_authors(["Derek Buranen", "Aaron Gerber"])
 		aboutDialog.set_license(license.read())
 		aboutDialog.set_website('http://code.google.com/p/gitso')
-		aboutDialog.set_website_label('http://code.google.com/p/gitso')
 		aboutDialog.set_copyright("2007 Derek Buranen, Aaron Gerber")
 		aboutDialog.set_comments("Gitso Is To Support Others")
 		license.close()
