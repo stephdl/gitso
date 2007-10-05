@@ -1,0 +1,11 @@
+0.3 
+----------------------
+*added blah
+*did this too
+*and this
+*and changeme
+
+
+0.2 
+----------------------
+*Basically the initial release
