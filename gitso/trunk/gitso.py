@@ -69,7 +69,7 @@ class Connect:
 		license = open('aboutlicense.txt', 'r')
 		aboutDialog = gtk.AboutDialog()
 		aboutDialog.set_name("Gitso")
-		aboutDialog.set_version("0.3")
+		aboutDialog.set_version("0.499-svn")
 		aboutDialog.set_authors(["Derek Buranen", "Aaron Gerber"])
 		aboutDialog.set_license(license.read())
 		aboutDialog.set_website('http://code.google.com/p/gitso')
