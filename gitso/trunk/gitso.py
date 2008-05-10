@@ -26,6 +26,7 @@ import os
 import signal
 import webbrowser
 
+
 class Connect:
 
 	# Make sure the URLs are clickable
@@ -55,7 +56,7 @@ class Connect:
 			self.connectButton.set_sensitive(False)
 			self.stopButton.set_sensitive(True)
 			self.statusLabel.set_text(self.statusLabelText[1])
-			self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc', "-connect %s" % self.GetSupportEntry.get_text())
+			self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc', " --connect %s -rawfb console" % self.GetSupportEntry.get_text())
 		else:
 			self.connectButton.set_sensitive(False)
 			self.stopButton.set_sensitive(True)
@@ -69,7 +70,7 @@ class Connect:
 		license = open('aboutlicense.txt', 'r')
 		aboutDialog = gtk.AboutDialog()
 		aboutDialog.set_name("Gitso")
-		aboutDialog.set_version("0.499-svn")
+		aboutDialog.set_version("0.1.1")
 		aboutDialog.set_authors(["Derek Buranen", "Aaron Gerber"])
 		aboutDialog.set_license(license.read())
 		aboutDialog.set_website('http://code.google.com/p/gitso')
@@ -127,31 +128,8 @@ class Connect:
 		self.killPID(self)
 		gtk.main_quit()
 
-	def get_main_menu(self, window):
-		accel_group = gtk.AccelGroup()
 
-		# This function initializes the item factory.
-		# Param 1: The type of menu - can be MenuBar, Menu,
-		#          or OptionMenu.
-		# Param 2: The path of the menu.
-		# Param 3: A reference to an AccelGroup. The item factory sets up
-		#          the accelerator table while generating menus.
-		item_factory = gtk.ItemFactory(gtk.MenuBar, "<main>", accel_group)
-
-		# This method generates the menu items. Pass to the item factory
-		#  the list of menu items
-		item_factory.create_items(self.menu_items)
-
-		# Attach the new accelerator group to the window.
-		window.add_accel_group(accel_group)
-
-		# need to keep a reference to item_factory to prevent its destruction
-		self.item_factory = item_factory
-		# Finally, return the actual menu bar created by the item factory.
-		return item_factory.get_widget("<main>")
-
-
-    # Run Loop: Initilize program
+	# Run Loop: Initilize program
 	def __init__(self):
 		#initializing various variables
 		self.returnPID = 0
@@ -166,18 +144,49 @@ class Connect:
         
 		self.clipboard = gtk.clipboard_get(gtk.gdk.SELECTION_CLIPBOARD)
 
-		self.menu_items = (
-			('/_File',            None,         None,        0, '<Branch>' ),
-			('/File/Connect',     None,         self.connectSupport, 0, '<StockItem>', gtk.STOCK_CONNECT),
-			('/File/_Quit',       '<control>Q', self.destroy, 0, '<StockItem>', gtk.STOCK_QUIT),
-			('/_Edit/_Copy',      None,         self.setClipboard, 0, '<StockItem>',gtk.STOCK_COPY),
-			('/_Edit/_Paste',     None,         self.getClipboard, 0, '<StockItem>',gtk.STOCK_PASTE),
-			('/_Help',            None,         None, 0, '<Branch>'),
-			('/Help/_About',      None,         self.showAbout, 0, '<StockItem>',gtk.STOCK_ABOUT),
-			)
-       	
-		self.MenuBar = self.get_main_menu(self.window)
-
+		ui = '''<ui>
+			<menubar name="MenuBar">
+			<menu action="File">
+			<menuitem action="Quit"/>
+			</menu>
+			<menu action="Edit">
+			<menuitem action="Copy"/>
+			<menuitem action="Paste"/>
+			</menu>
+			<menu action="Help">
+			<menuitem action="About"/>
+			</menu>
+			</menubar>
+			</ui>'''
+	
+		# Create a UIManager instance
+		GitsoUIManager = gtk.UIManager()
+			
+		# Add the accelerator group to the toplevel window
+		AccelGroup = GitsoUIManager.get_accel_group()
+		self.window.add_accel_group(AccelGroup)
+	
+		# Create an ActionGroup
+		self.ActionGroup = gtk.ActionGroup('GitsoUIManager')
+	
+		# Create actions
+		self.ActionGroup.add_actions([('Quit', gtk.STOCK_QUIT, '_Quit', None, 'Quit the Program', self.destroy),
+					 ('File', None, '_File'),
+					 ('Copy', gtk.STOCK_COPY, '_Copy', None, 'Copy IP Address', self.setClipboard),
+					 ('Paste', gtk.STOCK_PASTE, '_Paste', None, 'Copy IP Address', self.getClipboard),
+					 ('Edit', None, '_Edit'),
+					 ('About', gtk.STOCK_ABOUT, '_About', None, 'About Gitso', self.showAbout),
+					 ('Help', None, '_Help')])
+		self.ActionGroup.get_action('Quit').set_property('short-label', '_Quit')
+	
+		# Add the ActionGroup to the GitsoUIManager
+		GitsoUIManager.insert_action_group(self.ActionGroup, 0)
+	
+		# Add a UI description
+		GitsoUIManager.add_ui_from_string(ui)
+	
+		# Create a MenuBar
+		menubar = GitsoUIManager.get_widget('/MenuBar')
        
 		# Initialize IP Textbox
 		self.GetSupportEntry = gtk.Entry(50)
@@ -196,10 +205,10 @@ class Connect:
 		self.GetSupportRadio.show()
 
         
-        #### ToDo :: Connect Button -- Default ##########
-        #self.button.grab_default()
-        ####################################
-        # Initialize Connect Button Bar
+		#### ToDo :: Connect Button -- Default ##########
+		#self.button.grab_default()
+		####################################
+		# Initialize Connect Button Bar
 		self.connectButton = gtk.Button("OK", gtk.STOCK_CONNECT)
 		self.connectButton.connect("clicked", self.connectSupport)
 		self.connectButton.show()
@@ -211,7 +220,7 @@ class Connect:
 		self.statusLabel.show()
 
 
-        # Initialize Boxes
+		# Initialize Boxes
 		self.mainVBox            =  gtk.VBox(False, 0)
 		self.interfaceVBox      = gtk.VBox(False, 0)
 		self.menuHBox           = gtk.HBox(False, 0)
@@ -220,27 +229,26 @@ class Connect:
 		self.buttonHBox          = gtk.HBox(False, 0)
 
 
-        # VBox MenuBar
-		self.menuHBox.pack_start(self.MenuBar, True, True, 0)
+		# VBox MenuBar
+		self.menuHBox.pack_start(menubar, True, True, 0)
 		self.mainVBox.pack_start(self.menuHBox, False, False, 0)
-		self.MenuBar.show()
         
-        # VBox cell 1
+		# VBox cell 1
 		self.getSupportHBox.pack_start(self.GetSupportRadio, True, True, 8)
 		self.getSupportHBox.pack_start(self.GetSupportEntry, True, True, 8)
 		self.interfaceVBox.pack_start(self.getSupportHBox, True, True, 4)
 
-        # VBox cell 2
+		# VBox cell 2
 		self.giveSupportHBox.pack_start(self.GiveSupportRadio, True, True, 8)
 		self.interfaceVBox.pack_start(self.giveSupportHBox, True, True, 0)
 
-        # VBox cell 3
+		# VBox cell 3
 		self.buttonHBox.pack_start(self.statusLabel, False, False, 8)
 		self.buttonHBox.pack_end(self.stopButton, False, False, 8)
 		self.buttonHBox.pack_end(self.connectButton, False, False, 8)
 		self.interfaceVBox.pack_start(self.buttonHBox, False, False, 0)
 
-        # Show main window and initialize focus
+		# Show main window and initialize focus
 		self.GetSupportEntry.grab_focus()
 		self.mainVBox.pack_end(self.interfaceVBox, False, False, 8)
 
