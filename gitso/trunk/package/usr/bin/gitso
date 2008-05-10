@@ -1,23 +1,8 @@
 #!/usr/bin/env python
 # Copyright (c) 2007
 #      Aaron Gerber ('gerberad')
-#      Derek Buranen ('bur[n]er') <xburnerx@gmail.com>
+#      Derek Buranen ('burner') <derek@buranen.info>
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
-# any later version.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, write to:
-# 	The Free Software Foundation, Inc.,
-# 	51 Franklin Street, Fifth Floor
-# 	Boston, MA  02110-1301, USA.
 
 import pygtk
 pygtk.require('2.0')
@@ -67,10 +52,10 @@ class Connect:
     # Callback: showAbout
     #               : EVENT - About Gitso selected
 	def showAbout(self, widget, data=None):
-		license = open('aboutlicense.txt', 'r')
+		license = open('/usr/share/doc/gitso/copyright', 'r')
 		aboutDialog = gtk.AboutDialog()
 		aboutDialog.set_name("Gitso")
-		aboutDialog.set_version("0.1.1")
+		aboutDialog.set_version("0.4")
 		aboutDialog.set_authors(["Derek Buranen", "Aaron Gerber"])
 		aboutDialog.set_license(license.read())
 		aboutDialog.set_website('http://code.google.com/p/gitso')
@@ -110,7 +95,7 @@ class Connect:
     # Callback: deleteEvent
     #               : EVENT - "Close" option is selected - title bar or button
     #               : TODO - Add "Close" button
-    #               : TODO - "quit" promt dialog
+    #               : TODO - "quit" prompt dialog
     #               : TODO - Close VNC connection
 	def deleteEvent(self, widget, event, data=None):
         # If you return FALSE in the "deleteEvent" signal handler,
