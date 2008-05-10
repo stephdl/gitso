@@ -41,7 +41,7 @@ class Connect:
 			self.connectButton.set_sensitive(False)
 			self.stopButton.set_sensitive(True)
 			self.statusLabel.set_text(self.statusLabelText[1])
-			self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc', " -connect %s -rawfb console" % self.GetSupportEntry.get_text())
+			self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc', '-connect' , '%s' % self.GetSupportEntry.get_text())
 		else:
 			self.connectButton.set_sensitive(False)
 			self.stopButton.set_sensitive(True)
