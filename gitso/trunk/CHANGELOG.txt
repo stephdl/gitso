@@ -1,14 +1,14 @@
-0.4
-----------------------
+0.4 - "Do not fear the monster"
+-----------------------------------------
 *debianized tree structure
 *added icon & .desktop file
 *made about dialog work again
 *remove deprecated menus and replace as ui manager
 
 0.3 
-----------------------
+-----------------------------------------
 *made a deb
 
 0.2 
-----------------------
-*Basically the initial release
+-----------------------------------------
+*initial release
