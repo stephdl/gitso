@@ -1,10 +1,13 @@
+0.4
+----------------------
+*debianized tree structure
+*added icon & .desktop file
+*made about dialog work again
+*remove deprecated menus and replace as ui manager
+
 0.3 
 ----------------------
-*added blah
-*did this too
-*and this
-*and changeme
-
+*made a deb
 
 0.2 
 ----------------------
