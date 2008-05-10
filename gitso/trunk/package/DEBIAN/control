@@ -1,10 +1,10 @@
 Package: package
-Version: 0.3
+Version: 0.4
 Priority: optional
 Section: utils
 Architecture: all
-Depends: x11vnc, vncviewer
-Installed-Size: 64
+Depends: x11vnc, vncviewer, python-gtk2
+Installed-Size: 572
 Maintainer: Derek Buranen <derek@buranen.info>
 Description: gitso is to support others (using PyGTK and reverse vnc)
  gitso is a Python and GTK frontend to x11vnc server
