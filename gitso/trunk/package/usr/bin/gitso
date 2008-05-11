@@ -246,6 +246,7 @@ class Connect:
 		self.buttonHBox.show()
         
 		self.window.add(self.mainVBox)
+		self.window.set_position(gtk.WIN_POS_CENTER)
 		self.window.show()
 
 	# Run Loop: Main run loop
