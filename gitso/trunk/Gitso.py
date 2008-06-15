@@ -28,20 +28,33 @@ class Connect(wx.Frame):
 		"""
 		Setup Application Window
 		
-        @author: Derek Buranen
-        @author: Aaron Gerber
-        """
-		wx.Frame.__init__(self, parent, wx.ID_ANY, title, size=(350,145), style=wx.CLOSE_BOX | wx.MINIMIZE_BOX)
+        	@author: Derek Buranen
+        	@author: Aaron Gerber
+        	"""
+		if sys.platform.find('linux') != -1:
+			width = 165
+		else:
+			width = 145
+
+		wx.Frame.__init__(self, parent, wx.ID_ANY, title, size=(350,width), style=wx.CLOSE_BOX | wx.MINIMIZE_BOX)
 		self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
 		if sys.platform != 'darwin':
-			icon = wx.Icon("icon.ico", wx.BITMAP_TYPE_ICO)
-			self.SetIcon(icon)
+			print 'set icon'
+			#icon = wx.Icon("icon.ico", wx.BITMAP_TYPE_ICO)
+			#self.SetIcon(icon)
 		
+		if sys.platform.find('linux') != -1:
+			xval1 = 155
+			xval2 = 250
+		else:
+			xval1 = 180
+			xval2 = 265
+
 		#Buttons
-		self.connectButton = wx.Button(self, 10, "Start", wx.Point(180, 70))
+		self.connectButton = wx.Button(self, 10, "Start", wx.Point(xval1, 70))
 		wx.EVT_BUTTON(self, 10, self.ConnectSupport)
-		self.stopButton = wx.Button(self, wx.ID_STOP, "", wx.Point(265, 70))
+		self.stopButton = wx.Button(self, wx.ID_STOP, "", wx.Point(xval2, 70))
 		self.stopButton.Enable(False)
 		wx.EVT_BUTTON(self, wx.ID_STOP, self.KillPID)
 		self.returnPID = 0
@@ -75,25 +88,27 @@ class Connect(wx.Frame):
 		wx.EVT_MENU(self, 12, self.SetClipboard)
 		wx.EVT_MENU(self, wx.ID_PASTE, self.GetClipboard)
 
+		fileMenu.Append(13, "&Clear History", "Clear History")
 		if sys.platform == 'darwin':
 			#OS X deals with the help and file menu in  wonky way.
 			fileMenu.Append(wx.ID_ABOUT, "&About", "About Gitso")
 			wx.EVT_MENU(self, wx.ID_ABOUT, self.ShowAbout)
 		else:		
 			fileMenu.Append(wx.ID_EXIT, "&Quit\tCtrl+Q", "Quit Gitso")
-			wx.EVT_MENU(self, wx.ID_EXIT, self.Destroy)
+			wx.EVT_MENU(self, wx.ID_EXIT, self.OnCloseWindow)
 
 			helpMenu = wx.Menu()
 			helpMenu.Append(wx.ID_ABOUT, "&About\tCtrl+A", "About Gitso")
 			wx.EVT_MENU(self, wx.ID_ABOUT, self.ShowAbout)
 
-			menuBar.Append(helpMenu, "&Help")
-
-		fileMenu.Append(13, "&Clear History", "Clear History")
 		wx.EVT_MENU(self, 13, self.clearHistory)
 
 		menuBar.Append(fileMenu, "&File")
 		menuBar.Append(editMenu, "&Edit")
+		
+		if sys.platform.find('linux') != -1:
+			menuBar.Append(helpMenu, "&Help")
+
 
 		self.SetMenuBar(menuBar)
 		
@@ -147,7 +162,7 @@ class Connect(wx.Frame):
 				
 				if sys.platform == 'darwin':
 					self.returnPID = os.spawnl(os.P_NOWAIT, '%sOSXvnc/OSXvnc-server' % devPath, 'OSXvnc-server', '-connectHost', '%s' % host)
-				elif sys.platform == 'linux':
+				elif sys.platform.find('linux') != -1:
 					self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc', '-connect' , '%s' % host)
 				elif sys.platform == 'win32':
 					print 'win32 not implemented yet.'
@@ -172,7 +187,7 @@ class Connect(wx.Frame):
 					self.statusBar.SetStatusText("X11.app not found.", 1)
 					self.connectButton.Enable(True)
 					self.stopButton.Enable(False)
-			elif sys.platform == 'linux':
+			elif sys.platform.find('linux') != -1:
 				self.returnPID = os.spawnlp(os.P_NOWAIT, 'vncviewer', 'vncviewer', '-listen')
 			elif sys.platform == 'win32':
 				print 'win32 not implemented yet.'
@@ -312,29 +327,29 @@ class AboutWindow(wx.Frame):
 		self.copyright = wx.TextCtrl(self, -1, license.read(), pos=wx.Point(0, 180), size=wx.Size(525, 160), style=wx.TE_MULTILINE)
 		self.copyright.SetEditable(False)
 				
-		self.text1 = wx.StaticText(self, wx.ID_ANY, 'Gitso', pos=wx.Point(233, 20))
+		self.text1 = wx.StaticText(self, wx.ID_ANY, 'Gitso', pos=wx.Point(0, 20), size=wx.Size(525, -1), style=wx.ALIGN_CENTER_HORIZONTAL)
 		font1 = wx.Font(24, wx.NORMAL, wx.NORMAL, wx.BOLD)
 		self.text1.SetFont(font1)
 
-		self.text2 = wx.StaticText(self, -1, "Gitso is to Support Others", wx.Point(181, 50))
-		self.text3 = wx.StaticText(self, -1, "Version 0.5", wx.Point(223, 72))
+		self.text2 = wx.StaticText(self, -1, "Gitso is to Support Others", pos=wx.Point(0, 50), size=wx.Size(525, -1), style=wx.ALIGN_CENTER_HORIZONTAL)
+		self.text3 = wx.StaticText(self, -1, "Version 0.5", pos=wx.Point(0, 72), size=wx.Size(525, -1), style=wx.ALIGN_CENTER_HORIZONTAL)
 		font2 = wx.Font(16, wx.NORMAL, wx.NORMAL, wx.NORMAL)
 		self.text2.SetFont(font2)
 		self.text3.SetFont(font2)
 		
-		self.text4 = wx.StaticText(self, -1, "Copyright 2008", wx.Point(216, 105))
-		self.text5 = wx.StaticText(self, -1, "Aaron Gerber and Derek Buranen", wx.Point(173, 125))
+		self.text4 = wx.StaticText(self, -1, "Copyright 2008", pos=wx.Point(0, 105), size=wx.Size(525, -1), style=wx.ALIGN_CENTER_HORIZONTAL)
+		self.text5 = wx.StaticText(self, -1, "Aaron Gerber and Derek Buranen", pos=wx.Point(0, 125), size=wx.Size(525, -1), style=wx.ALIGN_CENTER_HORIZONTAL)
 		font4 = wx.Font(14, wx.NORMAL, wx.NORMAL, wx.NORMAL)
 		self.text4.SetFont(font4)
 		self.text5.SetFont(font4)
 		
 		self.url = wx.HyperlinkCtrl(self, -1, "code.google.com/p/gitso", "http://code.google.com/p/gitso", wx.Point(186, 150))
 		
-		self.ok = wx.Button(self, wx.ID_OK, "OK", wx.Point(445, 350))
+		self.ok = wx.Button(self, wx.ID_OK, "OK", wx.Point(425, 350))
 		self.SetDefaultItem(self.ok)
 		self.ok.SetFocus()
 		wx.EVT_BUTTON(self, wx.ID_OK, self.CloseAbout)
-		
+
 		self.SetThemeEnabled(True)
 		self.Centre()
 		self.Show()
