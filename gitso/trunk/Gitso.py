@@ -319,7 +319,7 @@ class AboutWindow(wx.Frame):
 		wx.Frame.__init__(self, parent, wx.ID_ANY, title, size=(525,400), style=wx.CLOSE_BOX | wx.MINIMIZE_BOX)
 		
 		# Create a read-only box
-		if sys.platform == "linux":
+		if sys.platform.find('linux') != -1:
 			license = open(os.path.join(sys.path[0], '..', 'share', 'doc', 'gitso', 'copyright'), 'r')
 		else:
 			license = open('copyright', 'r')
@@ -374,6 +374,7 @@ elif sys.platform == "win32":
 else:
 	prefFile = os.path.join(os.path.expanduser("~"), ".gitso-hosts")
 
-app = wx.PySimpleApp()
-Connect(None, -1, "Gitso")
-app.MainLoop()
+if __name__ == "__main__":
+	app = wx.PySimpleApp()
+	Connect(None, -1, "Gitso")
+	app.MainLoop()

@@ -62,6 +62,7 @@ if(`uname -a` =~ m/Darwin/) {
 	`mkdir $path/usr/share/doc/gitso`;
 	`mkdir $path/usr/share/gitso`;
 	`cp arch/linux/gitso $path/usr/bin/`;
+	`chmod u+x $path/usr/bin`;
 	`cp Gitso.py $path/usr/share/gitso/`;
 	`cp __init__.py $path/usr/share/gitso/`;
 	`cp hosts.txt $path/usr/share/gitso/`;
