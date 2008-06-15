@@ -11,7 +11,7 @@ if(`uname -a` =~ m/Darwin/) {
 		`rm -rf dist`;
 		
 		print "..";
-		`py2applet --make-setup Gitso.py`;
+		`py2applet --make-setup gitso.py`;
 		
 		print "..";
 		`python setup.py py2app`;
