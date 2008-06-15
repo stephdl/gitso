@@ -1,0 +1,27 @@
+0.5 - "Kill the undead"
+-----------------------------------------
+*Complete rewrite of the interface
+*Gitso no longer has Zombied VNC processes after it quits.
+*Gitso stops the VNC process when it closes
+*Updated Icon
+*Updated License: GPL 3
+*Added Support to be able to specify a list of hosts when you distribute it.
+*Added History/Clear History of servers
+*Added OS X 10.5 Support (need testing on 10.4 and 10.3)
+* - OS X uses TightVNC 1.3.9
+* - OS X uses OSXVNC 3.0
+
+0.4 - "Do not fear the monster"
+-----------------------------------------
+*debianized tree structure
+*added icon & .desktop file
+*made about dialog work again
+*remove deprecated menus and replace as ui manager
+
+0.3 
+-----------------------------------------
+*made a deb
+
+0.2 
+-----------------------------------------
+*initial release
