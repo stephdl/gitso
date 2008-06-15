@@ -46,5 +46,36 @@ if(`uname -a` =~ m/Darwin/) {
 	}
 	
 } elsif (`uname -a` =~ m/Linux/) {
-	print "Implement makegitso for Linux\n"
+	my $path = "gitso_0.5_all";
+	print "Creating $path.deb";
+	`rm -rf $path`;
+	`mkdir $path`;
+	`mkdir $path/DEBIAN`;
+	`cp arch/linux/control $path/DEBIAN`;
+
+	print "..";
+	`mkdir $path/usr`;
+	`mkdir $path/usr/bin`;
+	`mkdir $path/usr/share`;
+	`mkdir $path/usr/share/applications`;
+	`mkdir $path/usr/share/doc`;
+	`mkdir $path/usr/share/doc/gitso`;
+	`mkdir $path/usr/share/gitso`;
+	`cp arch/linux/gitso $path/usr/bin/`;
+	`cp Gitso.py $path/usr/share/gitso/`;
+	`cp __init__.py $path/usr/share/gitso/`;
+	`cp hosts.txt $path/usr/share/gitso/`;
+
+	print "..";
+	`cp arch/linux/gitso.desktop $path/usr/share/applications/`;
+	`cp arch/linux/README.txt $path/usr/share/doc/gitso/README`;
+	`cp copyright $path/usr/share/doc/gitso/`;
+	`gzip -cf arch/linux/changelog > $path/usr/share/doc/gitso/changelog.gz`;
+
+	print "..";
+	`dpkg -b $path $path.deb`;
+
+	`rm -rf $path`;
+
+	print " [done]\n";
 }
