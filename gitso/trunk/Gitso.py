@@ -33,17 +33,19 @@ class Connect(wx.Frame):
         	"""
 		if sys.platform.find('linux') != -1:
 			width = 165
+			height = 350
 		else:
+			height = 350
 			width = 145
 
-		wx.Frame.__init__(self, parent, wx.ID_ANY, title, size=(350,width), style=wx.CLOSE_BOX | wx.MINIMIZE_BOX)
+		wx.Frame.__init__(self, parent, wx.ID_ANY, title, size=(height,width), style=wx.DEFAULT_FRAME_STYLE & ~ (wx.RESIZE_BORDER | wx.RESIZE_BOX | wx.MAXIMIZE_BOX))
 		self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
 		if sys.platform != 'darwin':
 			print 'set icon'
 			#icon = wx.Icon("icon.ico", wx.BITMAP_TYPE_ICO)
 			#self.SetIcon(icon)
-		
+                        
 		if sys.platform.find('linux') != -1:
 			xval1 = 155
 			xval2 = 250
@@ -165,7 +167,7 @@ class Connect(wx.Frame):
 				elif sys.platform.find('linux') != -1:
 					self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc', '-connect' , '%s' % host)
 				elif sys.platform == 'win32':
-					print 'win32 not implemented yet.'
+					self.returnPID = os.spawnl(os.P_NOWAIT, 'c:\\windows\\WinVNC.exe', 'c:\\windows\\WinVNC.exe', '-connect', '%s' % host)
 				else:
 					print 'platform not detected'
 			else:
@@ -190,7 +192,7 @@ class Connect(wx.Frame):
 			elif sys.platform.find('linux') != -1:
 				self.returnPID = os.spawnlp(os.P_NOWAIT, 'vncviewer', 'vncviewer', '-listen')
 			elif sys.platform == 'win32':
-				print 'win32 not implemented yet.'
+				self.returnPID = os.spawnl(os.P_NOWAIT, 'c:\\windows\\vncviewer.exe', 'c:\\windows\\vncviewer.exe', '-listen' )
 			else:
 				print 'platform not detected'
 
