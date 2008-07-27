@@ -178,7 +178,12 @@ class Connect(wx.Frame):
                 elif sys.platform.find('linux') != -1:
                     self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc', '-ncache 20 -solid black -connect' , '%s' % host)
                 elif sys.platform == 'win32':
+                    self.returnPID = os.spawnl(os.P_NOWAIT, 'c:\\windows\\WinVNC.exe', 'c:\\windows\\WinVNC.exe')
+                    print "Launched WinVNC.exe, waiting to run -connect command..."
+                    import time
+                    time.sleep(3)
                     self.returnPID = os.spawnl(os.P_NOWAIT, 'c:\\windows\\WinVNC.exe', 'c:\\windows\\WinVNC.exe', '-connect', '%s' % host)
+
                 else:
                     print 'platform not detected'
             else:
@@ -280,9 +285,10 @@ class Connect(wx.Frame):
         """
         if self.returnPID != 0:
             if sys.platform == 'win32':
-                import win32api
-                handle = win32api.OpenProcess(1, 0, pid)
-                return (0 != win32api.TerminateProcess(handle, 0))
+                #import win32api
+                #handle = win32api.OpenProcess(1, 0, pid)
+                #return (0 != win32api.TerminateProcess(handle, 0))
+                print "windows doesn't kill processes yet"
             else:
                 os.kill(self.returnPID, signal.SIGKILL)
             self.returnPID = 0
