@@ -1,12 +1,12 @@
 [Desktop Entry]
-Version=0.4
+Version=0.5
 Encoding=UTF-8
 Name=Gitso
 Name[en_GB]=Gitso
 Name[en_US]=Gitso
 Comment=Connect to others using VNC protocol
 Exec=gitso
-Icon=/usr/share/gitso/gitso.svg
+Icon=/usr/share/gitso/gitso.ico
 Terminal=false
 MimeType=application/x-remote-connection;
 Type=Application

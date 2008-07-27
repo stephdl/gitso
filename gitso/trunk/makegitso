@@ -46,7 +46,8 @@ if(`uname -a` =~ m/Darwin/) {
 	}
 	
 } elsif (`uname -a` =~ m/Linux/) {
-	my $path = "gitso_0.5_all";
+	my $deb  = "gitso_0.5_all.deb";
+	my $path = "gitso";
 	print "Creating $path.deb";
 	`rm -rf $path`;
 	`mkdir $path`;
@@ -59,22 +60,23 @@ if(`uname -a` =~ m/Darwin/) {
 	`mkdir $path/usr/share`;
 	`mkdir $path/usr/share/applications`;
 	`mkdir $path/usr/share/doc`;
-	`mkdir $path/usr/share/doc/gitso`;
-	`mkdir $path/usr/share/gitso`;
+	`mkdir $path/usr/share/doc/$path`;
+	`mkdir $path/usr/share/$path`;
 	`cp arch/linux/gitso $path/usr/bin/`;
-	`chmod u+x $path/usr/bin`;
-	`cp Gitso.py $path/usr/share/gitso/`;
-	`cp __init__.py $path/usr/share/gitso/`;
-	`cp hosts.txt $path/usr/share/gitso/`;
+	`chmod 755 $path/usr/bin/gitso`;
+	`cp Gitso.py $path/usr/share/$path/`;
+	`cp __init__.py $path/usr/share/$path/`;
+	`cp hosts.txt $path/usr/share/$path/`;
+	`cp icon.ico $path/usr/share/$path/`;
 
 	print "..";
 	`cp arch/linux/gitso.desktop $path/usr/share/applications/`;
-	`cp arch/linux/README.txt $path/usr/share/doc/gitso/README`;
-	`cp copyright $path/usr/share/doc/gitso/`;
-	`gzip -cf arch/linux/changelog > $path/usr/share/doc/gitso/changelog.gz`;
+	`cp arch/linux/README.txt $path/usr/share/doc/$path/README`;
+	`cp copyright $path/usr/share/doc/$path/`;
+	`gzip -cf arch/linux/changelog > $path/usr/share/doc/$path/changelog.gz`;
 
 	print "..";
-	`dpkg -b $path $path.deb`;
+	`dpkg -b $path/ $deb`;
 
 	`rm -rf $path`;
 

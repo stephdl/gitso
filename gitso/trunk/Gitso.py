@@ -41,9 +41,12 @@ class Connect(wx.Frame):
         wx.Frame.__init__(self, parent, wx.ID_ANY, title, size=(height,width), style=wx.DEFAULT_FRAME_STYLE & ~ (wx.RESIZE_BORDER | wx.RESIZE_BOX | wx.MAXIMIZE_BOX))
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
-        if sys.platform != 'darwin':
-            print 'set icon'
-            #icon = wx.Icon("icon.ico", wx.BITMAP_TYPE_ICO)
+        if sys.platform.find('linux') != -1:
+            icon = wx.Icon(os.path.join(sys.path[0], '..', 'share', 'gitso', 'icon.ico'), wx.BITMAP_TYPE_ICO)
+            self.SetIcon(icon)
+        elif sys.platform == 'win32':
+            print "set icon"
+            #icon = wx.Icon(os.path.join(sys.path[0], '..', 'share', 'gitso', 'icon.ico'), wx.BITMAP_TYPE_ICO)
             #self.SetIcon(icon)
                         
         if sys.platform.find('linux') != -1:
@@ -74,7 +77,15 @@ class Connect(wx.Frame):
         
         # the combobox Control
         self.sampleList = []
-        self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], 'hosts.txt'))
+
+	if sys.platform == "darwin":
+ 		self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], 'hosts.txt'))
+	elif sys.platform == "win32":
+		print "set Hosts"
+ 		self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], 'hosts.txt'))
+	else:
+ 		self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], '..', 'share', 'gitso', 'hosts.txt'))
+
         self.sampleList = self.getHosts(self.sampleList, prefFile)
         self.displayHostBox(self.sampleList, "Enter/Select Support Address")
         
@@ -163,9 +174,9 @@ class Connect(wx.Frame):
                     self.displayHostBox(self.sampleList, host)
                 
                 if sys.platform == 'darwin':
-                    self.returnPID = os.spawnl(os.P_NOWAIT, '%sOSXvnc/OSXvnc-server' % devPath, 'OSXvnc-server', '-connectHost', '%s' % host)
+                    self.returnPID = os.spawnl(os.P_NOWAIT, '%sOSXvnc/OSXvnc-server' % devPath, 'OSXvnc-server', '-nopw -connectHost', '%s' % host)
                 elif sys.platform.find('linux') != -1:
-                    self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc', '-connect' , '%s' % host)
+                    self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc', '-ncache 20 -solid black -connect' , '%s' % host)
                 elif sys.platform == 'win32':
                     self.returnPID = os.spawnl(os.P_NOWAIT, 'c:\\windows\\WinVNC.exe', 'c:\\windows\\WinVNC.exe', '-connect', '%s' % host)
                 else:
@@ -215,7 +226,15 @@ class Connect(wx.Frame):
         text = self.hostField.GetValue()
         self.hostField.Destroy()
         self.sampleList = []
-        self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], 'hosts.txt'))
+
+	if sys.platform == "darwin":
+ 		self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], 'hosts.txt'))
+	elif sys.platform == "win32":
+		print "set Hosts"
+ 		self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], 'hosts.txt'))
+	else:
+ 		self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], '..', 'share', 'gitso', 'hosts.txt'))
+
         self.sampleList = self.getHosts(self.sampleList, prefFile)
         self.displayHostBox(self.sampleList, text)
 
@@ -376,6 +395,7 @@ if sys.platform == "darwin":
         os.makedirs(prefFile, 0700)
     prefFile = os.path.join(prefFile, "hosts")
 elif sys.platform == "win32":
+    print "set Hosts"
     # I don't know where the best place is for this.
     prefFile = os.path.join(os.path.expanduser("~"), ".gitso-hosts")
 else:
