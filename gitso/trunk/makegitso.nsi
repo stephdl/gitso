@@ -40,6 +40,9 @@ UninstPage instfiles
 Section "Gitso"
   SectionIn RO
   SetOutPath $INSTALLDIR
+  File ".\icon.ico"
+  File ".\hosts.txt"
+  File ".\Gitso.py"
   ;need to add gitso's exe file here after created with py2exe or something like it
   SetOutPath $WINDIR
   File ".\arch\win32\vncviewer.exe"
