@@ -2,7 +2,7 @@
 ; ----------------
 ; written by Derek Buranen (xburnerx@gmail.com) & Aaron Gerber
 ; 
-; Install Gitso in Windows using NSIS
+; Package Gitso for Windows using NSIS
 ;--------------------------------
 
 !define VERSION "0.5" 
@@ -40,7 +40,25 @@ UninstPage instfiles
 Section "Gitso"
   SectionIn RO
   SetOutPath $INSTALLDIR
-  ;need to add gitso's exe file here after created with py2exe or something like it
+  File ".\dist\Gitso.exe"
+  File ".\dist\bz2.pyd"
+  File ".\dist\icon.ico"
+  File ".\dist\library.zip"
+  File ".\dist\msvcp71.dll"
+  File ".\dist\MSVCR71.dll"
+  File ".\dist\python25.dll"
+  File ".\dist\unicodedata.pyd"
+  File ".\dist\w9xpopen.exe"
+  File ".\dist\wx._controls_.pyd"
+  File ".\dist\wx._core_.pyd"
+  File ".\dist\wx._gdi_.pyd"
+  File ".\dist\wx._misc_.pyd"
+  File ".\dist\wx._windows_.pyd"
+  File ".\dist\wxbase28uh_net_vc.dll"
+  File ".\dist\wxbase28uh_vc.dll"
+  File ".\dist\wxbase28uh_adv_vc.dll"
+  File ".\dist\wxbase28uh_core_vc.dll"
+  File ".\dist\wxbase28uh_html_vc.dll"
   SetOutPath $WINDIR
   File ".\arch\win32\vncviewer.exe"
   File ".\arch\win32\WinVNC.exe"
