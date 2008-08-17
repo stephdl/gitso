@@ -40,6 +40,14 @@ UninstPage instfiles
 Section "Gitso"
   SectionIn RO
   SetOutPath $INSTALLDIR
+	  ; Write the installation path into the registry
+	  ; Write the uninstall keys for Windows
+	  WriteRegStr HKLM SOFTWARE\RMTT "Install_Dir" "$INSTDIR"  
+	  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RMTT" "DisplayName" "RMTT"
+	  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RMTT" "UninstallString" '"$INSTDIR\uninstall.exe"'
+	  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RMTT" "NoModify" 1
+	  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RMTT" "NoRepair" 1
+	  WriteUninstaller "uninstall.exe"  
   File ".\dist\Gitso.exe"
   File ".\dist\bz2.pyd"
   File ".\dist\icon.ico"
@@ -63,12 +71,16 @@ Section "Gitso"
   File ".\arch\win32\vncviewer.exe"
   File ".\arch\win32\WinVNC.exe"
   File ".\arch\win32\VNCHooks.dll"
-  CreateShortCut "$INSTDIR\gitso.exe" "$INSTDIR\gitso.exe" "" "$INSTDIR\gitso.exe" 0
+ ;start menu items
+  CreateDirectory "$SMPROGRAMS\Gitso"
+  CreateShortCut "$SMPROGRAMS\Gitso\Gitso.lnk" "$INSTDIR\gitso.exe" "" "$INSTDIR\gitso.exe" 0
+  CreateShortCut "$SMPROGRAMS\Gitso\Gitso.lnk" "$INSTDIR\Gitso.exe" "" "$INSTDIR\Gitso.exe" 0
+ ;Registry tweaks to TightVNC's server
   WriteRegDWORD HKCU "Software\ORL\WinVNC3" "RemoveWallpaper" 1
   WriteRegDWORD HKCU "Software\ORL\WinVNC3" "EnableFileTransfers" 1
  ;set default password to something so WinVNC.exe doesn't complain about having no password
   WriteRegBin HKCU "SOFTWARE\ORL\WinVNC3" "Password" "238f16962aeb734e"
-  WriteRegBin HKCU "SOFTWARE\ORL\WinVNC3" "PasswordViewOnly" "b0f0ac1997133bc9"
+  WriteRegBin HKCU "SOFTWARE\ORL\WinVNC3" "PasswordViewOnly" "238f16962aeb734e"
  ;Try to set it for all users, but I'm not positive this works
   WriteRegDWORD HKLM "Software\ORL\WinVNC3" "RemoveWallpaper" 1
   WriteRegDWORD HKLM "Software\ORL\WinVNC3" "EnableFileTransfers" 1
@@ -81,17 +93,13 @@ SectionEnd
 ;------------------------------------------------------
 Section "Uninstall"
   ; Remove registry keys
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RMTT"
-  DeleteRegKey HKLM SOFTWARE\RMTT
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Gitso"
+  DeleteRegKey HKLM SOFTWARE\Gitso
   ; Remove files and uninstaller
   Delete $WINDIR\vncviewer.exe
   Delete $WINDIR\VNCHooks.dll
   Delete $WINDIR\WinVNC.exe
-  Delete $INSTDIR\gitso.exe
-  RMDir /r $INSTDIR
-  Delete $INSTDIR\uninstall.exe
-  Delete "$DESKTOP\RMTT.lnk"
   ; Remove shortcuts and folder
-  RMDir /r "$SMPROGRAMS\RMTT"
-  RMDir "$INSTDIR"
+  RMDir /r "$SMPROGRAMS\Gitso"
+  RMDir /r $INSTDIR
 SectionEnd
