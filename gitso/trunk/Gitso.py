@@ -176,7 +176,7 @@ class Connect(wx.Frame):
                 if sys.platform == 'darwin':
                     self.returnPID = os.spawnl(os.P_NOWAIT, '%sOSXvnc/OSXvnc-server' % devPath, 'OSXvnc-server', '-nopw -connectHost', '%s' % host)
                 elif sys.platform.find('linux') != -1:
-                    self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc', '-nopw -ncache 20 -solid black -connect' , '%s' % host)
+                    self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc','-nopw','-ncache','20','-solid','black','-connect','%s' % host)
                 elif sys.platform == 'win32':
                     self.returnPID = os.spawnl(os.P_NOWAIT, '%s\\WinVNC.exe' % os.environ['WINDIR'], '%s\\WinVNC.exe' % os.environ['WINDIR'])
                     print "Launched WinVNC.exe, waiting to run -connect command..."
