@@ -45,9 +45,9 @@ class Connect(wx.Frame):
             icon = wx.Icon(os.path.join(sys.path[0], '..', 'share', 'gitso', 'icon.ico'), wx.BITMAP_TYPE_ICO)
             self.SetIcon(icon)
         elif sys.platform == 'win32':
-            print "set icon"
-            #icon = wx.Icon(os.path.join(sys.path[0], '..', 'share', 'gitso', 'icon.ico'), wx.BITMAP_TYPE_ICO)
-            #self.SetIcon(icon)
+            self.SetBackgroundColour(wx.Colour(236,233,216))
+            icon = wx.Icon('icon.ico', wx.BITMAP_TYPE_ICO)
+            self.SetIcon(icon)
                         
         if sys.platform.find('linux') != -1:
             xval1 = 155
@@ -81,7 +81,6 @@ class Connect(wx.Frame):
 	if sys.platform == "darwin":
  		self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], 'hosts.txt'))
 	elif sys.platform == "win32":
-		print "set Hosts"
  		self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], 'hosts.txt'))
 	else:
  		self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], '..', 'share', 'gitso', 'hosts.txt'))
@@ -111,7 +110,7 @@ class Connect(wx.Frame):
             wx.EVT_MENU(self, wx.ID_EXIT, self.OnCloseWindow)
 
             helpMenu = wx.Menu()
-            helpMenu.Append(wx.ID_ABOUT, "&About\tCtrl+A", "About Gitso")
+            helpMenu.Append(wx.ID_ABOUT, "&About", "About Gitso")
             wx.EVT_MENU(self, wx.ID_ABOUT, self.ShowAbout)
 
         wx.EVT_MENU(self, 13, self.clearHistory)
@@ -119,7 +118,7 @@ class Connect(wx.Frame):
         menuBar.Append(fileMenu, "&File")
         menuBar.Append(editMenu, "&Edit")
         
-        if sys.platform.find('linux') != -1:
+        if sys.platform.find('linux') != -1 or sys.platform == 'win32':
             menuBar.Append(helpMenu, "&Help")
 
 
@@ -236,7 +235,6 @@ class Connect(wx.Frame):
 	if sys.platform == "darwin":
  		self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], 'hosts.txt'))
 	elif sys.platform == "win32":
-		print "set Hosts"
  		self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], 'hosts.txt'))
 	else:
  		self.sampleList = self.getHosts(self.sampleList, os.path.join(sys.path[0], '..', 'share', 'gitso', 'hosts.txt'))
@@ -356,27 +354,30 @@ class AboutWindow(wx.Frame):
             license = open(os.path.join(sys.path[0], '..', 'share', 'doc', 'gitso', 'copyright'), 'r')
         else:
             license = open('copyright', 'r')
+
+        if sys.platform == 'win32':
+            self.SetBackgroundColour(wx.Colour(236,233,216))
             
-        self.copyright = wx.TextCtrl(self, -1, license.read(), pos=wx.Point(0, 180), size=wx.Size(525, 160), style=wx.TE_MULTILINE)
+        self.copyright = wx.TextCtrl(self, -1, license.read(), pos=wx.Point(0, 180), size=wx.Size(525, 160), style=wx.TE_MULTILINE | wx.ST_NO_AUTORESIZE)
         self.copyright.SetEditable(False)
                 
-        self.text1 = wx.StaticText(self, wx.ID_ANY, 'Gitso', pos=wx.Point(0, 20), size=wx.Size(525, -1), style=wx.ALIGN_CENTER_HORIZONTAL)
+        self.text1 = wx.StaticText(self, wx.ID_ANY, 'Gitso', pos=wx.Point(0, 13), size=wx.Size(525, 35), style=wx.ALIGN_CENTER_HORIZONTAL | wx.ST_NO_AUTORESIZE)
         font1 = wx.Font(24, wx.NORMAL, wx.NORMAL, wx.BOLD)
         self.text1.SetFont(font1)
 
-        self.text2 = wx.StaticText(self, -1, "Gitso is to Support Others", pos=wx.Point(0, 50), size=wx.Size(525, -1), style=wx.ALIGN_CENTER_HORIZONTAL)
-        self.text3 = wx.StaticText(self, -1, "Version 0.5", pos=wx.Point(0, 72), size=wx.Size(525, -1), style=wx.ALIGN_CENTER_HORIZONTAL)
+        self.text2 = wx.StaticText(self, -1, "Gitso is to Support Others", pos=wx.Point(0, 48), size=wx.Size(525, 27), style=wx.ALIGN_CENTER_HORIZONTAL | wx.ST_NO_AUTORESIZE)
+        self.text3 = wx.StaticText(self, -1, "Version 0.5", pos=wx.Point(0, 72), size=wx.Size(525, 27), style=wx.ALIGN_CENTER_HORIZONTAL | wx.ST_NO_AUTORESIZE)
         font2 = wx.Font(16, wx.NORMAL, wx.NORMAL, wx.NORMAL)
         self.text2.SetFont(font2)
         self.text3.SetFont(font2)
         
-        self.text4 = wx.StaticText(self, -1, "Copyright 2008", pos=wx.Point(0, 105), size=wx.Size(525, -1), style=wx.ALIGN_CENTER_HORIZONTAL)
-        self.text5 = wx.StaticText(self, -1, "Aaron Gerber and Derek Buranen", pos=wx.Point(0, 125), size=wx.Size(525, -1), style=wx.ALIGN_CENTER_HORIZONTAL)
+        self.text4 = wx.StaticText(self, -1, "Copyright 2008", pos=wx.Point(0, 102), size=wx.Size(525, 27), style=wx.ALIGN_CENTER_HORIZONTAL | wx.ST_NO_AUTORESIZE)
+        self.text5 = wx.StaticText(self, -1, "Aaron Gerber and Derek Buranen", pos=wx.Point(0, 125), size=wx.Size(525, 27), style=wx.ALIGN_CENTER_HORIZONTAL | wx.ST_NO_AUTORESIZE)
         font4 = wx.Font(14, wx.NORMAL, wx.NORMAL, wx.NORMAL)
         self.text4.SetFont(font4)
         self.text5.SetFont(font4)
         
-        self.url = wx.HyperlinkCtrl(self, -1, "code.google.com/p/gitso", "http://code.google.com/p/gitso", wx.Point(186, 150))
+        self.url = wx.HyperlinkCtrl(self, -1, "code.google.com/p/gitso", "http://code.google.com/p/gitso", wx.Point(189, 150))
         
         self.ok = wx.Button(self, wx.ID_OK, "OK", wx.Point(425, 350))
         self.SetDefaultItem(self.ok)
@@ -402,9 +403,7 @@ if sys.platform == "darwin":
         os.makedirs(prefFile, 0700)
     prefFile = os.path.join(prefFile, "hosts")
 elif sys.platform == "win32":
-    print "set Hosts"
-    # I don't know where the best place is for this.
-    prefFile = os.path.join(os.path.expanduser("~"), ".gitso-hosts")
+    prefFile = os.path.join(os.path.expanduser("~"), "Local Settings", "Application Data", ".gitso-hosts")
 else:
     prefFile = os.path.join(os.path.expanduser("~"), ".gitso-hosts")
 
