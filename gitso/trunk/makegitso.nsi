@@ -1,7 +1,5 @@
-; gitso.nsi
+; makegitso.nsi
 ; ----------------
-; written by Derek Buranen (xburnerx@gmail.com) & Aaron Gerber
-; 
 ; Package Gitso for Windows using NSIS
 ;--------------------------------
 
@@ -42,11 +40,11 @@ Section "Gitso"
   SetOutPath $INSTALLDIR
 	  ; Write the installation path into the registry
 	  ; Write the uninstall keys for Windows
-	  WriteRegStr HKLM SOFTWARE\RMTT "Install_Dir" "$INSTDIR"  
-	  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RMTT" "DisplayName" "RMTT"
-	  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RMTT" "UninstallString" '"$INSTDIR\uninstall.exe"'
-	  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RMTT" "NoModify" 1
-	  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RMTT" "NoRepair" 1
+	  WriteRegStr HKLM SOFTWARE\Gitso "Install_Dir" "$INSTDIR"  
+	  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Gitso" "DisplayName" "Gitso"
+	  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Gitso" "UninstallString" '"$INSTDIR\uninstall.exe"'
+	  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Gitso" "NoModify" 1
+	  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Gitso" "NoRepair" 1
 	  WriteUninstaller "uninstall.exe"
   File ".\hosts.txt"
   File ".\icon.ico"  
@@ -75,7 +73,6 @@ Section "Gitso"
   File ".\arch\win32\VNCHooks.dll"
  ;start menu items
   CreateDirectory "$SMPROGRAMS\Gitso"
-  CreateShortCut "$SMPROGRAMS\Gitso\Gitso.lnk" "$INSTDIR\gitso.exe" "" "$INSTDIR\gitso.exe" 0
   CreateShortCut "$SMPROGRAMS\Gitso\Gitso.lnk" "$INSTDIR\Gitso.exe" "" "$INSTDIR\Gitso.exe" 0
  ;Registry tweaks to TightVNC's server
   WriteRegDWORD HKCU "Software\ORL\WinVNC3" "RemoveWallpaper" 1
@@ -96,7 +93,7 @@ SectionEnd
 Section "Uninstall"
   ; Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Gitso"
-  DeleteRegKey HKLM SOFTWARE\Gitso
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Gitso"
   ; Remove files and uninstaller
   Delete $WINDIR\vncviewer.exe
   Delete $WINDIR\VNCHooks.dll
