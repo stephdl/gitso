@@ -47,7 +47,9 @@ Section "Gitso"
 	  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RMTT" "UninstallString" '"$INSTDIR\uninstall.exe"'
 	  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RMTT" "NoModify" 1
 	  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RMTT" "NoRepair" 1
-	  WriteUninstaller "uninstall.exe"  
+	  WriteUninstaller "uninstall.exe"
+  File ".\hosts.txt"
+  File ".\icon.ico"  
   File ".\dist\Gitso.exe"
   File ".\dist\bz2.pyd"
   File ".\dist\icon.ico"
