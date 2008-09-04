@@ -173,7 +173,7 @@ class Connect(wx.Frame):
                     self.displayHostBox(self.sampleList, host)
                 
                 if sys.platform == 'darwin':
-                    self.returnPID = os.spawnl(os.P_NOWAIT, '%sOSXvnc/OSXvnc-server' % devPath, 'OSXvnc-server', '-nopw -connectHost', '%s' % host)
+                    self.returnPID = os.spawnl(os.P_NOWAIT, '%sOSXvnc/OSXvnc-server' % devPath, '%sOSXvnc/OSXvnc-server' % devPath, '-connectHost', '%s' % host)
                 elif sys.platform.find('linux') != -1:
                     self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc','-nopw','-ncache','20','-solid','black','-connect','%s' % host)
                 elif sys.platform == 'win32':
@@ -194,10 +194,10 @@ class Connect(wx.Frame):
             
             if sys.platform == 'darwin':
                 if os.path.exists("/Applications/Utilities/X11.app") :
-                    os.spawnl(os.P_WAIT, '/usr/bin/open', 'open', '/Applications/Utilities/X11.app')
+                    os.spawnl(os.P_WAIT, '/usr/bin/open', '/usr/bin/open', '/Applications/Utilities/X11.app')
                     dlg = wx.MessageDialog(self, "If it doesn't open shortly, please start it manually.", "Please wait while X11.app starts", wx.OK|wx.CENTRE|wx.ICON_INFORMATION)
                     dlg.ShowModal()
-                    self.returnPID = os.spawnlp(os.P_NOWAIT, '%svncviewer/vncviewer' % devPath, 'vncviewer', '-listen', '0')
+                    self.returnPID = os.spawnlp(os.P_NOWAIT, '%svncviewer/vncviewer' % devPath, '%svncviewer/vncviewer' % devPath, '-listen', '0')
                 else:
                     dlg = wx.MessageDialog(self, "We were unable to find X11.app in /Applications/Utilities", "To Give Support you need X11.app", wx.OK|wx.CENTRE|wx.ICON_ERROR)
                     dlg.ShowModal()
