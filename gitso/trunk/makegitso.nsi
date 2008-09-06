@@ -37,7 +37,7 @@ UninstPage instfiles
 
 Section "Gitso"
   SectionIn RO
-  SetOutPath $INSTALLDIR
+  SetOutPath $INSTDIR
 	  ; Write the installation path into the registry
 	  ; Write the uninstall keys for Windows
 	  WriteRegStr HKLM SOFTWARE\Gitso "Install_Dir" "$INSTDIR"  
@@ -47,7 +47,8 @@ Section "Gitso"
 	  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Gitso" "NoRepair" 1
 	  WriteUninstaller "uninstall.exe"
   File ".\hosts.txt"
-  File ".\icon.ico"  
+  File ".\icon.ico"
+  File ".\copyright"
   File ".\dist\Gitso.exe"
   File ".\dist\bz2.pyd"
   File ".\dist\icon.ico"
@@ -67,13 +68,15 @@ Section "Gitso"
   File ".\dist\wxmsw28uh_adv_vc.dll"
   File ".\dist\wxmsw28uh_core_vc.dll"
   File ".\dist\wxmsw28uh_html_vc.dll"
+ ;start menu items
+  CreateDirectory "$SMPROGRAMS\Gitso"
+  CreateShortCut "$SMPROGRAMS\Gitso\Gitso.lnk" "$INSTDIR\Gitso.exe" "" "$INSTDIR\icon.ico" 0
+  
   SetOutPath $WINDIR
   File ".\arch\win32\vncviewer.exe"
   File ".\arch\win32\WinVNC.exe"
   File ".\arch\win32\VNCHooks.dll"
- ;start menu items
-  CreateDirectory "$SMPROGRAMS\Gitso"
-  CreateShortCut "$SMPROGRAMS\Gitso\Gitso.lnk" "$INSTDIR\Gitso.exe" "" "$INSTDIR\Gitso.exe" 0
+
  ;Registry tweaks to TightVNC's server
   WriteRegDWORD HKCU "Software\ORL\WinVNC3" "RemoveWallpaper" 1
   WriteRegDWORD HKCU "Software\ORL\WinVNC3" "EnableFileTransfers" 1
