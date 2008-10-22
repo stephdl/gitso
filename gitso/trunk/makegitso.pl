@@ -78,7 +78,7 @@ if(`uname -a` =~ m/Darwin/) {
 	print "..";
 	`dpkg -b $path/ $deb`;
 
-	`rm -rf $path`;
+	#`rm -rf $path`;
 
 	print " [done]\n";
 }
