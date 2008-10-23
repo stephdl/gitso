@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 import wx
-import os, sys, signal, os.path
+import os, sys, signal, os.path, time, thread
 import AboutWindow, GitsoThread
 
 class ConnectionWindow(wx.Frame):
@@ -18,32 +18,30 @@ class ConnectionWindow(wx.Frame):
 		@author: Derek Buranen
 		@author: Aaron Gerber
 		"""
+		self.ToggleValue = 0
 		self.paths = paths
-		self.thread = GitsoThread.GitsoThread(self, self.paths)
+		self.thread = None
+		self.threadLock = thread.allocate_lock()
 		
 		if sys.platform.find('linux') != -1:
 			width = 165
 			height = 350
+			xval1 = 155
+			xval2 = 250
 		else:
 			height = 350
 			width = 175
+			xval1 = 180
+			xval2 = 265
 		
 		wx.Frame.__init__(self, parent, wx.ID_ANY, title, size=(height,width), style=wx.DEFAULT_FRAME_STYLE & ~ (wx.RESIZE_BORDER | wx.RESIZE_BOX | wx.MAXIMIZE_BOX))
 		self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 		
-		# I don't know if this works in OS X
 		icon = wx.Icon(os.path.join(self.paths['main'], 'icon.ico'), wx.BITMAP_TYPE_ICO)
 		self.SetIcon(icon)
 		
 		if sys.platform == 'win32':
 			self.SetBackgroundColour(wx.Colour(236,233,216))
-		
-		if sys.platform.find('linux') != -1:
-			xval1 = 155
-			xval2 = 250
-		else:
-			xval1 = 180
-			xval2 = 265
 		
 		#Buttons
 		self.connectButton = wx.Button(self, 10, "Start", wx.Point(xval1, 70))
@@ -83,7 +81,6 @@ class ConnectionWindow(wx.Frame):
 		
 		fileMenu.Append(13, "&Clear History", "Clear History")
 		if sys.platform == 'darwin':
-			#OS X deals with the help and file menu in  wonky way.
 			fileMenu.Append(wx.ID_ABOUT, "&About", "About Gitso")
 			wx.EVT_MENU(self, wx.ID_ABOUT, self.ShowAbout)
 		else:       
@@ -104,9 +101,9 @@ class ConnectionWindow(wx.Frame):
 		
 		self.SetMenuBar(menuBar)
 		
-		self.statusBar = self.CreateStatusBar(2)
-		self.statusBar.SetStatusText("Status:", 0)
-		self.statusBar.SetStatusWidths([50, 300])
+		self.statusBar = self.CreateStatusBar(1)
+		self.statusBar.SetStatusWidths([350])
+		self.setMessage("Idle", False)
 		
 		self.SetDefaultItem(self.hostField)
 		self.hostField.SetFocus()
@@ -124,8 +121,10 @@ class ConnectionWindow(wx.Frame):
 		@author: Aaron Gerber
 		"""
 		if self.rb1.GetValue():
+			self.ToggleValue = 0
 			self.hostField.Enable(True)
 		else:
+			self.ToggleValue = 1
 			self.hostField.Enable(False)
 	
 	
@@ -138,9 +137,7 @@ class ConnectionWindow(wx.Frame):
 		"""
 		if self.rb1.GetValue(): # Get Help
 			if self.validHost(self.hostField.GetValue().strip()) and self.hostField.GetValue() != "Enter/Select Support Address":
-				self.connectButton.Enable(False)
-				self.stopButton.Enable(True)
-				self.statusBar.SetStatusText("Started", 1)
+				self.setMessage("Connecting...", True)
 				
 				host = self.hostField.GetValue().strip()
 				
@@ -153,18 +150,15 @@ class ConnectionWindow(wx.Frame):
 					self.sampleList.append(host)
 					self.hostField.Destroy()
 					self.displayHostBox(self.sampleList, host)
-					
-				self.thread.setHost(host)
-				self.thread.start()
+				
+				self.createThread(host)
 			else:
-				self.statusBar.SetStatusText("Invalid Support Address", 1)
+				self.setMessage("Invalid Support Address", False)
 		else: # Give Suppport
-			self.connectButton.Enable(False)
-			self.stopButton.Enable(True)
-			self.statusBar.SetStatusText("Started", 1)
-			self.thread.start()
-	
-	
+			self.setMessage("Starting Server...", True)
+			self.createThread()
+
+
 	def ShowAbout(self,e):
 		"""
 		Display About Dialog
@@ -229,15 +223,19 @@ class ConnectionWindow(wx.Frame):
 		@author: Derek Buranen
 		@author: Aaron Gerber
 		"""
-		self.thread.kill()
-		self.connectButton.Enable(True)
-		self.stopButton.Enable(False)
-		self.statusBar.SetStatusText("Idle", 1)
+		if self.thread <> None:
+			self.thread.kill()
+			time.sleep(.5)
+		self.thread = None
+		self.setMessage("Idle.", False)
 		return
 	
 	
 	def OnCloseWindow(self, evt):
-		self.KillPID(self)
+		if self.thread <> None:
+			self.thread.kill()
+			time.sleep(.5)
+		self.thread = None
 		self.Destroy()
 	
 	
@@ -269,4 +267,33 @@ class ConnectionWindow(wx.Frame):
 	def displayHostBox(self, list, text):
 		self.hostField = wx.ComboBox(self, 30, "", wx.Point(105, 12), wx.Size(230, -1), list, wx.CB_DROPDOWN)
 		self.hostField.SetValue(text)
+
+	def setMessage(self, message, status):
+		self.threadLock.acquire()
+
+		self.statusBar.SetStatusText(message, 0)
+		if status:
+			self.connectButton.Enable(False)
+			self.stopButton.Enable(True)
+		else:
+			self.connectButton.Enable(True)
+			self.stopButton.Enable(False)
+		
+		if self.ToggleValue == 0:
+			self.rb1.SetValue(True)
+		else:
+			self.rb2.SetValue(True)
+		
+		self.threadLock.release()
+
+	def createThread(self, host=""):
+		if self.thread <> None:
+			self.thread.kill()
+		self.thread	 = GitsoThread.GitsoThread(self, self.paths)
+		self.thread.setHost(host)
+		self.thread.start()
+
+		# If you don't wait 2 seconds, the interface won't reload and it'll freeze.
+		# Possibly on older systems you should wait longer, it works fine on mine...
+		time.sleep(2)
 

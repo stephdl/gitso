@@ -53,7 +53,6 @@ if len(sys.argv) == 2:
 elif len(sys.argv) > 2:
 	help_menu()
 
-
 if sys.platform == "darwin":
     paths['preferences'] = os.path.join(os.path.expanduser("~"), "Library", "Application Support", "Gitso")
     if os.path.exists(paths['preferences']) != True:

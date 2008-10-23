@@ -20,6 +20,7 @@ class Processes:
 			self.returnPID = os.spawnl(os.P_NOWAIT, '%s\\WinVNC.exe' % os.environ['WINDIR'], '%s\\WinVNC.exe' % os.environ['WINDIR'], '-connect', '%s' % host)
 		else:
 			print 'Platform not detected'
+		return self.returnPID
 	
 	def giveSupport(self):
 		if sys.platform == 'darwin':
@@ -31,16 +32,13 @@ class Processes:
 			else:
 				dlg = wx.MessageDialog(self, "We were unable to find X11.app in /Applications/Utilities", "To Give Support you need X11.app", wx.OK|wx.CENTRE|wx.ICON_ERROR)
 				dlg.ShowModal()
-				#self.statusBar.SetStatusText("X11.app not found.", 1)
-				#self.connectButton.Enable(True)
-				#self.stopButton.Enable(False)
 		elif sys.platform.find('linux') != -1:
 			self.returnPID = os.spawnlp(os.P_NOWAIT, 'vncviewer', 'vncviewer', '-listen')                
 		elif sys.platform == 'win32':
-			print 'Launching %s\\vncviewer.exe' % os.environ['WINDIR']
 			self.returnPID = os.spawnl(os.P_NOWAIT, "%s\\vncviewer.exe" % os.environ['WINDIR'], '%s\\vncviewer.exe' % os.environ['WINDIR'], '-listen' )
 		else:
 			print 'Platform not detected'
+		return self.returnPID
 
 	def KillPID(self):
 		"""
@@ -50,6 +48,7 @@ class Processes:
 		@author: Aaron Gerber
 		"""
 		if self.returnPID != 0:
+			print "Processes.KillPID(" + str(self.returnPID) + ")"
 			if sys.platform == 'win32':
 				#import win32api
 				#handle = win32api.OpenProcess(1, 0, pid)
