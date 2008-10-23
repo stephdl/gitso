@@ -1,10 +1,12 @@
 #! /usr/bin/env python
 
+import wx
 import os, sys, signal, os.path
 
 class Processes:
-	def __init__(self, paths):
+	def __init__(self, window, paths):
 		self.returnPID = 0
+		self.window = window
 		self.paths = paths
 
 	def getSupport(self, host):
@@ -26,11 +28,11 @@ class Processes:
 		if sys.platform == 'darwin':
 			if os.path.exists("/Applications/Utilities/X11.app") :
 				os.spawnl(os.P_WAIT, '/usr/bin/open', '/usr/bin/open', '/Applications/Utilities/X11.app')
-				dlg = wx.MessageDialog(self, "If it doesn't open shortly, please start it manually.", "Please wait while X11.app starts", wx.OK|wx.CENTRE|wx.ICON_INFORMATION)
+				dlg = wx.MessageDialog(self.window, "If it doesn't open shortly, please start it manually.", "Please wait while X11.app starts", wx.OK|wx.CENTRE|wx.ICON_INFORMATION)
 				dlg.ShowModal()
 				self.returnPID = os.spawnlp(os.P_NOWAIT, '%svncviewer/vncviewer' % self.paths['resources'], '%svncviewer/vncviewer' % self.paths['resources'], '-listen', '0')
 			else:
-				dlg = wx.MessageDialog(self, "We were unable to find X11.app in /Applications/Utilities", "To Give Support you need X11.app", wx.OK|wx.CENTRE|wx.ICON_ERROR)
+				dlg = wx.MessageDialog(self.window, "We were unable to find X11.app in /Applications/Utilities", "To Give Support you need X11.app", wx.OK|wx.CENTRE|wx.ICON_ERROR)
 				dlg.ShowModal()
 		elif sys.platform.find('linux') != -1:
 			self.returnPID = os.spawnlp(os.P_NOWAIT, 'vncviewer', 'vncviewer', '-listen')                

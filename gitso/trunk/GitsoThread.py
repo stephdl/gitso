@@ -12,7 +12,7 @@ class GitsoThread(threading.Thread):
 		self.error   = False
 		self.pid     = 0
 		self.running = True
-		self.process = Processes.Processes(paths)
+		self.process = Processes.Processes(self.window, paths)
 		threading.Thread.__init__(self)
 		
 		
