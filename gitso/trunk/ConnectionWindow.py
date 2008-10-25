@@ -111,6 +111,16 @@ class ConnectionWindow(wx.Frame):
 		self.SetThemeEnabled(True)
 		self.Centre()
 		self.Show(True)
+		
+		if self.paths['listen']:
+			self.rb2.Value = True
+			self.RadioToggle(None)
+			self.ConnectSupport(None)
+		elif self.paths['connect'] <> "":
+			self.rb1.Value = True
+			self.RadioToggle(None)
+			self.hostField.Value = self.paths['connect']
+			self.ConnectSupport(None)
 	
 	
 	def RadioToggle(self, event):
@@ -295,5 +305,5 @@ class ConnectionWindow(wx.Frame):
 
 		# If you don't wait 2 seconds, the interface won't reload and it'll freeze.
 		# Possibly on older systems you should wait longer, it works fine on mine...
-		time.sleep(2)
+		time.sleep(1)
 

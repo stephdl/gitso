@@ -37,7 +37,7 @@ class GitsoThread(threading.Thread):
 		print "GitsoThread.run(pid: " + str(self.pid) + ") running..."
 
 		while(self.running and self.checkStatus()):
-			time.sleep(.5)
+			time.sleep(.2)
 
 		if not self.error:
 			self.window.setMessage("Idle.", False)
@@ -58,19 +58,22 @@ class GitsoThread(threading.Thread):
 		if self.pid == 0:
 			return False
 		
+		connection = []
+		listen = []
 		if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
-			connection = os.popen('netstat -an | grep 5500 | grep ESTABLISHED').readlines()
-			listen = os.popen('netstat -an | grep 5500 | grep LISTEN').readlines()
+			if self.host <> "":
+				connection = os.popen('netstat -an | grep 5500 | grep ESTABLISHED').readlines()
+			else:
+				listen = os.popen('netstat -an | grep 5500 | grep LISTEN').readlines()
 		elif sys.platform == 'win32':
 			#XP PRO only -- Need to fix the case where there is no process, it'll still return 1 line.
 			#info = os.popen('WMIC PROCESS ' + str(self.pid) + ' get Processid').readlines()
-			# possibly
-			connection = os.popen('netstat -a | find "ESTABLISHED" | find "5500"').readlines()
-			listen = os.popen('netstat -a | find "LISTEN" | find "5500"').readlines()
+			if self.host <> "":
+				connection = os.popen('netstat -a | find "ESTABLISHED" | find "5500"').readlines()
+			else:
+				listen = os.popen('netstat -a | find "LISTEN" | find "5500"').readlines()
 		else:
 			print 'Platform not detected'
-			connection = array()
-			listen = array()
 		
 		if len(connection) == 0 and len(listen) == 0:
 			return False
