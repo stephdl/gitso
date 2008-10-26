@@ -1,5 +1,37 @@
 import wx
-import os, os.path, sys
+import os, os.path, sys, cStringIO
+
+class InfoPage(wx.Panel):
+	def __init__(self, parent):
+		wx.Panel.__init__(self, parent)
+
+		infostring = "Authors:" + "\n\tAaron Gerber\n\tDerek Buranen"
+		infostring = infostring + "\n\nContributors:" + "\n\tNick Verbeck"
+		infostring = infostring + "\n\nCopyright 2007 - 2008"
+		
+		info = wx.TextCtrl(self, -1, infostring, style=wx.TE_MULTILINE | wx.ST_NO_AUTORESIZE)
+		
+		pagesizer = wx.BoxSizer(wx.VERTICAL);
+		pagesizer.Add(info, 1, wx.EXPAND)
+		self.SetSizer(pagesizer);
+		pagesizer.SetSizeHints(self);
+		
+
+class LicensePage(wx.Panel):
+	def __init__(self, parent, paths):
+		wx.Panel.__init__(self, parent)
+
+		license = open(paths['copyright'], 'r')
+		copyright = wx.TextCtrl(self, -1, license.read(), style=wx.TE_MULTILINE | wx.ST_NO_AUTORESIZE)
+		copyright.SetEditable(False)
+		
+		pagesizer = wx.BoxSizer(wx.VERTICAL);
+		pagesizer.Add(copyright, 1, wx.EXPAND);
+
+		self.SetSizer(pagesizer);
+		pagesizer.SetSizeHints(self);
+
+
 
 class AboutWindow(wx.Frame):
 	"""
@@ -19,41 +51,76 @@ class AboutWindow(wx.Frame):
 		icon = wx.Icon(os.path.join(paths['main'], 'icon.ico'), wx.BITMAP_TYPE_ICO)
 		self.SetIcon(icon)
 		
-		# Create a read-only box
-		license = open(paths['copyright'], 'r')
-
 		if sys.platform == 'win32':
-			self.SetBackgroundColour(wx.Colour(236,233,216))
+			SetBackgroundColour(wx.Colour(236,233,216))
 		
-		self.copyright = wx.TextCtrl(self, -1, license.read(), pos=wx.Point(0, 180), size=wx.Size(525, 160), style=wx.TE_MULTILINE | wx.ST_NO_AUTORESIZE)
-		self.copyright.SetEditable(False)
-		
-		self.text1 = wx.StaticText(self, wx.ID_ANY, 'Gitso', pos=wx.Point(0, 13), size=wx.Size(525, 35), style=wx.ALIGN_CENTER_HORIZONTAL | wx.ST_NO_AUTORESIZE)
+		## Headings ##
+		text1 = wx.StaticText(self, wx.ID_ANY, 'Gitso')
 		font1 = wx.Font(24, wx.NORMAL, wx.NORMAL, wx.BOLD)
-		self.text1.SetFont(font1)
-		
-		self.text2 = wx.StaticText(self, -1, "Gitso is to Support Others", pos=wx.Point(0, 48), size=wx.Size(525, 27), style=wx.ALIGN_CENTER_HORIZONTAL | wx.ST_NO_AUTORESIZE)
-		self.text3 = wx.StaticText(self, -1, "Version 0.5", pos=wx.Point(0, 72), size=wx.Size(525, 27), style=wx.ALIGN_CENTER_HORIZONTAL | wx.ST_NO_AUTORESIZE)
+		text1.SetFont(font1)
+
+		text2 = wx.StaticText(self, -1, "Gitso is to Support Others")
+		text3 = wx.StaticText(self, -1, "Version 0.6")
 		font2 = wx.Font(16, wx.NORMAL, wx.NORMAL, wx.NORMAL)
-		self.text2.SetFont(font2)
-		self.text3.SetFont(font2)
+		font3 = wx.Font(12, wx.NORMAL, wx.NORMAL, wx.NORMAL)
+		text2.SetFont(font2)
+		text3.SetFont(font3)
+		url = wx.HyperlinkCtrl(self, -1, "code.google.com/p/gitso", "http://code.google.com/p/gitso")
 		
-		self.text4 = wx.StaticText(self, -1, "Copyright 2008", pos=wx.Point(0, 102), size=wx.Size(525, 27), style=wx.ALIGN_CENTER_HORIZONTAL | wx.ST_NO_AUTORESIZE)
-		self.text5 = wx.StaticText(self, -1, "Aaron Gerber and Derek Buranen", pos=wx.Point(0, 125), size=wx.Size(525, 27), style=wx.ALIGN_CENTER_HORIZONTAL | wx.ST_NO_AUTORESIZE)
-		font4 = wx.Font(14, wx.NORMAL, wx.NORMAL, wx.NORMAL)
-		self.text4.SetFont(font4)
-		self.text5.SetFont(font4)
+		data = open(os.path.join(paths['main'], 'icon.png'), "rb").read()
+		stream = cStringIO.StringIO(data)
+		img = wx.ImageFromStream(stream)
+		img.Rescale(150, 150)
+		bmp = wx.BitmapFromImage(img)
+		image1 = wx.StaticBitmap(self, -1, bmp)
 		
-		self.url = wx.HyperlinkCtrl(self, -1, "code.google.com/p/gitso", "http://code.google.com/p/gitso", wx.Point(189, 150))
-		
-		self.ok = wx.Button(self, wx.ID_OK, "OK", wx.Point(425, 350))
-		self.SetDefaultItem(self.ok)
-		self.ok.SetFocus()
+		## Buttons ##
+		ok = wx.Button(self, wx.ID_OK, "OK")
+		self.SetDefaultItem(ok)
+		ok.SetFocus()
 		wx.EVT_BUTTON(self, wx.ID_OK, self.CloseAbout)
 		
+		## Sizers ##
+		topsizer = wx.BoxSizer(wx.VERTICAL);
+
+		info_sizer = wx.BoxSizer(wx.VERTICAL);
+		info_sizer.Add(text1, 0, wx.ALIGN_CENTER | wx.ALL, 7);
+		info_sizer.Add(text2, 0, wx.ALIGN_CENTER | wx.ALL, 3);
+		info_sizer.Add(text3, 0, wx.ALIGN_CENTER | wx.ALL, 3);
+		info_sizer.Add(url, 0, wx.ALIGN_CENTER | wx.ALL, 3);
+
+		heading_sizer = wx.BoxSizer(wx.HORIZONTAL);
+		heading_sizer.Add(image1, 0, wx.ALIGN_LEFT | wx.ALL, 10 );
+		heading_sizer.Add(info_sizer, 0, wx.ALL, 10 );
+
+		topsizer.Add(heading_sizer, 0, wx.ALIGN_CENTER);
+
+		## Tabs ##
+		nb = wx.Notebook(self, size=wx.Size(525,220))
+		
+		license_page = LicensePage(nb, paths)
+		info_page = InfoPage(nb)
+		
+		nb.AddPage(info_page, "Authors")
+		nb.AddPage(license_page, "License")
+		
+		tab_sizer = wx.BoxSizer(wx.HORIZONTAL);
+		tab_sizer.Add(nb, 1, wx.EXPAND | wx.ALL, 10 );
+		topsizer.Add(tab_sizer, 1, wx.ALIGN_RIGHT );
+
+		## Buttons ##
+		button_sizer = wx.BoxSizer(wx.HORIZONTAL);
+		button_sizer.Add(ok, 0, wx.ALL, 10 );
+		topsizer.Add(button_sizer, 0, wx.ALIGN_RIGHT );
+
+		## Final settings ##
+		self.SetSizer(topsizer);
+		topsizer.SetSizeHints(self);
+
 		self.SetThemeEnabled(True)
 		self.Centre()
 		self.Show()
+		
 	
 	def CloseAbout(self, event):
 		self.Close()

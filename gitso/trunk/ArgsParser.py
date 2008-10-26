@@ -10,7 +10,8 @@ Gitso is a utility to facilitate the connection of VNC
 @copyright: 2007-2008
 """
 
-import os, sys, signal, os.path
+import os, sys, signal, os.path, urllib
+
 class ArgsParser:
 	def __init__(self):
 		# Initialize Self.paths here.
@@ -21,6 +22,8 @@ class ArgsParser:
 		self.paths['main'] = ''
 		self.paths['listen'] = False
 		self.paths['connect'] = ''
+		self.paths['list'] = []
+
 		
 		if sys.platform.find('linux') != -1:
 			self.paths['main'] = os.path.join(sys.path[0], '..', 'share', 'gitso')
@@ -50,14 +53,30 @@ class ArgsParser:
 
 			elif sys.argv[i] == '--connect': # --connect
 				i = i + 1
-				if i >= len(sys.argv) or self.paths['listen']:
+				if i >= len(sys.argv):
+					print "Error: No IP or domain name given."
+					self.HelpMenu()
+
+				if self.paths['listen']:
 					print "Error: --connect and --listen can not be used at the same time."
 					self.HelpMenu()
 				
 				if sys.argv[i][0] + sys.argv[i][1] <> "--":
 					self.paths['connect'] = sys.argv[i]
 				else:
-					print "Error: '" + sys.argv[i] + "' is host with '--connect'."
+					print "Error: '" + sys.argv[i] + "' is not a valid host with '--connect'."
+					self.HelpMenu()
+
+			elif sys.argv[i] == '--list': # --list
+				i = i + 1
+				if i >= len(sys.argv):
+					print "Error: No List file given."
+					self.HelpMenu()
+				
+				if sys.argv[i][0] + sys.argv[i][1] <> "--":
+					self.paths['list'] = self.getHosts(sys.argv[i])
+				else:
+					print "Error: '" + sys.argv[i] + "' is not a valid list with '--list'."
 					self.HelpMenu()
 
 			else:
@@ -83,9 +102,42 @@ class ArgsParser:
 		print "   --dev\t\tSet self.paths for development."
 		print "   --listen\t\tlisten for incoming connections."
 		print "   --connect {IP|DN}\tConnects to host (support giver)."
-		print "   --list {URL|LIST}\tAlternative Support list."
+		print "   --list {URL|FILE}\tAlternative Support list."
 		print "   --help\t\tThis Menu."
 		exit(0)
 	
 	def GetPaths(self):
 		return self.paths
+		
+	def getHosts(self, file):
+		list = []
+		fileList = ""
+		
+		if len(file) > 3:
+			prefix = file[0] + file[1] + file[2] + file[3]
+		else:
+			prefix = ""
+		
+		if prefix == "www." or prefix == "http":
+			handle = urllib.urlopen(file)
+			fileList = handle.read()
+			handle.close()
+		else:
+			if os.path.exists(file):
+				handle = open(file, 'r')
+				fileList = handle.read()
+				handle.close()
+		
+		parsedlist = fileList.split(",")
+		for i in range(0, len(parsedlist)):
+			if self.validHost(parsedlist[i].strip()):
+				list.append(parsedlist[i].strip())
+		
+		return list
+
+	def validHost(self, host):
+		if host != "" and host.find(";") == -1 and host.find("/") == -1 and host.find("'") == -1 and host.find("`") == -1 and len(host) > 6:
+			return True
+		else:
+			return False
+

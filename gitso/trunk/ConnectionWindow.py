@@ -61,7 +61,7 @@ class ConnectionWindow(wx.Frame):
 		
 		
 		# the combobox Control
-		self.sampleList = []
+		self.sampleList = self.paths['list']
 		
 		self.sampleList = self.getHosts(self.sampleList, os.path.join(self.paths['main'], 'hosts.txt'))
 		self.sampleList = self.getHosts(self.sampleList, self.paths['preferences'])
@@ -121,7 +121,6 @@ class ConnectionWindow(wx.Frame):
 			self.RadioToggle(None)
 			self.hostField.Value = self.paths['connect']
 			self.ConnectSupport(None)
-	
 	
 	def RadioToggle(self, event):
 		"""
@@ -303,7 +302,7 @@ class ConnectionWindow(wx.Frame):
 		self.thread.setHost(host)
 		self.thread.start()
 
-		# If you don't wait 2 seconds, the interface won't reload and it'll freeze.
+		# If you don't wait 1+ seconds, the interface won't reload and it'll freeze.
 		# Possibly on older systems you should wait longer, it works fine on mine...
 		time.sleep(1)
 

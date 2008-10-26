@@ -55,10 +55,13 @@ if test `uname -a | grep Darwin`; then
 	
 elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 	DEB="gitso_0.6_all.deb"
+	TARGZ="gitso_0.6_all.tar.gz"
 	BUILDPATH="gitso"
+	TARGZPATH="Gitso"
 	echo -n "Creating $DEB"
 	rm -rf $BUILDPATH
 
+	# Deb version of Gitso.
 	mkdir -p $BUILDPATH/DEBIAN
 	mkdir -p $BUILDPATH/usr/bin
 	mkdir -p $BUILDPATH/usr/share/applications
@@ -79,6 +82,7 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 	cp __init__.py $BUILDPATH/usr/share/$BUILDPATH/
 	cp hosts.txt $BUILDPATH/usr/share/$BUILDPATH/
 	cp icon.ico $BUILDPATH/usr/share/$BUILDPATH/
+	cp icon.png $BUILDPATH/usr/share/$BUILDPATH/
 
 	echo -n ".."
 	cp arch/linux/gitso.desktop $BUILDPATH/usr/share/applications/
@@ -89,10 +93,32 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 
 	echo -n ".."
 	dpkg -b $BUILDPATH/ $DEB 2>&1 > /dev/null
+	
+	echo -e " [done]"
+
+	# Standalone version of Gitso.
+	echo -n "Creating $TARGZ"
+	rm -rf $TARGZPATH
+	
+	cp -r $BUILDPATH $TARGZPATH
+	rm -rf $TARGZPATH/DEBIAN
+
+	echo -n ".."
+	cp arch/linux/README-stand-alone.txt $TARGZPATH/README
+	cp arch/linux/run-gitso.sh $TARGZPATH/
+	mv $TARGZPATH/usr/bin $TARGZPATH/bin
+	mv $TARGZPATH/usr/share $TARGZPATH/share
+	rm -rf $TARGZPATH/usr/
+	
+	echo -n "."
+	tar -cvzf $TARGZ $TARGZPATH 2>&1 > /dev/null
+	
+	echo -e " [done]\n"
 
 	if [ "$CLEAN" = "yes" ]; then
 		rm -rf $BUILDPATH
+		rm -rf $TARGZPATH
+		find . -name "*.pyc" -exec rm {} ';'
 	fi
 
-	echo -e " [done]\n"
 fi
