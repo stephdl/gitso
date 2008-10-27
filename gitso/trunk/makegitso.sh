@@ -1,5 +1,22 @@
 #! /bin/bash
 
+DEB="gitso_0.6_all.deb"
+TARGZ="gitso_0.6_all.tar.gz"
+SRC="gitso_0.6_src.tar.bz2"
+RPM="gitso-0.6-1.i586.rpm"
+
+function mksrc {
+		P=`pwd`
+		TMP_PKG="../pkg"
+		rm -rf $TMP_PKG
+		mkdir -p $TMP_PKG/trunk/
+		cp -r ./ $TMP_PKG/trunk/
+ 		find $TMP_PKG/trunk -name ".svn" -exec rm -rf {} 2>&1 > /dev/null ';' 2>&1 > /dev/null
+		mv $TMP_PKG/trunk $TMP_PKG/gitso-0.6
+		tar -cj -C $TMP_PKG/ gitso-0.6 > $P/$SRC
+		rm -rf $TMP_PKG
+}
+
 if [ "$1" = "" ]; then
 	CLEAN="yes"
 elif test "$1" = "--no-clean"; then
@@ -54,8 +71,7 @@ if test `uname -a | grep Darwin`; then
 	fi
 	
 elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
-	DEB="gitso_0.6_all.deb"
-	TARGZ="gitso_0.6_all.tar.gz"
+	if test "`which dpkg 2>&1 | grep -v which`"; then
 	BUILDPATH="gitso"
 	TARGZPATH="Gitso"
 	echo -n "Creating $DEB"
@@ -115,10 +131,41 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 	
 	echo -e " [done]\n"
 
+	echo -n "Creating gitso $SRC...."
+	mksrc
+	echo -e " [done]\n"
+
+
 	if [ "$CLEAN" = "yes" ]; then
 		rm -rf $BUILDPATH
 		rm -rf $TARGZPATH
 		find . -name "*.pyc" -exec rm {} ';'
 	fi
+	elif test "`which rpmbuild 2>&1 | grep -v which`"; then
+		# RPM version of Gitso
+		echo "Creating $RPM"
+		BUILD_DIR=`pwd`
+		export BUILD_DIR="$BUILD_DIR/build"
+		TMP="$BUILD_DIR/rpm/tmp"
+		BUILD_ROOT="$BUILD_DIR/rpm/tmp/gitso-root"
 
+		mkdir -p $BUILD_DIR/rpm/{BUILD,RPMS/$ARCH,RPMS/noarch,SOURCES,SRPMS,SPECS,tmp}
+		mkdir -p $BUILD_ROOT
+
+		mksrc
+
+		cp $SRC $BUILD_DIR/rpm/SOURCES/$SRC
+
+		cp arch/linux/gitso_rpm.spec $TMP
+	  perl -e 's/%\(echo \$HOME\)/$ENV{'BUILD_DIR'}/g;' -pi $TMP/gitso_rpm.spec
+
+		rpmbuild -ba $TMP/gitso_rpm.spec
+		cp $BUILD_DIR/rpm/RPMS/i586/$RPM .
+		echo -e " [done]\n"
+		if [ "$CLEAN" = "yes" ]; then
+			rm -rf $BUILD_DIR
+			find . -name "*.pyc" -exec rm {} ';'
+		fi
+	
+	fi
 fi
