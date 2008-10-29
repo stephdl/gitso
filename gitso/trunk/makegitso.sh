@@ -4,6 +4,7 @@ DEB="gitso_0.6_all.deb"
 TARGZ="gitso_0.6_all.tar.gz"
 SRC="gitso_0.6_src.tar.bz2"
 RPM="gitso-0.6-1.i586.rpm"
+RPMOUT="gitso_0.6-1_opensuse.i586.rpm"
 
 function mksrc {
 		P=`pwd`
@@ -17,12 +18,43 @@ function mksrc {
 		rm -rf $TMP_PKG
 }
 
+CLEAN="yes"
+RPMNAME="opensuse"
+echo -n "Starting makegitso:"
+
 if [ "$1" = "" ]; then
-	CLEAN="yes"
+	echo -n ".."
 elif test "$1" = "--no-clean"; then
 	CLEAN="no"
+elif test "$1" = "--fedora"; then
+	RPMNAME="fedora"
+	RPMOUT="gitso_0.6-1_fedora.i386.rpm"
+elif test "$1" = "--opensuse"; then
+	RPMNAME="opensuse"
 else
-	echo -e "Usage makegitso.sh: [ --no-clean | --help ]"
+	echo -e "Usage makegitso.sh: [ --no-clean | --fedora | --opensuse | --help ]"
+	echo -e "\tOptions:"
+	echo -e "\t--no-clean\tDo not remove the build directory."
+	echo -e "\t--fedora\tMake Build for Fedora."
+	echo -e "\t--opensuse\tMake Build for OpenSUSE."
+	echo -e "\t--help  \tThese options."
+	exit 0
+fi
+
+if [ "$2" = "" ]; then
+	echo ".."
+elif test "$2" = "--no-clean"; then
+	CLEAN="no"
+	echo ".."
+elif test "$2" = "--fedora"; then
+	RPMNAME="fedora"
+	RPMOUT="gitso_0.6-1_fedora.i386.rpm"
+	echo ".."
+elif test "$2" = "--opensuse"; then
+	RPMNAME="opensuse"
+	echo ".."
+else
+	echo -e "Usage makegitso.sh: [ --no-clean | --fedora | --opensuse | --help ]"
 	echo -e "\tOptions:"
 	echo -e "\t--no-clean\tDo not remove the build directory."
 	echo -e "\t--help  \tThese options."
@@ -141,7 +173,15 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 		rm -rf $TARGZPATH
 		find . -name "*.pyc" -exec rm {} ';'
 	fi
-	elif test "`which rpmbuild 2>&1 | grep -v which`"; then
+	elif test "`which rpm 2>&1 | grep -v which`"; then
+		if [ "$RPMNAME" = "fedora" ]; then
+			SPEC="gitso_rpm_fedora.spec"
+			# Before installing the .rpm
+			# You need to install http://dl.atrpms.net/all/x11vnc-0.9.3-3.fc9.i386.rpm
+			# yum --nogpgcheck install gitso_0.6-1_fedora.i386.rpm 
+		else
+			SPEC="gitso_rpm.spec"
+		fi
 		# RPM version of Gitso
 		echo "Creating $RPM"
 		BUILD_DIR=`pwd`
@@ -156,11 +196,12 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 
 		cp $SRC $BUILD_DIR/rpm/SOURCES/$SRC
 
-		cp arch/linux/gitso_rpm.spec $TMP
-	  perl -e 's/%\(echo \$HOME\)/$ENV{'BUILD_DIR'}/g;' -pi $TMP/gitso_rpm.spec
+		cp arch/linux/$SPEC $TMP
+	  perl -e 's/%\(echo \$HOME\)/$ENV{'BUILD_DIR'}/g;' -pi $TMP/$SPEC
 
-		rpmbuild -ba $TMP/gitso_rpm.spec
-		cp $BUILD_DIR/rpm/RPMS/i586/$RPM .
+		rpmbuild -ba $TMP/$SPEC
+		find $BUILD_DIR/rpm/RPMS -name "*.rpm" -exec cp {} $RPMOUT ';'
+
 		echo -e " [done]\n"
 		if [ "$CLEAN" = "yes" ]; then
 			rm -rf $BUILD_DIR
