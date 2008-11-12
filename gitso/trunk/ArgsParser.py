@@ -5,9 +5,22 @@ Gisto - Gitso is to support others
 
 Gitso is a utility to facilitate the connection of VNC
 
-@author: Aaron Gerber ('gerberad')
+@author: Aaron Gerber ('gerberad') <gerberad@gmail.com>
 @author: Derek Buranen ('burner') <derek@buranen.info>
-@copyright: 2007-2008
+@copyright: 2008
+
+Gitso is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Gitso is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Gitso.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os, sys, signal, os.path, urllib
@@ -37,7 +50,13 @@ class ArgsParser:
 		while i < len(sys.argv):
 			if sys.argv[i] == '--dev': # --dev
 				if sys.platform == "darwin":
-					self.paths['resources'] = 'arch/osx/'
+					if not os.path.exists('build/OSXvnc'):
+						os.popen("mkdir build; cp arch/osx/OSXvnc.tar.gz build ; cd build ; tar xvfz OSXvnc.tar.gz > /dev/null")
+					if not os.path.exists('build/vncviewer'):
+						os.popen("cp arch/osx/vncviewer.tar.gz build ; cd build ; tar xvfz vncviewer.tar.gz > /dev/null")
+					if not os.path.exists('build/cotvnc.app'):
+						os.popen("cp arch/osx/cotvnc.app.tar.gz build ; cd build ; tar xvfz cotvnc.app.tar.gz > /dev/null")
+					self.paths['resources'] = 'build/'
 				elif sys.platform == "w32":
 					self.paths['resources'] = 'arch/win32/'
 				else:

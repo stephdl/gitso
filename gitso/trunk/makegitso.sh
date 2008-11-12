@@ -1,5 +1,25 @@
 #! /bin/bash
 
+##########
+# Gisto - Gitso is to support others
+# 
+# Copyright 2008, Aaron Gerber Derek Buranen
+#
+# Gitso is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Gitso is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with Gitso.  If not, see <http://www.gnu.org/licenses/>.
+##########
+
+
 DEB="gitso_0.6_all.deb"
 TARGZ="gitso_0.6_all.tar.gz"
 SRC="gitso_0.6_src.tar.bz2"
@@ -61,28 +81,60 @@ else
 	exit 0
 fi
 
-if test `uname -a | grep Darwin`; then
+if [ "`uname -a | grep Darwin`" != "" ]; then
 	if test `which py2applet`; then
 		echo -e "Creating Gitso.app "
 		rm -f setup.py
 		rm -rf dist
+		
+		# To Make cotvnc
+		# cvs -z3 -d:pserver:anonymous@cotvnc.cvs.sourceforge.net:/cvsroot/cotvnc co -P cotvnc
+		#
+		# cd cotvnc
+		# patch -p0 < [Gitso-path]/arch/osx/cotvnc-gitso.diff
+		#
+		# Then in xCode build cotvnc
+		# find build/Development/
+		# rename Chicken Of The VNC.app to cotvnc.app
+		# remove cotvnc.app/Contents/Resources/*non English.lproj
+		# rename cotvnc.app/Contents/MacOS/Chicken Of The VNC to cotvnc.app/Contents/MacOS/cotvnc
+		# 
+		# Patch was made with: diff -aurr . ../cotvnc-gitso/ > cotvnc-gitso.diff
+		#
 		
 		echo -e ".."
 		py2applet --make-setup Gitso.py
 		
 		echo -e ".."
 		python setup.py py2app
+		rm setup.py
 		
 		echo -e ".."
 		cp arch/osx/Info.plist dist/Gitso.app/Contents/
+		
 		cp copyright dist/Gitso.app/Contents/Resources/
 		cp PythonApplet.icns dist/Gitso.app/Contents/Resources/
 		
 		tar xvfz arch/osx/OSXvnc.tar.gz
 		mv OSXvnc dist/Gitso.app/Contents/Resources/
 
-		tar xvfz arch/osx/vncviewer.tar.gz
-		mv vncviewer dist/Gitso.app/Contents/Resources/
+		tar xvfz arch/osx/cotvnc.app.tar.gz
+		mv cotvnc.app dist/Gitso.app/Contents/Resources/
+		
+		cp icon.ico dist/Gitso.app/Contents/Resources/
+		cp icon.png dist/Gitso.app/Contents/Resources/
+		cp __init__.py dist/Gitso.app/Contents/Resources/
+		cp ArgsParser.py dist/Gitso.app/Contents/Resources/
+		cp Processes.py dist/Gitso.app/Contents/Resources/
+		cp ConnectionWindow.py dist/Gitso.app/Contents/Resources/
+		cp AboutWindow.py dist/Gitso.app/Contents/Resources/
+		cp GitsoThread.py dist/Gitso.app/Contents/Resources/
+		
+		cp arch/osx/libjpeg-copyright.txt dist/Gitso.app/Contents/Frameworks/
+		cp arch/osx/osxvnc_echoware-copyright.txt dist/Gitso.app/Contents/Resources/OSXvnc/
+		cp arch/osx/cotvnc-copyright.txt dist/Gitso.app/Contents/Resources/cotvnc.app/contents/Resources
+		cp arch/osx/osxvnc-copyright.txt dist/Gitso.app/Contents/Resources/OSXvnc/
+		
 		echo -e " [done]\n"
 		
 		echo -e "Creating Gitso.dmg "

@@ -1,14 +1,53 @@
 import wx
 import os, os.path, sys, cStringIO
 
+
+"""
+Gisto - Gitso is to support others
+
+Gitso is a utility to facilitate the connection of VNC
+
+@author: Aaron Gerber ('gerberad') <gerberad@gmail.com>
+@author: Derek Buranen ('burner') <derek@buranen.info>
+@copyright: 2008
+
+Gitso is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Gitso is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Gitso.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
 class InfoPage(wx.Panel):
 	def __init__(self, parent):
 		wx.Panel.__init__(self, parent)
 
 		infostring = "Authors:" + "\n\tAaron Gerber\n\tDerek Buranen"
 		infostring = infostring + "\n\nContributors:" + "\n\tNick Verbeck"
-		infostring = infostring + "\n\nCopyright 2007 - 2008"
-		
+		infostring = infostring + "\n\nCopyright (C) 2007 - 2008 by Aaron Gerber and Derek Buranen"
+		if sys.platform == "darwin":
+			infostring = infostring + "\n\n+++++++++++++++++++++++"
+			infostring = infostring + "\nChicken Of The VNC:"
+			infostring = infostring + "\n\tCopyright (C) 2002-2006 by Jason Harris"
+			infostring = infostring + "\n\tCopyright (C) 1998-2000 by Helmut Maierhofer"
+
+			infostring = infostring + "\n\nlibJPEG: Independent JPEG Group's JPEG software"
+			infostring = infostring + "\n\tCopyright (C) 1991-1998, Thomas G. Lane."
+
+			infostring = infostring + "\n\nOSXvnc:"
+			infostring = infostring + "\n\tCopyright (C) 2002-2007 by Redstone Software: "
+			infostring = infostring + "\n\t\tDoug Simons and Jonathan Gillaspie"
+	
+			infostring = infostring + "\n\nechoWare:"
+			infostring = infostring + "\n\tCopyright (C) 2004-2007 Echogent Systems, Inc"
+
 		info = wx.TextCtrl(self, -1, infostring, style=wx.TE_MULTILINE | wx.ST_NO_AUTORESIZE)
 		
 		pagesizer = wx.BoxSizer(wx.VERTICAL);
@@ -34,12 +73,6 @@ class LicensePage(wx.Panel):
 
 
 class AboutWindow(wx.Frame):
-	"""
-	About Window for Gitso
-	
-	@author: Derek Buranen
-	@author: Aaron Gerber
-	"""
 	def __init__(self, parent, id, title, paths):
 		"""
 		Setup About Window for Gitso
