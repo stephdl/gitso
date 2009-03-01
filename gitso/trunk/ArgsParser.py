@@ -110,7 +110,7 @@ class ArgsParser:
 						os.makedirs(self.paths['preferences'], 0700)
 				self.paths['preferences'] = os.path.join(self.paths['preferences'], "hosts")
 		elif sys.platform == "win32":
-				self.paths['preferences'] = os.path.join(os.path.expanduser("~"), "Local Settings", "Application Data", ".gitso-hosts")
+				self.paths['preferences'] = os.path.join(os.getenv('APPDATA'), ".gitso-hosts")
 		else:
 				self.paths['preferences'] = os.path.join(os.path.expanduser("~"), ".gitso-hosts")
 
