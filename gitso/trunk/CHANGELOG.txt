@@ -1,3 +1,8 @@
+0.6
+----------------------------
+*added --dev option while testing
+
+
 0.5 - "Kill the undead"
 -----------------------------------------
 *Complete rewrite of the interface

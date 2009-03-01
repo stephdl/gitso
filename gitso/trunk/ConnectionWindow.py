@@ -68,13 +68,13 @@ class ConnectionWindow(wx.Frame):
 		
 		#Buttons
 		self.connectButton = wx.Button(self, 10, "Start", wx.Point(xval1, 70))
+		self.connectButton.SetDefault()
 		wx.EVT_BUTTON(self, 10, self.ConnectSupport)
 		self.stopButton = wx.Button(self, wx.ID_STOP, "", wx.Point(xval2, 70))
 		self.stopButton.Enable(False)
 		wx.EVT_BUTTON(self, wx.ID_STOP, self.KillPID)
 		
 		# Radio Boxes
-		#self.rb = wx.RadioBox(self, 50, "", wx.Point(10, 10), wx.Size(330, 70))
 		self.rb1 = wx.RadioButton(self, -1, 'Get Help', (10, 15), style=wx.RB_GROUP)
 		self.rb2 = wx.RadioButton(self, -1, 'Give Support', (10, 48))
 		self.rb1.SetValue(True)
