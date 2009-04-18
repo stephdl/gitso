@@ -38,11 +38,11 @@ class Processes:
 		elif sys.platform.find('linux') != -1:
 			self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc','-nopw','-ncache','20','-solid','black','-connect','%s' % host)
 		elif sys.platform == 'win32':
-			self.returnPID = os.spawnl(os.P_NOWAIT, '%s\\WinVNC.exe' % os.environ['WINDIR'], '%s\\WinVNC.exe' % os.environ['WINDIR'])
+			self.returnPID = os.spawnl(os.P_NOWAIT, 'WinVNC.exe', 'WinVNC.exe')
 			print "Launched WinVNC.exe, waiting to run -connect command..."
 			import time
 			time.sleep(3)
-			self.returnPID = os.spawnl(os.P_NOWAIT, '%s\\WinVNC.exe' % os.environ['WINDIR'], '%s\\WinVNC.exe' % os.environ['WINDIR'], '-connect', '%s' % host)
+			self.returnPID = os.spawnl(os.P_NOWAIT, 'WinVNC.exe', 'WinVNC.exe', '-connect', '%s' % host)
 		else:
 			print 'Platform not detected'
 		return self.returnPID
@@ -55,7 +55,7 @@ class Processes:
 		elif sys.platform.find('linux') != -1:
 			self.returnPID = os.spawnlp(os.P_NOWAIT, 'vncviewer', 'vncviewer', '-listen')                
 		elif sys.platform == 'win32':
-			self.returnPID = os.spawnl(os.P_NOWAIT, "%s\\vncviewer.exe" % os.environ['WINDIR'], '%s\\vncviewer.exe' % os.environ['WINDIR'], '-listen' )
+			self.returnPID = os.spawnl(os.P_NOWAIT, "vncviewer.exe" , 'vncviewer.exe' , '-listen' )
 		else:
 			print 'Platform not detected'
 		return self.returnPID

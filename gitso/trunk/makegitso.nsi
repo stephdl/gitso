@@ -86,8 +86,6 @@ Section "Gitso"
  ;start menu items
   CreateDirectory "$SMPROGRAMS\Gitso"
   CreateShortCut "$SMPROGRAMS\Gitso\Gitso.lnk" "$INSTDIR\Gitso.exe" "" "$INSTDIR\icon.ico" 0
-  
-  SetOutPath $WINDIR
   File ".\arch\win32\vncviewer.exe"
   File ".\arch\win32\WinVNC.exe"
   File ".\arch\win32\VNCHooks.dll"
@@ -113,9 +111,9 @@ Section "Uninstall"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Gitso"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Gitso"
   ; Remove files and uninstaller
-  Delete $WINDIR\vncviewer.exe
-  Delete $WINDIR\VNCHooks.dll
-  Delete $WINDIR\WinVNC.exe
+  Delete $INSTDIR\vncviewer.exe
+  Delete $INSTDIR\VNCHooks.dll
+  Delete $INSTDIR\WinVNC.exe
   ; Remove shortcuts and folder
   RMDir /r "$SMPROGRAMS\Gitso"
   RMDir /r $INSTDIR
