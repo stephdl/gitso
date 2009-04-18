@@ -9,7 +9,7 @@ Gitso is a utility to facilitate the connection of VNC
 
 @author: Aaron Gerber ('gerberad') <gerberad@gmail.com>
 @author: Derek Buranen ('burner') <derek@buranen.info>
-@copyright: 2008
+@copyright: 2008, 2009
 
 Gitso is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -81,12 +81,13 @@ class AboutWindow(wx.Frame):
 		@author: Aaron Gerber
 		"""
 		wx.Frame.__init__(self, parent, wx.ID_ANY, title, size=(525,400), style=wx.CLOSE_BOX | wx.MINIMIZE_BOX)
-		icon = wx.Icon(os.path.join(paths['main'], 'icon.ico'), wx.BITMAP_TYPE_ICO)
-		self.SetIcon(icon)
 		
 		if sys.platform == 'win32':
-			SetBackgroundColour(wx.Colour(236,233,216))
-		
+			self.SetBackgroundColour(wx.Colour(236,233,216))
+
+		icon = wx.Icon(os.path.join(paths['main'], 'icon.ico'), wx.BITMAP_TYPE_ICO)
+		self.SetIcon(icon)
+
 		## Headings ##
 		text1 = wx.StaticText(self, wx.ID_ANY, 'Gitso')
 		font1 = wx.Font(24, wx.NORMAL, wx.NORMAL, wx.BOLD)

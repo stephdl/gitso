@@ -7,7 +7,7 @@ Gitso is a utility to facilitate the connection of VNC
 
 @author: Aaron Gerber ('gerberad') <gerberad@gmail.com>
 @author: Derek Buranen ('burner') <derek@buranen.info>
-@copyright: 2008
+@copyright: 2008, 2009
 
 Gitso is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,7 +23,12 @@ You should have received a copy of the GNU General Public License
 along with Gitso.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os, sys, signal, os.path, urllib
+# import os, sys, signal, os.path, urllib
+import os
+import sys
+import signal
+import os.path
+#import urllib
 
 class ArgsParser:
 	def __init__(self):
@@ -40,10 +45,10 @@ class ArgsParser:
 		
 		if sys.platform.find('linux') != -1:
 			self.paths['main'] = os.path.join(sys.path[0], '..', 'share', 'gitso')
-			self.paths['copyright'] = os.path.join(sys.path[0], '..', 'share', 'doc', 'gitso', 'copyright')
+			self.paths['copyright'] = os.path.join(sys.path[0], '..', 'share', 'doc', 'gitso', 'COPYING')
 		else:
-			self.paths['main'] = os.path.join(sys.path[0])
-			self.paths['copyright'] = os.path.join(sys.path[0], 'copyright')
+			self.paths['main'] = os.path.join(sys.path[0], '..')
+			self.paths['copyright'] = os.path.join(sys.path[0], '..', 'COPYING')
 		
 		#for i in range(1, len(sys.argv)):
 		i = 1
@@ -58,11 +63,14 @@ class ArgsParser:
 						os.popen("cp arch/osx/cotvnc.app.tar.gz build ; cd build ; tar xvfz cotvnc.app.tar.gz > /dev/null")
 					self.paths['resources'] = 'build/'
 				elif sys.platform == "w32":
+					print "dev mode"
+					self.paths['main'] = os.path.join(sys.path[0])
+					self.paths['copyright'] = os.path.join(sys.path[0], 'COPYING')
 					self.paths['resources'] = 'arch/win32/'
 				else:
 					self.paths['resources'] = 'arch/linux/'
 					self.paths['main'] = os.path.join(sys.path[0])
-					self.paths['copyright'] = os.path.join(sys.path[0], 'copyright')
+					self.paths['copyright'] = os.path.join(sys.path[0], 'COPYING')
 
 			elif sys.argv[i] == '--listen': # --listen
 				if self.paths['connect'] <> "":
@@ -110,7 +118,7 @@ class ArgsParser:
 						os.makedirs(self.paths['preferences'], 0700)
 				self.paths['preferences'] = os.path.join(self.paths['preferences'], "hosts")
 		elif sys.platform == "win32":
-				self.paths['preferences'] = os.path.join(os.getenv('APPDATA'), ".gitso-hosts")
+				self.paths['preferences'] = os.path.join(os.getenv('APPDATA'), "gitso-hosts")
 		else:
 				self.paths['preferences'] = os.path.join(os.path.expanduser("~"), ".gitso-hosts")
 

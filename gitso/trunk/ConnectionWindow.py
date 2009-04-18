@@ -7,7 +7,7 @@ Gitso is a utility to facilitate the connection of VNC
 
 @author: Aaron Gerber ('gerberad') <gerberad@gmail.com>
 @author: Derek Buranen ('burner') <derek@buranen.info>
-@copyright: 2008
+@copyright: 2008, 2009
 
 Gitso is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -60,11 +60,12 @@ class ConnectionWindow(wx.Frame):
 		wx.Frame.__init__(self, parent, wx.ID_ANY, title, size=(height,width), style=wx.DEFAULT_FRAME_STYLE & ~ (wx.RESIZE_BORDER | wx.RESIZE_BOX | wx.MAXIMIZE_BOX))
 		self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 		
-		icon = wx.Icon(os.path.join(self.paths['main'], 'icon.ico'), wx.BITMAP_TYPE_ICO)
-		self.SetIcon(icon)
-		
 		if sys.platform == 'win32':
+			icon = wx.Icon(os.path.join(self.paths['main'], 'icon.ico'), wx.BITMAP_TYPE_ICO)
 			self.SetBackgroundColour(wx.Colour(236,233,216))
+		else:
+			icon = wx.Icon(os.path.join(self.paths['main'], 'icon.ico'), wx.BITMAP_TYPE_ICO)
+		self.SetIcon(icon)
 		
 		#Buttons
 		self.connectButton = wx.Button(self, 10, "Start", wx.Point(xval1, 70))
@@ -254,6 +255,14 @@ class ConnectionWindow(wx.Frame):
 		
 		@author: Derek Buranen
 		@author: Aaron Gerber
+		"""
+		
+		"""
+		def kill(pid):
+		""kill function for Win32""
+		import win32api
+		handle = win32api.OpenProcess(1, 0, pid)
+		return (0 != win32api.TerminateProcess(handle, 0))
 		"""
 		if self.thread <> None:
 			self.thread.kill()

@@ -2,7 +2,7 @@
 ; ----------------
 ; Package Gitso for Windows using NSIS
 ; 
-; Copyright 2008, Aaron Gerber and Derek Buranen
+; Copyright 2008, 2009: Aaron Gerber and Derek Buranen
 ; 
 ; Gitso is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -18,10 +18,10 @@
 ; along with Gitso.  If not, see <http://www.gnu.org/licenses/>.
 ;--------------------------------
 
-!define VERSION "0.5" 
+!define VERSION "0.6" 
 Name "Gitso ${VERSION}"
-Icon "icon.ico"
-UninstallIcon "icon.ico"
+Icon "./icon.ico"
+UninstallIcon "./icon.ico"
 OutFile "gitso-install.exe"
 
 ; The default installation directory
@@ -31,11 +31,11 @@ InstallDirRegKey HKLM "Software\Gitso" "Install_Dir"
 
 ;--------------------------------
 ; Version Information
-  VIProductVersion "0.5.0.0"
+  VIProductVersion "0.6.0.0"
   VIAddVersionKey "ProductName" "Gitso"
   VIAddVersionKey "Comments" "Gitso is to support others"
   VIAddVersionKey "CompanyName" "http://code.google.com/p/gitso"
-  VIAddVersionKey "LegalCopyright" "GPL"
+  VIAddVersionKey "LegalCopyright" "GPL 3"
   VIAddVersionKey "FileDescription" "Gitso"
   VIAddVersionKey "FileVersion" "${VERSION}"
 ;--------------------------------
@@ -63,7 +63,8 @@ Section "Gitso"
 	  WriteUninstaller "uninstall.exe"
   File ".\hosts.txt"
   File ".\icon.ico"
-  File ".\copyright"
+  File ".\icon.png"
+  File ".\COPYING"
   File ".\dist\Gitso.exe"
   File ".\dist\bz2.pyd"
   File ".\dist\icon.ico"
@@ -83,6 +84,10 @@ Section "Gitso"
   File ".\dist\wxmsw28uh_adv_vc.dll"
   File ".\dist\wxmsw28uh_core_vc.dll"
   File ".\dist\wxmsw28uh_html_vc.dll"
+  File ".\arch\win32\tightVNC_LICENCE.txt"
+  File ".\arch\win32\tightVNC_COPYING.txt"
+  File ".\arch\win32\tightVNC_README.txt"
+  File ".\arch\win32\VNCHooks_COPYING.txt"
  ;start menu items
   CreateDirectory "$SMPROGRAMS\Gitso"
   CreateShortCut "$SMPROGRAMS\Gitso\Gitso.lnk" "$INSTDIR\Gitso.exe" "" "$INSTDIR\icon.ico" 0

@@ -3,7 +3,7 @@
 ##########
 # Gisto - Gitso is to support others
 # 
-# Copyright 2008, Aaron Gerber Derek Buranen
+# Copyright 2008, 2009: Aaron Gerber, Derek Buranen
 #
 # Gitso is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -187,7 +187,7 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 	echo -n ".."
 	cp arch/linux/gitso.desktop $BUILDPATH/usr/share/applications/
 	cp arch/linux/README.txt $BUILDPATH/usr/share/doc/$BUILDPATH/README
-	cp copyright $BUILDPATH/usr/share/doc/$BUILDPATH/
+	cp COPYING $BUILDPATH/usr/share/doc/$BUILDPATH/
 	gzip -cf arch/linux/changelog > $BUILDPATH/usr/share/doc/$BUILDPATH/changelog.gz
 	gzip -cf arch/linux/gitso.1 > $BUILDPATH/usr/share/man/man1/gitso.1.gz
 

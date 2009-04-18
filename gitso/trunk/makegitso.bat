@@ -17,8 +17,9 @@
 :: along with Gitso.  If not, see <http://www.gnu.org/licenses/>.
 :: 
 
-C:\Python25\python arch\win32\setup.py py2exe
+"C:\Python25\python" arch\win32\setup.py py2exe
 
-COPY C:\Python25\Lib\site-packages\wx-2.8-msw-unicode\wx\msvcp71.dll dist\msvcp71.dll
+COPY "C:\Python25\Lib\site-packages\wx-2.8-msw-unicode\wx\msvcp71.dll" dist\msvcp71.dll
 
-rd build /s /q
+"%ProgramFiles%\NSIS\makensis.exe" /X"SetCompressor /FINAL /SOLID lzma " makegitso.nsi
+:: rd build /s /q
