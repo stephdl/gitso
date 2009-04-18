@@ -3,7 +3,7 @@ Version: 0.6
 Priority: optional
 Section: utils
 Architecture: all
-Depends: x11vnc, vncviewer, python-wxtools
+Depends: x11vnc, xvnc4viewer, python-wxtools
 Installed-Size: 108
 Maintainer: Derek Buranen <derek@buranen.info>
 Description: gitso is to support others (using wxPython and reverse vnc)
