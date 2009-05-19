@@ -73,10 +73,10 @@ class Processes:
 			if sys.platform == 'win32':
 				import win32api
 				PROCESS_TERMINATE = 1
-                               handle = win32api.OpenProcess(PROCESS_TERMINATE, False, self.returnPID.pid)
-                               win32api.TerminateProcess(handle, -1)
-                               win32api.CloseHandle(handle)
-                               print "vnc is dead, handles closed."
+				handle = win32api.OpenProcess(PROCESS_TERMINATE, False, self.returnPID.pid)
+				win32api.TerminateProcess(handle, -1)
+				win32api.CloseHandle(handle)
+				print "vnc is dead, handles closed."
 			else:
 				os.kill(self.returnPID, signal.SIGKILL)
 			self.returnPID = 0
