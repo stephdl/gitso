@@ -38,11 +38,12 @@ class Processes:
 		elif sys.platform.find('linux') != -1:
 			self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc','-nopw','-ncache','20','-solid','black','-connect','%s' % host)
 		elif sys.platform == 'win32':
-			self.returnPID = os.spawnl(os.P_NOWAIT, 'WinVNC.exe', 'WinVNC.exe')
+			import subprocess
+                        self.returnPID = subprocess.Popen(['WinVNC.exe'])
 			print "Launched WinVNC.exe, waiting to run -connect command..."
 			import time
 			time.sleep(3)
-			self.returnPID = os.spawnl(os.P_NOWAIT, 'WinVNC.exe', 'WinVNC.exe', '-connect', '%s' % host)
+			subprocess.Popen(['WinVNC.exe', '-connect', '%s' % host])
 		else:
 			print 'Platform not detected'
 		return self.returnPID
@@ -53,9 +54,9 @@ class Processes:
 			print vncviewer
 			self.returnPID = os.spawnlp(os.P_NOWAIT, vncviewer, vncviewer, '--listen')
 		elif sys.platform.find('linux') != -1:
-			self.returnPID = os.spawnlp(os.P_NOWAIT, 'vncviewer', 'vncviewer', '-listen')                
+			self.returnPID = os.spawnlp(os.P_NOWAIT, 'vncviewer', 'vncviewer', '-bgr233', '-listen')                
 		elif sys.platform == 'win32':
-			self.returnPID = os.spawnl(os.P_NOWAIT, "vncviewer.exe" , 'vncviewer.exe' , '-listen' )
+			self.returnPID = subprocess.Popen(['vncviewer.exe' , '-listen'])
 		else:
 			print 'Platform not detected'
 		return self.returnPID
@@ -70,12 +71,14 @@ class Processes:
 		if self.returnPID != 0:
 			print "Processes.KillPID(" + str(self.returnPID) + ")"
 			if sys.platform == 'win32':
-				#import win32api
-				#handle = win32api.OpenProcess(1, 0, pid)
-				#return (0 != win32api.TerminateProcess(handle, 0))
-				print "windows doesn't kill processes yet"
+				import win32api
+				PROCESS_TERMINATE = 1
+                               handle = win32api.OpenProcess(PROCESS_TERMINATE, False, self.returnPID.pid)
+                               win32api.TerminateProcess(handle, -1)
+                               win32api.CloseHandle(handle)
+                               print "vnc is dead, handles closed."
 			else:
 				os.kill(self.returnPID, signal.SIGKILL)
-				self.returnPID = 0
+			self.returnPID = 0
 		return
 
