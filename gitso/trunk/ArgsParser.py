@@ -41,6 +41,7 @@ class ArgsParser:
 		self.paths['listen'] = False
 		self.paths['connect'] = ''
 		self.paths['list'] = []
+		self.paths['mode'] = ''
 
 		
 		if sys.platform.find('linux') != -1:
@@ -54,6 +55,8 @@ class ArgsParser:
 		i = 1
 		while i < len(sys.argv):
 			if sys.argv[i] == '--dev': # --dev
+				print "Running in 'Development Mode'"
+				self.paths['mode'] = 'dev'
 				if sys.platform == "darwin":
 					if not os.path.exists('build/OSXvnc'):
 						os.popen("mkdir build; cp arch/osx/OSXvnc.tar.gz build ; cd build ; tar xvfz OSXvnc.tar.gz > /dev/null")
@@ -62,8 +65,7 @@ class ArgsParser:
 					if not os.path.exists('build/cotvnc.app'):
 						os.popen("cp arch/osx/cotvnc.app.tar.gz build ; cd build ; tar xvfz cotvnc.app.tar.gz > /dev/null")
 					self.paths['resources'] = 'build/'
-				elif sys.platform == "w32":
-					print "dev mode"
+				elif sys.platform == "win32":
 					self.paths['main'] = os.path.join(sys.path[0])
 					self.paths['copyright'] = os.path.join(sys.path[0], 'COPYING')
 					self.paths['resources'] = 'arch/win32/'

@@ -1,11 +1,15 @@
+import glob
 from distutils.core import setup
 import py2exe
-import urllib
+DATA_FILES = []
 OPTIONS = {'argv_emulation': True}
 
-setup(name="Gitso",
-  windows=["Gitso.py"],
+setup(
+  version = "0.6.0",
+  description = "Gitso is to support Others",
+  name="Gitso",
+  
+  windows=[{"script":"Gitso.py", "icon_resources":[(1,"icon.ico")]}],
+  data_files=[(".", ["icon.ico"])],
   py_modules = ['AboutWindow', 'ConnectionWindow', 'ArgsParser', 'GitsoThread', 'Processes'],
 )
-
-

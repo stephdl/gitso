@@ -125,7 +125,7 @@ class ConnectionWindow(wx.Frame):
 		
 		self.SetMenuBar(menuBar)
 		
-		self.statusBar = self.CreateStatusBar(1)
+		self.statusBar = self.CreateStatusBar()
 		self.statusBar.SetStatusWidths([350])
 		self.setMessage("Idle", False)
 		
@@ -256,27 +256,19 @@ class ConnectionWindow(wx.Frame):
 		@author: Derek Buranen
 		@author: Aaron Gerber
 		"""
-		
-		"""
-		def kill(pid):
-		""kill function for Win32""
-		import win32api
-		handle = win32api.OpenProcess(1, 0, pid)
-		return (0 != win32api.TerminateProcess(handle, 0))
-		"""
 		if self.thread <> None:
 			self.thread.kill()
-			time.sleep(.5)
+			# If you don't wait 0.5+ seconds, the interface won't reload and it'll freeze.
+			# Possibly on older systems you should wait longer, it works fine on mine...
+			# With better thread management, I'm not sure that we need this. If we start getting freezes, look at this.
+			# time.sleep(1)
 		self.thread = None
 		self.setMessage("Idle.", False)
 		return
 	
 	
 	def OnCloseWindow(self, evt):
-		if self.thread <> None:
-			self.thread.kill()
-			time.sleep(.5)
-		self.thread = None
+		self.KillPID()
 		self.Destroy()
 	
 	
@@ -310,15 +302,20 @@ class ConnectionWindow(wx.Frame):
 		self.hostField.SetValue(text)
 
 	def setMessage(self, message, status):
+		if self.threadLock.locked():
+			return
+
 		self.threadLock.acquire()
 
 		self.statusBar.SetStatusText(message, 0)
+
 		if status:
 			self.connectButton.Enable(False)
 			self.stopButton.Enable(True)
 		else:
 			self.connectButton.Enable(True)
 			self.stopButton.Enable(False)
+
 		
 		if self.ToggleValue == 0:
 			self.rb1.SetValue(True)
@@ -328,13 +325,13 @@ class ConnectionWindow(wx.Frame):
 		self.threadLock.release()
 
 	def createThread(self, host=""):
-		if self.thread <> None:
-			self.thread.kill()
-		self.thread	 = GitsoThread.GitsoThread(self, self.paths)
+		self.KillPID()
+		self.thread = GitsoThread.GitsoThread(self, self.paths)
 		self.thread.setHost(host)
 		self.thread.start()
 
 		# If you don't wait 1+ seconds, the interface won't reload and it'll freeze.
 		# Possibly on older systems you should wait longer, it works fine on mine...
-		time.sleep(1)
+		# With better thread management, I'm not sure that we need this. If we start getting freezes, look at this.
+		# time.sleep(1)
 

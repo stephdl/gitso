@@ -43,7 +43,11 @@ class Processes:
 			print "Launched WinVNC.exe, waiting to run -connect command..."
 			import time
 			time.sleep(3)
-			subprocess.Popen(['WinVNC.exe', '-connect', '%s' % host])
+			
+			if self.paths['mode'] == 'dev':
+				subprocess.Popen(['%sWinVNC.exe' % self.paths['resources'], '-connect', '%s' % host])
+			else:
+				subprocess.Popen(['WinVNC.exe', '-connect', '%s' % host])
 		else:
 			print 'Platform not detected'
 		return self.returnPID
@@ -56,7 +60,12 @@ class Processes:
 		elif sys.platform.find('linux') != -1:
 			self.returnPID = os.spawnlp(os.P_NOWAIT, 'vncviewer', 'vncviewer', '-bgr233', '-listen')                
 		elif sys.platform == 'win32':
-			self.returnPID = subprocess.Popen(['vncviewer.exe' , '-listen'])
+			import subprocess
+			print self.paths['resources']
+			if self.paths['mode'] == 'dev':
+				self.returnPID = subprocess.Popen(['%svncviewer.exe' % self.paths['resources'], '-listen'])
+			else:
+				self.returnPID = subprocess.Popen(['vncviewer.exe', '-listen'])
 		else:
 			print 'Platform not detected'
 		return self.returnPID
@@ -76,7 +85,6 @@ class Processes:
 				handle = win32api.OpenProcess(PROCESS_TERMINATE, False, self.returnPID.pid)
 				win32api.TerminateProcess(handle, -1)
 				win32api.CloseHandle(handle)
-				print "vnc is dead, handles closed."
 			else:
 				os.kill(self.returnPID, signal.SIGKILL)
 			self.returnPID = 0
