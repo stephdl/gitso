@@ -14,6 +14,8 @@ gitso - Gitso is to support others
 .B --list
 .I list
 |
+.B --version
+|
 .B --help
 ]
 .SH DESCRIPTION
@@ -36,6 +38,9 @@ Alternative support list, where
 .I list 
 is either a URL of a remote file or path to local file.
 .TP
+.B --version
+The current Gitso version.
+.TP
 .B --help
 Display the help menu.
 
@@ -45,7 +50,7 @@ Display the help menu.
 
 .SH EXAMPLES
 .TP
-gitso --list support.mydomain.com/techs.txt
+gitso --list http://support.mydomain.com/techs.txt
 Gets the list of technician IP's or DN's from techs.txt
 .TP
 gitso --list sanda.mydomain.com,aicha.mydomain.com

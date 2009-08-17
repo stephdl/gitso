@@ -23,12 +23,11 @@ You should have received a copy of the GNU General Public License
 along with Gitso.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-# import os, sys, signal, os.path, urllib
 import os
 import sys
 import signal
 import os.path
-#import urllib
+import urllib
 
 class ArgsParser:
 	def __init__(self):
@@ -54,7 +53,12 @@ class ArgsParser:
 		#for i in range(1, len(sys.argv)):
 		i = 1
 		while i < len(sys.argv):
-			if sys.argv[i] == '--dev': # --dev
+			if sys.argv[i] == '--help': # --help
+				self.HelpMenu()
+			elif sys.argv[i] == '--version': # --version
+				print "Gitso 0.6  -- Copyright 2007 - 2009 Aaron Gerber and Derek Buranen."
+				exit(0)
+			elif sys.argv[i] == '--dev': # --dev
 				print "Running in 'Development Mode'"
 				self.paths['mode'] = 'dev'
 				if sys.platform == "darwin":
@@ -129,11 +133,12 @@ class ArgsParser:
 		print "Usage: " + os.path.basename(sys.argv[0]) + " [OPTION]"
 		print "   OPTIONS"
 		print "   --dev\t\tSet self.paths for development."
-		print "   --listen\t\tlisten for incoming connections."
+		print "   --listen\t\tListen for incoming connections."
 		print "   --connect {IP|DN}\tConnects to host (support giver)."
 		print "   --list {URL|FILE}\tAlternative Support list."
+		print "   --version\t\tThe current Gitso version."
 		print "   --help\t\tThis Menu."
-		exit(0)
+		exit(1)
 	
 	def GetPaths(self):
 		return self.paths
