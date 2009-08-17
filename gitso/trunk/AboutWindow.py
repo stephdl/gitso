@@ -30,8 +30,8 @@ class InfoPage(wx.Panel):
 		wx.Panel.__init__(self, parent)
 
 		infostring = "Authors:" + "\n\tAaron Gerber\n\tDerek Buranen"
-		infostring = infostring + "\n\nContributors:" + "\n\tNick Verbeck"
-		infostring = infostring + "\n\nCopyright (C) 2007 - 2008 by Aaron Gerber and Derek Buranen"
+		infostring = infostring + "\n\nContributors:" + "\n\tNick Verbeck" + "\n\tTroy Frew"
+		infostring = infostring + "\n\nCopyright (C) 2007 - 2009 by Aaron Gerber and Derek Buranen"
 		if sys.platform == "darwin":
 			infostring = infostring + "\n\n+++++++++++++++++++++++"
 			infostring = infostring + "\nChicken Of The VNC:"
@@ -47,6 +47,13 @@ class InfoPage(wx.Panel):
 	
 			infostring = infostring + "\n\nechoWare:"
 			infostring = infostring + "\n\tCopyright (C) 2004-2007 Echogent Systems, Inc"
+		elif sys.platform == "win32":
+			infostring = infostring + "\n\n+++++++++++++++++++++++"
+			infostring = infostring + "\nTightVNC && VNCviewer:"
+			infostring = infostring + "\n\tCopyright (C) 1999 AT&T Laboratories Cambridge."
+
+			infostring = infostring + "\n\nVNCHooks:"
+			infostring = infostring + "\n\tCopyright (C) 2000-2007 TightVNC Group"
 
 		info = wx.TextCtrl(self, -1, infostring, style=wx.TE_MULTILINE | wx.ST_NO_AUTORESIZE)
 		

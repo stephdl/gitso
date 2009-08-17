@@ -249,7 +249,7 @@ class ConnectionWindow(wx.Frame):
 			self.hostField.SetValue("")
 	
 	
-	def KillPID(self, data=None):
+	def KillPID(self, showMessage=True):
 		"""
 		Kill VNC instance, called by the Stop Button or Application ends.
 		
@@ -260,10 +260,10 @@ class ConnectionWindow(wx.Frame):
 			self.thread.kill()
 			# If you don't wait 0.5+ seconds, the interface won't reload and it'll freeze.
 			# Possibly on older systems you should wait longer, it works fine on mine...
-			# With better thread management, I'm not sure that we need this. If we start getting freezes, look at this.
-			# time.sleep(1)
+			time.sleep(.5)
 		self.thread = None
-		self.setMessage("Idle.", False)
+		if showMessage :
+			self.setMessage("Idle.", False)
 		return
 	
 	
@@ -325,13 +325,12 @@ class ConnectionWindow(wx.Frame):
 		self.threadLock.release()
 
 	def createThread(self, host=""):
-		self.KillPID()
+		self.KillPID(False)
 		self.thread = GitsoThread.GitsoThread(self, self.paths)
 		self.thread.setHost(host)
 		self.thread.start()
 
 		# If you don't wait 1+ seconds, the interface won't reload and it'll freeze.
 		# Possibly on older systems you should wait longer, it works fine on mine...
-		# With better thread management, I'm not sure that we need this. If we start getting freezes, look at this.
-		# time.sleep(1)
+		time.sleep(1)
 

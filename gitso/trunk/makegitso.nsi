@@ -31,7 +31,7 @@ InstallDirRegKey HKLM "Software\Gitso" "Install_Dir"
 
 ;--------------------------------
 ; Version Information
-  VIProductVersion "0.6.0.0"
+  VIProductVersion "0.6.0"
   VIAddVersionKey "ProductName" "Gitso"
   VIAddVersionKey "Comments" "Gitso is to support others"
   VIAddVersionKey "CompanyName" "http://code.google.com/p/gitso"
@@ -89,6 +89,7 @@ Section "Gitso"
   File ".\arch\win32\tightVNC_COPYING.txt"
   File ".\arch\win32\tightVNC_README.txt"
   File ".\arch\win32\VNCHooks_COPYING.txt"
+  File ".\arch\win32\msvcr71_README.txt"
  ;start menu items
   CreateDirectory "$SMPROGRAMS\Gitso"
   CreateShortCut "$SMPROGRAMS\Gitso\Gitso.lnk" "$INSTDIR\Gitso.exe" "" "$INSTDIR\icon.ico" 0

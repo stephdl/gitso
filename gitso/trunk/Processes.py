@@ -55,13 +55,11 @@ class Processes:
 	def giveSupport(self):
 		if sys.platform == 'darwin':
 			vncviewer = '%scotvnc.app/Contents/MacOS/cotvnc' % self.paths['resources']
-			print vncviewer
 			self.returnPID = os.spawnlp(os.P_NOWAIT, vncviewer, vncviewer, '--listen')
 		elif sys.platform.find('linux') != -1:
-			self.returnPID = os.spawnlp(os.P_NOWAIT, 'vncviewer', 'vncviewer', '-bgr233', '-listen')                
+			self.returnPID = os.spawnlp(os.P_NOWAIT, 'vncviewer', 'vncviewer', '-bgr233', '-listen')
 		elif sys.platform == 'win32':
 			import subprocess
-			print self.paths['resources']
 			if self.paths['mode'] == 'dev':
 				self.returnPID = subprocess.Popen(['%svncviewer.exe' % self.paths['resources'], '-listen'])
 			else:
@@ -85,6 +83,11 @@ class Processes:
 				handle = win32api.OpenProcess(PROCESS_TERMINATE, False, self.returnPID.pid)
 				win32api.TerminateProcess(handle, -1)
 				win32api.CloseHandle(handle)
+			elif sys.platform.find('linux') != -1:
+				# New processes are created when you made connections. So if you kill self.returnPID,
+				# you're just killing the dispatch process, not the one actually doing business...
+				os.spawnlp(os.P_NOWAIT, 'killall', 'killall', 'vncviewer')
+				os.spawnlp(os.P_NOWAIT, 'killall', 'killall', 'x11vnc')
 			else:
 				os.kill(self.returnPID, signal.SIGKILL)
 			self.returnPID = 0
