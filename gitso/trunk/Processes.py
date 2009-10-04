@@ -57,7 +57,11 @@ class Processes:
 			vncviewer = '%scotvnc.app/Contents/MacOS/cotvnc' % self.paths['resources']
 			self.returnPID = os.spawnlp(os.P_NOWAIT, vncviewer, vncviewer, '--listen')
 		elif sys.platform.find('linux') != -1:
-			self.returnPID = os.spawnlp(os.P_NOWAIT, 'vncviewer', 'vncviewer', '-bgr233', '-listen')
+			self.returnPID = os.spawnlp(os.P_NOWAIT, 'vncviewer', 'vncviewer', '-listen')
+			
+			# These are the options for low-res connections.
+			# In the future, I'd like to support cross-platform low-res options.
+			# self.returnPID = os.spawnlp(os.P_NOWAIT, 'vncviewer', 'vncviewer', '-bgr233', '-listen')
 		elif sys.platform == 'win32':
 			import subprocess
 			if self.paths['mode'] == 'dev':
