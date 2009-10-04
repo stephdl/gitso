@@ -20,6 +20,7 @@
 ##########
 
 
+DMG="Gitso_0.6.dmg"
 DEB="gitso_0.6_all.deb"
 TARGZ="gitso_0.6_all.tar.gz"
 SRC="gitso_0.6_src.tar.bz2"
@@ -106,13 +107,17 @@ if [ "`uname -a | grep Darwin`" != "" ]; then
 		py2applet --make-setup Gitso.py
 		
 		echo -e ".."
+		
+		# To manually include the wx libraries, I'm not sure we need them...
+		# python setup.py py2app --includes=wx --packages=wx
+		
 		python setup.py py2app
 		rm setup.py
 		
 		echo -e ".."
 		cp arch/osx/Info.plist dist/Gitso.app/Contents/
 		
-		cp copyright dist/Gitso.app/Contents/Resources/
+		cp COPYING dist/Gitso.app/Contents/Resources/
 		cp PythonApplet.icns dist/Gitso.app/Contents/Resources/
 		
 		tar xvfz arch/osx/OSXvnc.tar.gz
@@ -131,14 +136,14 @@ if [ "`uname -a | grep Darwin`" != "" ]; then
 		cp GitsoThread.py dist/Gitso.app/Contents/Resources/
 		
 		cp arch/osx/libjpeg-copyright.txt dist/Gitso.app/Contents/Frameworks/
-		cp arch/osx/osxvnc_echoware-copyright.txt dist/Gitso.app/Contents/Resources/OSXvnc/
+		cp arch/osx/osxnvc_echoware-copyright.txt dist/Gitso.app/Contents/Resources/OSXvnc/
 		cp arch/osx/cotvnc-copyright.txt dist/Gitso.app/Contents/Resources/cotvnc.app/contents/Resources
 		cp arch/osx/osxvnc-copyright.txt dist/Gitso.app/Contents/Resources/OSXvnc/
 		
 		echo -e " [done]\n"
 		
 		echo -e "Creating Gitso.dmg "
-		rm -f Gitso.dmg
+		rm -f $DMG
 		
 		mkdir dist/Gitso
 		cp arch/osx/dmg_DS_Store dist/Gitso/.DS_Store
@@ -148,7 +153,7 @@ if [ "`uname -a | grep Darwin`" != "" ]; then
 		cp -r arch/osx/Readme.rtfd dist/Gitso/Readme.rtfd
 		
 		echo -e "..."
-		hdiutil create -srcfolder dist/Gitso/ Gitso.dmg
+		hdiutil create -srcfolder dist/Gitso/ $DMG
 		echo -e "... [done]\n"
 	else
 		echo -e "Error, you need py2applet to be installed."

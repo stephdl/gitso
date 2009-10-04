@@ -46,6 +46,9 @@ class ArgsParser:
 		if sys.platform.find('linux') != -1:
 			self.paths['main'] = os.path.join(sys.path[0], '..', 'share', 'gitso')
 			self.paths['copyright'] = os.path.join(sys.path[0], '..', 'share', 'doc', 'gitso', 'COPYING')
+		elif sys.platform == "darwin":
+			self.paths['main'] = sys.path[0]
+			self.paths['copyright'] = os.path.join(sys.path[0], 'COPYING')
 		else:
 			self.paths['main'] = os.path.join(sys.path[0], '..')
 			self.paths['copyright'] = os.path.join(sys.path[0], '..', 'COPYING')
@@ -64,18 +67,21 @@ class ArgsParser:
 				if sys.platform == "darwin":
 					if not os.path.exists('build/OSXvnc'):
 						os.popen("mkdir build; cp arch/osx/OSXvnc.tar.gz build ; cd build ; tar xvfz OSXvnc.tar.gz > /dev/null")
-					if not os.path.exists('build/vncviewer'):
-						os.popen("cp arch/osx/vncviewer.tar.gz build ; cd build ; tar xvfz vncviewer.tar.gz > /dev/null")
 					if not os.path.exists('build/cotvnc.app'):
 						os.popen("cp arch/osx/cotvnc.app.tar.gz build ; cd build ; tar xvfz cotvnc.app.tar.gz > /dev/null")
+						
 					self.paths['resources'] = 'build/'
-				elif sys.platform == "win32":
-					self.paths['main'] = os.path.join(sys.path[0])
+					self.paths['main']		= sys.path[0]
 					self.paths['copyright'] = os.path.join(sys.path[0], 'COPYING')
+					
+				elif sys.platform == "win32":
+					self.paths['copyright'] = os.path.join(sys.path[0], 'COPYING')
+					self.paths['main']		= os.path.join(sys.path[0])
 					self.paths['resources'] = 'arch/win32/'
+					
 				else:
 					self.paths['resources'] = 'arch/linux/'
-					self.paths['main'] = os.path.join(sys.path[0])
+					self.paths['main']		= os.path.join(sys.path[0])
 					self.paths['copyright'] = os.path.join(sys.path[0], 'COPYING')
 
 			elif sys.argv[i] == '--listen': # --listen
