@@ -9,7 +9,8 @@ from setuptools import setup
 
 APP = ['Gitso.py']
 DATA_FILES = []
-OPTIONS = {'argv_emulation': True}
+OPTIONS = {'argv_emulation': True,
+'site_packages': True}
 
 setup(
     app=APP,

@@ -32,17 +32,17 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.6</string>
+	<string>0.5</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>0.6</string>
+	<string>0.5</string>
 	<key>LSHasLocalizedDisplayName</key>
 	<false/>
 	<key>NSAppleScriptEnabled</key>
 	<false/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Aaron Gerber and Derek Buranen 2010</string>
+	<string>Copyright not specified</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -72,18 +72,18 @@
 	<array/>
 	<key>PyRuntimeLocations</key>
 	<array>
-		<string>@executable_path/../Frameworks/Python.framework/Versions/2.6/Python</string>
-		<string>/System/Library/Frameworks/Python.framework/Versions/2.6/Python</string>
+		<string>@executable_path/../Frameworks/Python.framework/Versions/2.5/Python</string>
+		<string>/System/Library/Frameworks/Python.framework/Versions/2.5/Python</string>
 	</array>
 	<key>PythonInfoDict</key>
 	<dict>
 		<key>PythonExecutable</key>
-		<string>/System/Library/Frameworks/Python.framework/Versions/2.6/Resources/Python.app/Contents/MacOS/Python</string>
+		<string>/System/Library/Frameworks/Python.framework/Versions/2.5/Resources/Python.app/Contents/MacOS/Python</string>
 		<key>PythonLongVersion</key>
-		<string>Python 2.6.1 (r261:67515, Jul  7 2009, 23:51:51) 
-[GCC 4.2.1 (Apple Inc. build 5646)] on darwin</string>
+		<string>2.5.1 (r251:54863, Jan 17 2008, 19:35:17) 
+[GCC 4.0.1 (Apple Inc. build 5465)]</string>
 		<key>PythonShortVersion</key>
-		<string>2.6</string>
+		<string>2.5</string>
 		<key>py2app</key>
 		<dict>
 			<key>alias</key>
@@ -91,7 +91,7 @@
 			<key>template</key>
 			<string>app</string>
 			<key>version</key>
-			<string>0.4.2</string>
+			<string>0.3.6</string>
 		</dict>
 	</dict>
 </dict>

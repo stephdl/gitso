@@ -20,7 +20,8 @@
 ##########
 
 
-DMG="Gitso_0.6.dmg"
+DMG_OSX_106="Gitso_0.6_SnowLeopard.dmg"
+DMG_OSX_105="Gitso_0.6_Leopard.dmg"
 DEB="gitso_0.6_all.deb"
 TARGZ="gitso_0.6_all.tar.gz"
 SRC="gitso_0.6_src.tar.bz2"
@@ -38,6 +39,118 @@ function mksrc {
 		tar -cj -C $TMP_PKG/ gitso-0.6 > $P/$SRC
 		rm -rf $TMP_PKG
 }
+
+function snowLeopardDMG {
+	echo -e "Creating Gitso.app "
+	rm -f setup.py
+	rm -rf dist
+	
+	#echo -e ".."
+	#py2applet --make-setup Gitso.py
+	
+	echo -e ".."
+	
+	# To manually include the wx libraries, I'm not sure we need them...
+	# python setup.py py2app --includes=wx --packages=wx
+	
+	python arch/osx/setup.py py2app
+	#rm setup.py
+	
+	echo -e ".."
+	cp arch/osx/Info_OSX-10.6.plist dist/Gitso.app/Contents/
+	
+	cp COPYING dist/Gitso.app/Contents/Resources/
+	cp PythonApplet.icns dist/Gitso.app/Contents/Resources/
+	
+	tar xvfz arch/osx/OSXvnc.tar.gz
+	mv OSXvnc dist/Gitso.app/Contents/Resources/
+
+	tar xvfz arch/osx/cotvnc.app.tar.gz
+	mv cotvnc.app dist/Gitso.app/Contents/Resources/
+	
+	cp icon.ico dist/Gitso.app/Contents/Resources/
+	cp icon.png dist/Gitso.app/Contents/Resources/
+	cp __init__.py dist/Gitso.app/Contents/Resources/
+	cp ArgsParser.py dist/Gitso.app/Contents/Resources/
+	cp Processes.py dist/Gitso.app/Contents/Resources/
+	cp ConnectionWindow.py dist/Gitso.app/Contents/Resources/
+	cp AboutWindow.py dist/Gitso.app/Contents/Resources/
+	cp GitsoThread.py dist/Gitso.app/Contents/Resources/
+	
+	cp arch/osx/libjpeg-copyright.txt dist/Gitso.app/Contents/Frameworks/
+	cp arch/osx/osxnvc_echoware-copyright.txt dist/Gitso.app/Contents/Resources/OSXvnc/
+	cp arch/osx/cotvnc-copyright.txt dist/Gitso.app/Contents/Resources/cotvnc.app/contents/Resources
+	cp arch/osx/osxvnc-copyright.txt dist/Gitso.app/Contents/Resources/OSXvnc/
+	
+	echo -e " [done]\n"
+	
+	echo -e "Creating $DMG_OSX_106"
+	rm -f $DMG_OSX_106
+	
+	mkdir dist/Gitso
+	cp arch/osx/dmg_DS_Store dist/Gitso/.DS_Store
+	ln -s /Applications/ dist/Gitso/Applications
+	
+	mv "dist/Gitso.app" "dist/Gitso/"
+	cp -r arch/osx/Readme.rtfd dist/Gitso/Readme.rtfd
+	
+	echo -e "..."
+	hdiutil create -srcfolder dist/Gitso/ $DMG_OSX_106
+	echo -e "... [done]\n"
+}
+
+function LeopardDMG {
+	echo -e "Creating Gitso.app "
+	rm -f setup.py
+	rm -rf dist
+	
+	echo -e ".."
+	
+	python arch/osx/setup.py py2app
+	
+	echo -e ".."
+	cp arch/osx/Info_OSX-10.5.plist dist/Gitso.app/Contents/
+	
+	cp COPYING dist/Gitso.app/Contents/Resources/
+	cp PythonApplet.icns dist/Gitso.app/Contents/Resources/
+	
+	tar xvfz arch/osx/OSXvnc.tar.gz
+	mv OSXvnc dist/Gitso.app/Contents/Resources/
+
+	tar xvfz arch/osx/cotvnc.app.tar.gz
+	mv cotvnc.app dist/Gitso.app/Contents/Resources/
+	
+	cp icon.ico dist/Gitso.app/Contents/Resources/
+	cp icon.png dist/Gitso.app/Contents/Resources/
+	cp __init__.py dist/Gitso.app/Contents/Resources/
+	cp ArgsParser.py dist/Gitso.app/Contents/Resources/
+	cp Processes.py dist/Gitso.app/Contents/Resources/
+	cp ConnectionWindow.py dist/Gitso.app/Contents/Resources/
+	cp AboutWindow.py dist/Gitso.app/Contents/Resources/
+	cp GitsoThread.py dist/Gitso.app/Contents/Resources/
+	
+	cp arch/osx/libjpeg-copyright.txt dist/Gitso.app/Contents/Frameworks/
+	cp arch/osx/osxnvc_echoware-copyright.txt dist/Gitso.app/Contents/Resources/OSXvnc/
+	cp arch/osx/cotvnc-copyright.txt dist/Gitso.app/Contents/Resources/cotvnc.app/contents/Resources
+	cp arch/osx/osxvnc-copyright.txt dist/Gitso.app/Contents/Resources/OSXvnc/
+	
+	echo -e " [done]\n"
+	
+	echo -e "Creating $DMG_OSX_105"
+	rm -f $DMG_OSX_105
+	
+	mkdir dist/Gitso
+	cp arch/osx/dmg_DS_Store dist/Gitso/.DS_Store
+	ln -s /Applications/ dist/Gitso/Applications
+	
+	mv "dist/Gitso.app" "dist/Gitso/"
+	cp -r arch/osx/Readme.rtfd dist/Gitso/Readme.rtfd
+	
+	echo -e "..."
+	hdiutil create -srcfolder dist/Gitso/ $DMG_OSX_105
+	echo -e "... [done]\n"
+}
+
 
 CLEAN="yes"
 RPMNAME="opensuse"
@@ -84,10 +197,6 @@ fi
 
 if [ "`uname -a | grep Darwin`" != "" ]; then
 	if test `which py2applet`; then
-		echo -e "Creating Gitso.app "
-		rm -f setup.py
-		rm -rf dist
-		
 		# To Make cotvnc
 		# cvs -z3 -d:pserver:anonymous@cotvnc.cvs.sourceforge.net:/cvsroot/cotvnc co -P cotvnc
 		#
@@ -102,59 +211,8 @@ if [ "`uname -a | grep Darwin`" != "" ]; then
 		# 
 		# Patch was made with: diff -aurr . ../cotvnc-gitso/ > cotvnc-gitso.diff
 		#
-		
-		echo -e ".."
-		py2applet --make-setup Gitso.py
-		
-		echo -e ".."
-		
-		# To manually include the wx libraries, I'm not sure we need them...
-		# python setup.py py2app --includes=wx --packages=wx
-		
-		python setup.py py2app
-		rm setup.py
-		
-		echo -e ".."
-		cp arch/osx/Info.plist dist/Gitso.app/Contents/
-		
-		cp COPYING dist/Gitso.app/Contents/Resources/
-		cp PythonApplet.icns dist/Gitso.app/Contents/Resources/
-		
-		tar xvfz arch/osx/OSXvnc.tar.gz
-		mv OSXvnc dist/Gitso.app/Contents/Resources/
-
-		tar xvfz arch/osx/cotvnc.app.tar.gz
-		mv cotvnc.app dist/Gitso.app/Contents/Resources/
-		
-		cp icon.ico dist/Gitso.app/Contents/Resources/
-		cp icon.png dist/Gitso.app/Contents/Resources/
-		cp __init__.py dist/Gitso.app/Contents/Resources/
-		cp ArgsParser.py dist/Gitso.app/Contents/Resources/
-		cp Processes.py dist/Gitso.app/Contents/Resources/
-		cp ConnectionWindow.py dist/Gitso.app/Contents/Resources/
-		cp AboutWindow.py dist/Gitso.app/Contents/Resources/
-		cp GitsoThread.py dist/Gitso.app/Contents/Resources/
-		
-		cp arch/osx/libjpeg-copyright.txt dist/Gitso.app/Contents/Frameworks/
-		cp arch/osx/osxnvc_echoware-copyright.txt dist/Gitso.app/Contents/Resources/OSXvnc/
-		cp arch/osx/cotvnc-copyright.txt dist/Gitso.app/Contents/Resources/cotvnc.app/contents/Resources
-		cp arch/osx/osxvnc-copyright.txt dist/Gitso.app/Contents/Resources/OSXvnc/
-		
-		echo -e " [done]\n"
-		
-		echo -e "Creating Gitso.dmg "
-		rm -f $DMG
-		
-		mkdir dist/Gitso
-		cp arch/osx/dmg_DS_Store dist/Gitso/.DS_Store
-		ln -s /Applications/ dist/Gitso/Applications
-		
-		mv "dist/Gitso.app" "dist/Gitso/"
-		cp -r arch/osx/Readme.rtfd dist/Gitso/Readme.rtfd
-		
-		echo -e "..."
-		hdiutil create -srcfolder dist/Gitso/ $DMG
-		echo -e "... [done]\n"
+		snowLeopardDMG
+		LeopardDMG
 	else
 		echo -e "Error, you need py2applet to be installed."
 	fi
