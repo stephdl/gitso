@@ -7,7 +7,7 @@ Gitso is a utility to facilitate the connection of VNC
 
 @author: Aaron Gerber ('gerberad') <gerberad@gmail.com>
 @author: Derek Buranen ('burner') <derek@buranen.info>
-@copyright: 2008, 2009
+@copyright: 2008 - 2010
 
 Gitso is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

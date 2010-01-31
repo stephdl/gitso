@@ -7,7 +7,7 @@ Gitso is a utility to facilitate the connection of VNC
 
 @author: Aaron Gerber ('gerberad') <gerberad@gmail.com>
 @author: Derek Buranen ('burner') <derek@buranen.info>
-@copyright: 2008, 2009
+@copyright: 2008 - 2010
 
 Gitso is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ class ArgsParser:
 			if sys.argv[i] == '--help': # --help
 				self.HelpMenu()
 			elif sys.argv[i] == '--version': # --version
-				print "Gitso 0.6  -- Copyright 2007 - 2009 Aaron Gerber and Derek Buranen."
+				print "Gitso 0.6  -- Copyright 2007 - 2010 Aaron Gerber and Derek Buranen."
 				exit(0)
 			elif sys.argv[i] == '--dev': # --dev
 				print "Running in 'Development Mode'"

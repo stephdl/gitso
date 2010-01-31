@@ -9,7 +9,7 @@ Gitso is a utility to facilitate the connection of VNC
 
 @author: Aaron Gerber ('gerberad') <gerberad@gmail.com>
 @author: Derek Buranen ('burner') <derek@buranen.info>
-@copyright: 2008, 2009
+@copyright: 2008 - 2010
 
 Gitso is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ class InfoPage(wx.Panel):
 
 		infostring = "Authors:" + "\n\tAaron Gerber\n\tDerek Buranen"
 		infostring = infostring + "\n\nContributors:" + "\n\tNick Verbeck" + "\n\tTroy Frew"
-		infostring = infostring + "\n\nCopyright (C) 2007 - 2009 by Aaron Gerber and Derek Buranen"
+		infostring = infostring + "\n\nCopyright (C) 2007 - 2010 by Aaron Gerber and Derek Buranen"
 		if sys.platform == "darwin":
 			infostring = infostring + "\n\n+++++++++++++++++++++++"
 			infostring = infostring + "\nChicken Of The VNC:"

@@ -2,7 +2,7 @@
 ; ----------------
 ; Package Gitso for Windows using NSIS
 ; 
-; Copyright 2008, 2009: Aaron Gerber and Derek Buranen
+; Copyright 2008 - 2010: Aaron Gerber and Derek Buranen
 ; 
 ; Gitso is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
