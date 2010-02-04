@@ -51,6 +51,7 @@ simple two-step process that connects one person to another's screen.
 %{_prefix}/gitso/Processes.py
 %{_prefix}/gitso/ArgsParser.py
 %{_prefix}/gitso/__init__.py
+%{_prefix}/gitso/NATPMP.py
 %{_prefix}/gitso/hosts.txt
 %{_prefix}/gitso/icon.ico
 %{_prefix}/gitso/icon.png

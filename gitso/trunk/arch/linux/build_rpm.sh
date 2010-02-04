@@ -33,6 +33,7 @@ cp GitsoThread.py $BUILD_ROOT/usr/share/gitso/
 cp Processes.py $BUILD_ROOT/usr/share/gitso/
 cp ArgsParser.py $BUILD_ROOT/usr/share/gitso/
 cp __init__.py $BUILD_ROOT/usr/share/gitso/
+cp NATPMP.py $BUILD_ROOT/usr/share/gitso/
 cp hosts.txt $BUILD_ROOT/usr/share/gitso/
 cp icon.ico $BUILD_ROOT/usr/share/gitso/
 cp icon.png $BUILD_ROOT/usr/share/gitso/
