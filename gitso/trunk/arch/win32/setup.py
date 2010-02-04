@@ -11,5 +11,5 @@ setup(
   
   windows=[{"script":"Gitso.py", "icon_resources":[(1,"icon.ico")]}],
   data_files=[(".", ["icon.ico"])],
-  py_modules = ['AboutWindow', 'ConnectionWindow', 'ArgsParser', 'GitsoThread', 'Processes'],
+  py_modules = ['AboutWindow', 'ConnectionWindow', 'ArgsParser', 'GitsoThread', 'Processes', 'NATPMP'],
 )
