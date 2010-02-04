@@ -30,7 +30,7 @@ class InfoPage(wx.Panel):
 		wx.Panel.__init__(self, parent)
 
 		infostring = "Authors:" + "\n\tAaron Gerber\n\tDerek Buranen"
-		infostring = infostring + "\n\nContributors:" + "\n\tNick Verbeck" + "\n\tTroy Frew"
+		infostring = infostring + "\n\nContributors:" + "\n\tNick Verbeck" + "\n\tTroy Frew" + "\n\tDennis Koot"
 		infostring = infostring + "\n\nCopyright (C) 2007 - 2010 by Aaron Gerber and Derek Buranen"
 		if sys.platform == "darwin":
 			infostring = infostring + "\n\n+++++++++++++++++++++++"
