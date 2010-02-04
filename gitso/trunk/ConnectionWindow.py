@@ -84,7 +84,9 @@ class ConnectionWindow(wx.Frame):
 		self.Bind(wx.EVT_RADIOBUTTON, self.RadioToggle, id=self.rb2.GetId())
 		
 		# checkbox for natpmp
-		self.cb1 = wx.CheckBox(self, -1, 'Use NAT-PMP', (130, 48))
+		if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
+			self.cb1 = wx.CheckBox(self, -1, 'Use NAT-PMP', (130, 48))
+			self.cb1.Enable(False)
 
 
 		# the combobox Control
@@ -134,7 +136,6 @@ class ConnectionWindow(wx.Frame):
 		
 		self.SetDefaultItem(self.hostField)
 		self.hostField.SetFocus()
-		self.cb1.Enable(False)
 		
 		self.SetThemeEnabled(True)
 		self.Centre()
@@ -161,11 +162,13 @@ class ConnectionWindow(wx.Frame):
 		if self.rb1.GetValue():
 			self.ToggleValue = 0
 			self.hostField.Enable(True)
-			self.cb1.Enable(False)
+			if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
+				self.cb1.Enable(False)
 		else:
 			self.ToggleValue = 1
 			self.hostField.Enable(False)
-			self.cb1.Enable(True)
+			if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
+				self.cb1.Enable(True)
 	
 	
 	def ConnectSupport(self, event):
