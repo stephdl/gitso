@@ -218,10 +218,6 @@ USESRC="no"
 ##
 # Get Comman line arguments
 ############################
-if test "$1" = ""; then
-	helpMenu
-fi
-
 for param in "$@"
 do
 if test "${param}" = "--no-clean"; then
@@ -268,8 +264,8 @@ elif [ "`uname -a | grep Darwin`" != "" ]; then
 		# 
 		# Patch was made with: diff -aurr . ../cotvnc-gitso/ > cotvnc-gitso.diff
 		#
-		snowLeopardDMG
 		LeopardDMG
+		snowLeopardDMG
 	else
 		echo -e "Error, you need py2applet to be installed."
 	fi

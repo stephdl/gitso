@@ -83,7 +83,10 @@ class ConnectionWindow(wx.Frame):
 		self.Bind(wx.EVT_RADIOBUTTON, self.RadioToggle, id=self.rb1.GetId())
 		self.Bind(wx.EVT_RADIOBUTTON, self.RadioToggle, id=self.rb2.GetId())
 		
-		
+		# checkbox for natpmp
+		self.cb1 = wx.CheckBox(self, -1, 'Use NAT-PMP', (130, 48))
+
+
 		# the combobox Control
 		self.sampleList = self.paths['list']
 		
@@ -131,6 +134,7 @@ class ConnectionWindow(wx.Frame):
 		
 		self.SetDefaultItem(self.hostField)
 		self.hostField.SetFocus()
+		self.cb1.Enable(False)
 		
 		self.SetThemeEnabled(True)
 		self.Centre()
@@ -145,7 +149,8 @@ class ConnectionWindow(wx.Frame):
 			self.RadioToggle(None)
 			self.hostField.Value = self.paths['connect']
 			self.ConnectSupport(None)
-	
+
+
 	def RadioToggle(self, event):
 		"""
 		Toggles Radio Buttons
@@ -156,9 +161,11 @@ class ConnectionWindow(wx.Frame):
 		if self.rb1.GetValue():
 			self.ToggleValue = 0
 			self.hostField.Enable(True)
+			self.cb1.Enable(False)
 		else:
 			self.ToggleValue = 1
 			self.hostField.Enable(False)
+			self.cb1.Enable(True)
 	
 	
 	def ConnectSupport(self, event):

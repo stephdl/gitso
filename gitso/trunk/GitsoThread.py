@@ -26,6 +26,7 @@ along with Gitso.  If not, see <http://www.gnu.org/licenses/>.
 import threading, time
 import os, sys, signal, os.path
 import Processes
+import NATPMP
 
 class GitsoThread(threading.Thread):
 	def __init__(self, window, paths):
@@ -40,7 +41,13 @@ class GitsoThread(threading.Thread):
 		
 		
 	def run(self):
+		"""
+		This is where the beef is. Start the processes and check on them.
+		
+		@author: Aaron Gerber
+		"""
 		if self.host <> "":
+			# Get Help
 			self.pid = self.process.getSupport(self.host)
 			time.sleep(.5)
 			if self.checkStatus():
@@ -49,6 +56,11 @@ class GitsoThread(threading.Thread):
 				self.window.setMessage("Could not connect.", False)
 				self.error = True
 		else:
+			# Give Support
+			self.window.cb1.Enable(False)
+			if self.window.cb1.GetValue() == True:
+				self.NATPMP('request')
+			
 			self.pid = self.process.giveSupport()
 			time.sleep(.5)
 			if self.checkStatus():
@@ -69,15 +81,36 @@ class GitsoThread(threading.Thread):
 
 		
 	def setHost(self, host=""):
+		"""
+		Set the object variable.
+		
+		@author: Aaron Gerber
+		"""
 		self.host = host
 		
 		
 	def kill(self):
+		"""
+		Kill the process and general clean-up.
+		
+		@author: Aaron Gerber
+		"""
+		if self.window.rb1.GetValue() == False: #give support
+			if self.window.cb1.GetValue() == True:
+				self.NATPMP('giveup')
+			self.window.cb1.Enable(True)
+
 		self.process.KillPID()
 		self.pid = 0
 		self.running = False
-		
+
+
 	def checkStatus(self):
+		"""
+		Check the status of the underlying process.
+		
+		@author: Aaron Gerber
+		"""
 		if self.pid == 0:
 			return False
 		
@@ -102,4 +135,26 @@ class GitsoThread(threading.Thread):
 			return False
 		else:
 			return True
+
+
+	def NATPMP(self, action):
+		"""
+		Call NAT-PMP on router to get port 5500 forwarded.
+		
+		@author: Dennis Koot
+		"""
+		if action == 'request':
+			lifetime = 3600
+			print "Request port 5500 (NAT-PMP)."
+		else:
+			lifetime = 0
+			print "Give up port 5500 (NAT-PMP)."
+		
+		pubpriv_port = int(5500)
+		protocol = NATPMP.NATPMP_PROTOCOL_TCP
+		gateway = NATPMP.get_gateway_addr()
+		try:
+			print NATPMP.map_port(protocol, pubpriv_port, pubpriv_port, lifetime, gateway_ip=gateway)
+		except:
+			print "Warning: Unable to automap port."
 
