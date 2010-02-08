@@ -61,6 +61,7 @@ function mksrc {
 # And because py2app needs to know there, we just use different config files.
 #
 function snowLeopardDMG {
+	defaults write com.apple.versioner.python Prefer-32-Bit -bool yes
 	echo -e "Creating Gitso.app "
 	rm -f setup.py
 	rm -rf $OSX_BUILD_DIR
