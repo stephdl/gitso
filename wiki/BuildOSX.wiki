@@ -1,4 +1,4 @@
-===Mac OS X===
+===Build Gitso===
   # Install Developer Tools (Xcode) from the OS X System CD
   # Install [http://pypi.python.org/pypi/py2app/ py2app]
     * From the command line type:
