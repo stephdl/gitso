@@ -8,3 +8,7 @@
   # From within the src directory:
   # Update hosts.txt to have preset options for the client. Hosts are comma separated and optional.
   # Run:./makegitso.pl --> Gitso.dmg
+
+===Notes====
+   # If you get a python gdb error try typing the following at the command line: 
+     * defaults write com.apple.versioner.python Prefer-32-Bit -bool yes
