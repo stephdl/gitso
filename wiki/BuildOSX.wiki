@@ -1,1 +1,10 @@
-To build gitso ons OS X.
+===Mac OS X===
+  # Install Developer Tools (Xcode) from the OS X System CD
+  # Install [http://pypi.python.org/pypi/py2app/ py2app]
+    * From the command line type:
+      * curl -O http://peak.telecommunity.com/dist/ez_setup.py
+      * sudo python ez_setup.py -U setuptools
+      * sudo easy_install -U py2app
+  # From within the src directory:
+  # Update hosts.txt to have preset options for the client. Hosts are comma separated and optional.
+  # Run:./makegitso.pl --> Gitso.dmg
