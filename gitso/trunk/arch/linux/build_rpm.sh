@@ -7,7 +7,6 @@ if test "$1" = ""; then
 fi
 
 echo -e "Setting up RPM build-root!\n\t"
-echo -e "'$1'\n"
 
 BUILD_ROOT="$HOME/rpmbuild/BUILDROOT/gitso-0.6-1.i386"
 
@@ -39,4 +38,6 @@ cp icon.ico $BUILD_ROOT/usr/share/gitso/
 cp icon.png $BUILD_ROOT/usr/share/gitso/
 
 gzip -cf arch/linux/gitso.1 > $BUILD_ROOT/usr/share/man/man1/gitso.1.gz
+
+echo 'Done';
 

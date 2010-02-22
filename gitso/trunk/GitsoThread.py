@@ -60,9 +60,10 @@ class GitsoThread(threading.Thread):
 		else:
 			# Give Support
 			if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
-				self.window.cb1.Enable(False)
-				if self.window.cb1.GetValue() == True:
-					self.NATPMP('request')
+				if self.window.enablePMP:
+					self.window.cb1.Enable(False)
+					if self.window.cb1.GetValue() == True:
+						self.NATPMP('request')
 			
 			self.pid = self.process.giveSupport()
 			time.sleep(.5)
@@ -99,10 +100,11 @@ class GitsoThread(threading.Thread):
 		@author: Aaron Gerber
 		"""
 		if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
-			if self.window.rb1.GetValue() == False: #give support
-				if self.window.cb1.GetValue() == True:
-					self.NATPMP('giveup')
-				self.window.cb1.Enable(True)
+			if self.window.enablePMP:
+				if self.window.rb1.GetValue() == False: #give support
+					if self.window.cb1.GetValue() == True:
+						self.NATPMP('giveup')
+					self.window.cb1.Enable(True)
 	
 		self.process.KillPID()
 		self.pid = 0
@@ -148,19 +150,20 @@ class GitsoThread(threading.Thread):
 		@author: Dennis Koot
 		"""
 		if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
-			if action == 'request':
-				lifetime = 3600
-				print "Request port 5500 (NAT-PMP)."
-			else:
-				lifetime = 0
-				print "Give up port 5500 (NAT-PMP)."
-	
-			pubpriv_port = int(5500)
-			protocol = NATPMP.NATPMP_PROTOCOL_TCP
-			
-			try:
-				gateway = NATPMP.get_gateway_addr()
-				print NATPMP.map_port(protocol, pubpriv_port, pubpriv_port, lifetime, gateway_ip=gateway)
-			except:
-				print "Warning: Unable to automap port."
+			if self.window.enablePMP:
+				if action == 'request':
+					lifetime = 3600
+					print "Request port 5500 (NAT-PMP)."
+				else:
+					lifetime = 0
+					print "Give up port 5500 (NAT-PMP)."
+		
+				pubpriv_port = int(5500)
+				protocol = NATPMP.NATPMP_PROTOCOL_TCP
+				
+				try:
+					gateway = NATPMP.get_gateway_addr()
+					print NATPMP.map_port(protocol, pubpriv_port, pubpriv_port, lifetime, gateway_ip=gateway)
+				except:
+					print "Warning: Unable to automap port."
 

@@ -41,21 +41,21 @@ simple two-step process that connects one person to another's screen.
 
 %{_prefix}/applications/gitso.desktop
 
-%{_prefix}/doc/gitso/copyright
+%{_prefix}/doc/gitso/COPYING
 %{_prefix}/doc/gitso/README
 %{_prefix}/doc/gitso/changelog.gz
 
-%{_prefix}/gitso/icon.png
+%{_prefix}/gitso/Gitso.py
+%{_prefix}/gitso/ConnectionWindow.py
+%{_prefix}/gitso/AboutWindow.py
+%{_prefix}/gitso/GitsoThread.py
+%{_prefix}/gitso/Processes.py
 %{_prefix}/gitso/ArgsParser.py
 %{_prefix}/gitso/__init__.py
 %{_prefix}/gitso/hosts.txt
-%{_prefix}/gitso/AboutWindow.py
-%{_prefix}/gitso/ConnectionWindow.py
-%{_prefix}/gitso/GitsoThread.py
-%{_prefix}/gitso/Gitso.py
-%{_prefix}/gitso/Processes.py
 %{_prefix}/gitso/NATPMP.py
 %{_prefix}/gitso/icon.ico
+%{_prefix}/gitso/icon.png
 
 %{_mandir}/man1/gitso.1.gz
 

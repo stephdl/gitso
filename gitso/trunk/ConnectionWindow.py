@@ -46,6 +46,9 @@ class ConnectionWindow(wx.Frame):
 		self.thread = None
 		self.threadLock = thread.allocate_lock()
 		
+		# Disable until 0.7 release
+		self.enablePMP = False
+		
 		if sys.platform.find('linux') != -1:
 			width = 165
 			height = 350
@@ -85,8 +88,9 @@ class ConnectionWindow(wx.Frame):
 		
 		# checkbox for natpmp
 		if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
-			self.cb1 = wx.CheckBox(self, -1, 'Use NAT-PMP', (130, 48))
-			self.cb1.Enable(False)
+			if self.enablePMP:
+				self.cb1 = wx.CheckBox(self, -1, 'Use NAT-PMP', (130, 48))
+				self.cb1.Enable(False)
 
 
 		# the combobox Control
@@ -163,12 +167,14 @@ class ConnectionWindow(wx.Frame):
 			self.ToggleValue = 0
 			self.hostField.Enable(True)
 			if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
-				self.cb1.Enable(False)
+				if self.enablePMP:
+					self.cb1.Enable(False)
 		else:
 			self.ToggleValue = 1
 			self.hostField.Enable(False)
 			if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
-				self.cb1.Enable(True)
+				if self.enablePMP:
+					self.cb1.Enable(True)
 	
 	
 	def ConnectSupport(self, event):

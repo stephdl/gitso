@@ -1,3 +1,24 @@
+PACKAGE (0.6) karmic; urgency=low
+
+  * Complete rewrite of process management.
+  * Actually stop VNC Processes (Windows)
+  * Support loading remote hosts file.
+  * Command line switches
+  *     --dev (Done)
+  *     --listen (Done)
+  *     --connect IP (Done)
+  *     --list list_file (Done)
+  *     --version (Done)
+  *     --help (Done) 
+  * manpage for (Linux)
+  * Support for .rpms (Fedora, OpenSUSE, CentOS)
+  * Implement Native VNC listener (OS X)
+  * Better process management, user gets notified if connection is broken.
+  * Licensing Updates (across the board).
+  * Improved documentation. 
+
+ -- Aaron D. Gerber <gerberad@gmail.com>  Sun, 21 Feb 2010 17:32:40 -0600
+
 PACKAGE (0.5) hardy; urgency=low
 
   * Complete rewrite of the interface

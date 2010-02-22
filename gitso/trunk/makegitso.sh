@@ -34,6 +34,7 @@ function mksrc {
 
 		# Clean up first.
 		find . -name "*~" -exec rm {} ';'
+
 		rm -rf $OSX_BUILD_DIR
 		rm -rf $RPM_BUILD_DIR
 		rm -rf $DEB_BUILD_DIR
@@ -332,11 +333,12 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 		# RPM version of Gitso
 		if [ "$RPMNAME" = "fedora" ]; then
 			SPEC="gitso_rpm_fedora.spec"
-			# Before installing the .rpm
-			# You need to install http://dl.atrpms.net/all/x11vnc-0.9.3-3.fc9.i386.rpm
 			# yum --nogpgcheck install gitso_0.6-1_fedora.i386.rpm 
-		else
+		elif [ "$RPMNAME" = "opensuse" ]; then
 			SPEC="gitso_rpm.spec"
+		else
+		    echo -e "Error: Please '$RPMNAME' specify --opensuse or --fedora\n"
+		    exit 1
 		fi
 
 		echo "Creating $RPM"
@@ -345,7 +347,7 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 		BUILD_ROOT="$RPM_BUILD_DIR/rpm/tmp/gitso-root"
 
 		# We need this because the rpmbuild below needs to the source ball.
-		# Also realize that mksrc is going to clean-up, so if you creat dist files before this line
+		# Also realize that mksrc is going to clean-up, so if you creat diste files before this line
 		# They will be deleted.
 		mksrc
 		
@@ -356,8 +358,14 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 
 		cp arch/linux/$SPEC $TMP
 		perl -e 's/%\(echo \$HOME\)/$ENV{'RPM_BUILD_DIR'}/g;' -pi $TMP/$SPEC
-
-		rpmbuild -ba $TMP/$SPEC
+		
+		if [ "$RPMNAME" = "fedora" ]; then
+			rpmbuild -ba $TMP/$SPEC
+		elif [ "$RPMNAME" = "opensuse" ]; then
+			export RPM_BUILD_ROOT="$HOME/rpmbuild/BUILDROOT/gitso-0.6-1.i386"
+			rpmbuild -ba --buildroot=$RPM_BUILD_ROOT $TMP/$SPEC
+		fi
+		
 		find $RPM_BUILD_DIR/rpm/RPMS -name "*.rpm" -exec cp {} $RPMOUT ';'
 
 		echo -e " [done]\n"

@@ -1,7 +1,23 @@
 0.6
 ----------------------------
-*added --dev option while testing
+# Complete rewrite of process management.
+# Actually stop VNC Processes (Windows)
+# Support loading remote hosts file.
+# Command line switches
 
+    * --dev (Done)
+    * --listen (Done)
+    * --connect IP (Done)
+    * --list list_file (Done)
+    * --version (Done)
+    * --help (Done) 
+
+# manpage for (Linux)
+# Support for .rpms (Fedora, OpenSUSE, CentOS)
+# Implement Native VNC listener (OS X)
+# Better process management, user gets notified if connection is broken.
+# Licensing Updates (across the board).
+# Improved documentation. 
 
 0.5 - "Kill the undead"
 -----------------------------------------
