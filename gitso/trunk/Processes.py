@@ -36,7 +36,10 @@ class Processes:
 		if sys.platform == 'darwin':
 			self.returnPID = os.spawnl(os.P_NOWAIT, '%sOSXvnc/OSXvnc-server' % self.paths['resources'], '%sOSXvnc/OSXvnc-server' % self.paths['resources'], '-connectHost', '%s' % host)
 		elif sys.platform.find('linux') != -1:
-			self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc','-nopw','-ncache','20','-solid','black','-connect','%s' % host)
+			# We should include future versions with options for speed.
+			#self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc','-nopw','-ncache','20','-solid','black','-connect','%s' % host)
+			
+			self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc','-nopw','-ncache','20','-connect','%s' % host)
 		elif sys.platform == 'win32':
 			import subprocess
                         self.returnPID = subprocess.Popen(['WinVNC.exe'])

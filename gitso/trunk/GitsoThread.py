@@ -124,9 +124,9 @@ class GitsoThread(threading.Thread):
 		listen = []
 		if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
 			if self.host <> "":
-				connection = os.popen('netstat -an | grep 5500 | grep ESTABLISHED').readlines()
+				connection = os.popen('LANG=C netstat -an | grep 5500 | grep ESTABLISHED').readlines()
 			else:
-				listen = os.popen('netstat -an | grep 5500 | grep LISTEN').readlines()
+				listen = os.popen('LANG=C netstat -an | grep 5500 | grep LISTEN').readlines()
 		elif sys.platform == 'win32':
 			#XP PRO only -- Need to fix the case where there is no process, it'll still return 1 line.
 			#info = os.popen('WMIC PROCESS ' + str(self.pid) + ' get Processid').readlines()
