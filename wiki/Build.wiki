@@ -7,3 +7,9 @@ Patches are definitely welcome! However, if you want to create a specialized bui
   * [BuildOSX Mac OS X]
   * [BuildWin32 Windows]
   * [BuildLinux Linux (Ubuntu, Fedora, OpenSUSE)]
+
+==How it Works==
+Using Python and wxWidgets, Gitso utilizes other applications for the actual VNC work:
+
+    * Getting support relies on x11vnc -connect (varies per platform).
+    * Giving support relies on vncviewer -listen (varies per platform).
