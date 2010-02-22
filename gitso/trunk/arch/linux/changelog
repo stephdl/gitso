@@ -11,7 +11,7 @@ PACKAGE (0.6) karmic; urgency=low
   *     --version
   *     --help
   * manpage for (All UNIX sytems)
-  * Support for .rpms (Fedora, OpenSUSE, CentOS)
+  * Support for .rpms (Fedora, OpenSUSE)
   * Implement Native VNC listener (OS X)
   * Better process management, user gets notified if connection is broken.
   * Licensing Updates (across the board).

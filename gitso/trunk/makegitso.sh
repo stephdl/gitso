@@ -44,6 +44,8 @@ function mksrc {
 		rm -rf $P/*.gz
 		rm -rf $P/*.app
 		rm -rf $P/*.dmg
+		rm -rf $P/*.deb
+		rm -rf $P/*.rpm
 		rm -rf $P/*.exe
 		rm -rf $TMP_PKG
 
@@ -183,6 +185,10 @@ function helpMenu {
 	echo -e "\tBUILD OPTIONS"
 	echo -e "\t--fedora\tMake package for Fedora. (only avaible on Fedora)"
 	echo -e "\t--opensuse\tMake package for OpenSUSE. (only avaible on OpenSUSE)"
+
+	# Cent OS doesn't have wxWidget in it's repo....
+	#echo -e "\t--centos\tMake package for CentOS. (only avaible on CentOS)"
+
 	echo -e "\t--source\tMake the source package. (All UNIX/Linux systems)\n"
 	echo -e "\tOPTIONS:"
 	echo -e "\t--no-clean\tDo not remove the build directory."
@@ -201,7 +207,7 @@ DEB="gitso_0.6_all.deb"
 TARGZ="gitso_0.6_all.tar.gz"
 SRC="gitso_0.6_src.tar.bz2"
 RPM="gitso-0.6-1.i586.rpm"
-RPMOUT="gitso_0.6-1_opensuse.i586.rpm"
+RPMOUT=""
 
 OSX_BUILD_DIR=`pwd`"/dist"
 RPM_BUILD_DIR=`pwd`"/build"
@@ -209,7 +215,7 @@ DEB_BUILD_DIR="gitso"
 DEB_TARGZ_PATH="Gitso"
 
 CLEAN="yes"
-RPMNAME="opensuse"
+RPMNAME=""
 USESRC="no"
 
 
@@ -218,15 +224,17 @@ USESRC="no"
 ############################
 for param in "$@"
 do
-if test "${param}" = "--no-clean"; then
+	if test "${param}" = "--no-clean"; then
 		CLEAN="no"
 	elif test "${param}" = "--fedora"; then
 		RPMNAME="fedora"
 		RPMOUT="gitso_0.6-1_fedora.i386.rpm"
+	elif test "${param}" = "--centos"; then
+		RPMNAME="centos"
+		RPMOUT="gitso_0.6-1_centos.i386.rpm"
 	elif test "${param}" = "--opensuse"; then
 		RPMNAME="opensuse"
-	elif test "${param}" = "--opensuse"; then
-		RPMNAME="opensuse"
+		RPMOUT="gitso_0.6-1_opensuse.i586.rpm"
 	elif test "${param}" = "--source"; then
 		USESRC="yes"
 	else
@@ -337,8 +345,10 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 			# yum --nogpgcheck install gitso_0.6-1_fedora.i386.rpm 
 		elif [ "$RPMNAME" = "opensuse" ]; then
 			SPEC="gitso_rpm.spec"
+		elif [ "$RPMNAME" = "centos" ]; then
+			SPEC="gitso_rpm_centos.spec"
 		else
-		    echo -e "Error: Please '$RPMNAME' specify --opensuse or --fedora\n"
+		    echo -e "Error: Invalid RPM Type: '$RPMNAME'\n\tPlease specify one of the following:\n\t--opensuse\n\t--fedora\n"
 		    exit 1
 		fi
 
@@ -365,7 +375,10 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 		elif [ "$RPMNAME" = "opensuse" ]; then
 			export RPM_BUILD_ROOT="$HOME/rpmbuild/BUILDROOT/gitso-0.6-1.i386"
 			rpmbuild -ba --buildroot=$RPM_BUILD_ROOT $TMP/$SPEC
-		fi
+		elif [ "$RPMNAME" = "centos" ]; then
+			export RPM_BUILD_ROOT="$HOME/rpmbuild/BUILDROOT/gitso-0.6-1.i386"
+			rpmbuild -ba --buildroot=$RPM_BUILD_ROOT $TMP/$SPEC
+		fi	
 		
 		find $RPM_BUILD_DIR/rpm/RPMS -name "*.rpm" -exec cp {} $RPMOUT ';'
 
