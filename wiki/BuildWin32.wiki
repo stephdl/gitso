@@ -1,5 +1,4 @@
-We currently support Windows XP and Windows 7.
-
+We currently support Windows XP and higher.
   # Install:
     * [http://www.py2exe.org/ py2exe],
     * [http://www.python.org/download/ python],
