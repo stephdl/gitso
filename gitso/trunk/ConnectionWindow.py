@@ -309,9 +309,10 @@ class ConnectionWindow(wx.Frame):
 	
 	
 	def saveHost(self, file, host):
-		handle = open(file, 'a')
-		handle.write(", %s" % host)
-		handle.close()
+		if os.path.exists(file):
+			handle = open(file, 'a')
+			handle.write(", %s" % host)
+			handle.close()
 	
 	def displayHostBox(self, list, text):
 		self.hostField = wx.ComboBox(self, 30, "", wx.Point(105, 12), wx.Size(230, -1), list, wx.CB_DROPDOWN)
