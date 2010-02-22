@@ -1,0 +1,21 @@
+First, the person giving support needs to:
+
+  # Launch Gitso.
+  # Click on "Give Support"
+  # Click "Connect"
+
+Second, the person who needs help, needs to:
+  
+  # Launch Gitso.
+  # Click on "Get Help"
+  # Type in the "IP Address" provided by the supporter
+  # Click "Connect"
+   
+Now the person who needs help sits back and watches as someone else moves their mouse and operates their pc from afar.  
+
+Note: The person who is giving support needs to have port 5500 open to their machine which requires a port forward on a NATed network.
+
+===FAQ===
+ Q. I want to help someone, but I’m behind a router, and it doesn’t work!
+
+ A. The person who is going to “give support” must have port 5500 open to their PC. This usually means enabling port forwarding on your router and poking holes through any firewalls.
