@@ -1,3 +1,21 @@
+==Gitso 0.6 (Feb 21, 2010)==
+  * Complete rewrite of processes.
+  * Stop VNC Processes (Windows)
+  * Support loading remote hosts file.
+  * Command line switches
+    * --dev
+    * --listen
+    * --connect IP
+    * --list list_file
+    * --version
+    * --help
+  * manpage for (Linux)
+  * Support for .rpms (Done)
+  * Native VNC listener! (OS X)
+  * Better process management, user gets notified if connection is broken.
+  * Licensing Updates (across the board).
+  * Many bug fixes.
+
 ==Gitso 0.5 (September 5, 2008)==
   * Complete rewrite of the interface to wxWidgets (from GTK).
   * Gitso no longer has Zombied VNC processes after it quits.
