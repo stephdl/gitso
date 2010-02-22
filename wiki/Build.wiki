@@ -3,7 +3,7 @@ If you are just curious about using Gitso, there is no need to build it from Sou
 If you're interested in digging around in the code or submitting a patch, I'd recommend grabbing a snapshot from [http://code.google.com/p/gitso/source/checkout SVN]. 
 Patches are definitely welcome! However, if you want to create a specialized build for yourself, I'd recomment download the [http://gitso.googlecode.com/files/gitso_0.6_src.tar.bz2 latest stable version of the source].
 
-==Build instructions:==
+==Instructions:==
   * [BuildOSX Mac OS X]
   * [BuildWin32 Windows]
   * [BuildLinux Linux (Ubuntu, Fedora, OpenSUSE)]
