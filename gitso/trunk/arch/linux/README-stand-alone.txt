@@ -8,25 +8,29 @@ Because Gitso is cross-platform (Ubuntu, OS X and Windows) and uses a
 reverse VNC connection, it greatly simplifies the process of getting support.
 
 
-Gitso 0.5: "Kill the Undead". (September 5, 2008)
+Gitso 0.6: (Feb 21, 2010)
 
-    * Complete rewrite of the interface to wxWidgets (from GTK).
-    * Gitso no longer has Zombied VNC processes after it quits.
-    * Gitso stops the VNC process when it closes (OS X & Linux)
-    * Updated Icon
-    * Updated License: GPL 3
-    * Added Support to specify a list of hosts when you distribute it.
-    * Added History/Clear History of servers
-    * Added OS X 10.5 Support (needs testing on 10.4 and 10.3)
-          o OS X uses TightVNC 1.3.9 (Source)
-          o OS X uses OSXvnc 3.0 (Source) 
-    * Added Windows XP Support
-          o Windows uses TightVNC 1.3.9 (Source)
+  * Complete rewrite of process management.
+  * Actually stop VNC Processes (Windows)
+  * Support loading remote hosts file.
+  * Command line switches
+  *     --dev (Done)
+  *     --listen (Done)
+  *     --connect IP (Done)
+  *     --list list_file (Done)
+  *     --version (Done)
+  *     --help (Done) 
+  * manpage for (Linux)
+  * Support for .rpms (Fedora, OpenSUSE, CentOS)
+  * Implement Native VNC listener (OS X)
+  * Better process management, user gets notified if connection is broken.
+  * Licensing Updates (across the board).
+  * Improved documentation. 
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Gitso Distro-independent Code.
 
-Note: If you run Ubuntu, it'd be easier to use gitso_0.5_all.deb. However,
+Note: If you run Ubuntu, it'd be easier to use gitso_0.6_all.deb. However,
 if you aren't running Ubuntu proceed.
 
 Requirements:
