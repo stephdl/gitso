@@ -14,13 +14,13 @@ Gitso 0.6: (Feb 21, 2010)
   * Actually stop VNC Processes (Windows)
   * Support loading remote hosts file.
   * Command line switches
-  *     --dev (Done)
-  *     --listen (Done)
-  *     --connect IP (Done)
-  *     --list list_file (Done)
-  *     --version (Done)
-  *     --help (Done) 
-  * manpage for (Linux)
+  *     --dev
+  *     --listen
+  *     --connect IP
+  *     --list list_file
+  *     --version
+  *     --help
+  * manpage for (All UNIX sytems)
   * Support for .rpms (Fedora, OpenSUSE, CentOS)
   * Implement Native VNC listener (OS X)
   * Better process management, user gets notified if connection is broken.
@@ -40,6 +40,10 @@ Requirements:
 
 Usage: ./run-gitso.sh [options]
 	Options:
-	--have-wxpython:	Disable wxPython library check
+       --listen
+       --connect IP
+       --list list_file
+       --version
+       --help
 
 
