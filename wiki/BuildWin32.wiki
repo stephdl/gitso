@@ -1,0 +1,12 @@
+We currently support Windows XP and Windows 7.
+
+  # Install:
+    * [http://www.py2exe.org/ py2exe],
+    * [http://www.python.org/download/ python],
+    * [http://wxpython.org/ wxwidgets],
+    * [http://nsis.sf.net nsis]
+    * [http://sourceforge.net/project/showfiles.php?group_id=78018&package_id=79063&release_id=661475 pywin32]
+  # From within the src directory:
+  # Update hosts.txt to have preset options for the client. Hosts are comma separated and optional.
+  # Run:./makegitso.bat
+  
