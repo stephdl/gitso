@@ -30,8 +30,8 @@
   * Added Windows XP Support
     * Windows uses [http://www.tightvnc.com/ TightVNC 1.3.9] ([http://downloads.sourceforge.net/vnc-tight/tightvnc-1.3.9_winsrc.tar.bz2 Source])
 
-==Gitso 0.4: Sat, 10 May 2008==
+==Gitso 0.4: (May 10, 2008)==
   * Made Deb, updated with icons and much more.
 
-==Gitso 0.3: Thu, 08 May 2008==
+==Gitso 0.3: (May 8, 2008)==
   * Initial release.
