@@ -1,14 +1,16 @@
-==Gitso 0.5: Sat, 26 Jul 2008==
-  * Complete rewrite of the interface
+==Gitso 0.5 (September 5, 2008)==
+  * Complete rewrite of the interface to wxWidgets (from GTK).
   * Gitso no longer has Zombied VNC processes after it quits.
-  * Gitso stops the VNC process when it closes
+  * Gitso stops the VNC process when it closes (OS X & Linux)
   * Updated Icon
   * Updated License: GPL 3
   * Added Support to be able to specify a list of hosts when you distribute it.
   * Added History/Clear History of servers
-  * Added OS X 10.5 Support (need testing on 10.4 and 10.3)
-  *   OS X uses TightVNC 1.3.9
-  *   OS X uses OSXVNC 3.0
+  * Added OS X 10.5 Support
+    * OS X uses [http://www.tightvnc.com/ TightVNC 1.3.9] ([http://downloads.sourceforge.net/vnc-tight/tightvnc-1.3.9_unixsrc.tar.gz Source])
+    * OS X uses [http://sourceforge.net/projects/osxvnc/ OSXvnc 3.0] ([http://sourceforge.net/project/showfiles.php?group_id=64523 Source])
+  * Added Windows XP Support
+    * Windows uses [http://www.tightvnc.com/ TightVNC 1.3.9] ([http://downloads.sourceforge.net/vnc-tight/tightvnc-1.3.9_winsrc.tar.bz2 Source])
 
 ==Gitso 0.4: Sat, 10 May 2008==
   * Made Deb, updated with icons and much more.
