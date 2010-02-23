@@ -75,7 +75,7 @@ function snowLeopardDMG {
 	python arch/osx/setup.py py2app
 	
 	echo -e ".."
-	cp arch/osx/Info_OSX-10.6.plist $OSX_BUILD_DIR/Gitso.app/Contents/
+	cp arch/osx/Info_OSX-10.6.plist $OSX_BUILD_DIR/Gitso.app/Contents/Info.plist
 	
 	cp COPYING $OSX_BUILD_DIR/Gitso.app/Contents/Resources/
 	cp PythonApplet.icns $OSX_BUILD_DIR/Gitso.app/Contents/Resources/
@@ -133,7 +133,7 @@ function LeopardDMG {
 	python arch/osx/setup.py py2app
 	
 	echo -e ".."
-	cp arch/osx/Info_OSX-10.5.plist $OSX_BUILD_DIR/Gitso.app/Contents/
+	cp arch/osx/Info_OSX-10.5.plist $OSX_BUILD_DIR/Gitso.app/Contents/Info.plist
 	
 	cp COPYING $OSX_BUILD_DIR/Gitso.app/Contents/Resources/
 	cp PythonApplet.icns $OSX_BUILD_DIR/Gitso.app/Contents/Resources/
@@ -201,8 +201,8 @@ function helpMenu {
 ##
 # Initialize values
 ############################
-DMG_OSX_106="Gitso_0.6_SnowLeopard.dmg"
-DMG_OSX_105="Gitso_0.6_Leopard.dmg"
+DMG_OSX_106="Gitso_0.6_mac_SnowLeopard.dmg"
+DMG_OSX_105="Gitso_0.6_mac_Leopard.dmg"
 DEB="gitso_0.6_all.deb"
 TARGZ="gitso_0.6_all.tar.gz"
 SRC="gitso_0.6_src.tar.bz2"
