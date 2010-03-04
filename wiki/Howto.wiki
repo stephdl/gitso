@@ -22,6 +22,11 @@ Note: The person who is giving support needs to have port 5500 open to their mac
  * *Q:* How do I get an IP that can be reached by a person who is in another city or simply another ISP(network)? I don't have an IP. The public IP that I get from a whatismyip type website is actually common to everybody around me.
  * *A:* In order to give support through Gitso, you need to be able to have access to the firewall/router of the subnet you're on. If you don't have access to that, you unfortunately won't be able to use Gitso. If you do have access, then you forward the external IP/port to your internal IP/port. Usually in VNC, it's the person "getting support" who has to do this, but with Gitso, we reverse this and have the person "giving support" set this up. For example, that's what I do at home. But when I'm at work and don't have access to the router, I can't use Gitso to give support.
 
+ * *Q:* (Ubuntu) When I try to install Gitso, it says "Dependency is not satisfiable: x11vnc". What's up?
+ * *A:* This is because that program isn't enabled for install by default, please follow these steps to enable it.
+   # Enable universe repository by going to the following menu:
+     System > Administration > Software Sources > check all > Close > Reload
+   # Now you should be able to install Gitso by double clicking gitso_0.6_all.deb and then clicking "Install Package".
 
 
 ==Advanced==
