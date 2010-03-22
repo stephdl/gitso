@@ -20,5 +20,7 @@ There are a number of command line switches that Gitso supports.
   * *--listen* Gitso will start and automatically listen for connections (AKA give support)..
   * *--connect IP* Gitso will start and automatically try to connect to the IP address.
   * *--list list_file* Gitso will look to this external list, can be local or via HTTP for the hosts lists. Ex: You could add a list to your web server so every time the user connected with this option, they would get an up-to-date support list from your server.
+    * *list_file* Should be something like http://www.myserver.com/path/to/support_ips.txt
+    * *support_ips.txt* Should be a comma separated list of IP's. These will then show up in the menu of support IP addresses in Gitso.
   * *--version* Show the current release of Gitso.
   * *--help* Show these options.
