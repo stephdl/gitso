@@ -1,5 +1,6 @@
 We currently support Windows XP and higher.
   # Install:
+    * [http://www.python.org/download/releases/2.5/ Python 2.5]
     * [http://www.py2exe.org/ py2exe],
     * [http://www.python.org/download/ python],
     * [http://wxpython.org/ wxwidgets],
