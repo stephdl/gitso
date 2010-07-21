@@ -31,6 +31,9 @@ Note: The person who is giving support needs to have port 5500 open to their mac
  * *Q:* (Windows  - Get help) I'm not able to get help, I know I have IP's and the support guys says his network is set-up correctly.
  * *A:* Selecting "Unblock" when prompted by Windows Firewall or disable the firewall on that port.
 
+* *Q:* Why is there no temporary shared secret needed to make sure the connection is legitimate and not accidental or manipulative?
+* *A:* Because Gitso is based on reverse VNC, you have to connect to someone to share your screen, not the other-way around; as such it reduces the need for a password. Specifically, the server that is running, allows you to connect to other peoples' screens, not to share your screen (which is traditionally used).
+
 
 ==Advanced==
 There are a number of command line switches that Gitso supports.
