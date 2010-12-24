@@ -2,14 +2,14 @@ First, the person giving support needs to:
 
   # Launch Gitso.
   # Click on "Give Support"
-  # Click "Connect"
+  # Click "Start"
 
 Second, the person who needs help, needs to:
   
   # Launch Gitso.
   # Click on "Get Help"
   # Type in the "IP Address" provided by the supporter
-  # Click "Connect"
+  # Click "Start"
    
 Now the person who needs help sits back and watches as someone else moves their mouse and operates their pc from afar.  
 
