@@ -41,7 +41,7 @@ class ArgsParser:
 		self.paths['connect'] = ''
 		self.paths['list'] = []
 		self.paths['mode'] = ''
-
+		self.paths['low-colors'] = False
 		
 		if sys.platform.find('linux') != -1:
 			self.paths['main'] = os.path.join(sys.path[0], '..', 'share', 'gitso')
@@ -106,6 +106,9 @@ class ArgsParser:
 					print "Error: '" + sys.argv[i] + "' is not a valid host with '--connect'."
 					self.HelpMenu()
 
+			elif sys.argv[i] == '--low-colors': # --low-colors
+				self.paths['low-colors'] = True;
+
 			elif sys.argv[i] == '--list': # --list
 				i = i + 1
 				if i >= len(sys.argv):
@@ -142,6 +145,7 @@ class ArgsParser:
 		print "   --listen\t\tListen for incoming connections."
 		print "   --connect {IP|DN}\tConnects to host (support giver)."
 		print "   --list {URL|FILE}\tAlternative Support list."
+		print "   --low-colors\t\tUse 8bit colors (for slow connections). Linux only."
 		print "   --version\t\tThe current Gitso version."
 		print "   --help\t\tThis Menu."
 		exit(1)

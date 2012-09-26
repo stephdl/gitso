@@ -40,6 +40,7 @@ class ConnectionWindow(wx.Frame):
 		
 		@author: Derek Buranen
 		@author: Aaron Gerber
+		@author: Markus Roth
 		"""
 		self.ToggleValue = 0
 		self.paths = paths
@@ -71,10 +72,10 @@ class ConnectionWindow(wx.Frame):
 		self.SetIcon(icon)
 		
 		#Buttons
-		self.connectButton = wx.Button(self, 10, "Start", wx.Point(xval1, 70))
+		self.connectButton = wx.Button(self, 10, "Start", wx.Point(xval1, 81))
 		self.connectButton.SetDefault()
 		wx.EVT_BUTTON(self, 10, self.ConnectSupport)
-		self.stopButton = wx.Button(self, wx.ID_STOP, "", wx.Point(xval2, 70))
+		self.stopButton = wx.Button(self, wx.ID_STOP, "", wx.Point(xval2, 81))
 		self.stopButton.Enable(False)
 		wx.EVT_BUTTON(self, wx.ID_STOP, self.KillPID)
 		
@@ -92,7 +93,12 @@ class ConnectionWindow(wx.Frame):
 				self.cb1 = wx.CheckBox(self, -1, 'Use NAT-PMP', (130, 48))
 				self.cb1.Enable(False)
 
-
+		# Checkbox for low color
+		self.cb2 = wx.CheckBox(self, -1, 'Use low colors', (10, 81))
+		self.cb2.Set3StateValue(False)
+		self.cb2.SetValue(self.paths['low-colors']) # Use value of --low-colors from command line
+		self.cb2.Enable(False)
+		
 		# the combobox Control
 		self.sampleList = self.paths['list']
 		
@@ -162,21 +168,24 @@ class ConnectionWindow(wx.Frame):
 		
 		@author: Derek Buranen
 		@author: Aaron Gerber
+		@author: Markus Roth
 		"""
 		if self.rb1.GetValue():
 			self.ToggleValue = 0
 			self.hostField.Enable(True)
+			self.cb2.Enable(False)
 			if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
 				if self.enablePMP:
 					self.cb1.Enable(False)
 		else:
 			self.ToggleValue = 1
 			self.hostField.Enable(False)
+			self.cb2.Enable(True)
 			if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
 				if self.enablePMP:
 					self.cb1.Enable(True)
-	
-	
+
+
 	def ConnectSupport(self, event):
 		"""
 		Call VNC in a thread.
@@ -342,6 +351,7 @@ class ConnectionWindow(wx.Frame):
 		self.threadLock.release()
 
 	def createThread(self, host=""):
+		self.paths['low-colors'] = self.cb2.GetValue() # Set low-colors to value of checkbox
 		self.KillPID(False)
 		self.thread = GitsoThread.GitsoThread(self, self.paths)
 		self.thread.setHost(host)
