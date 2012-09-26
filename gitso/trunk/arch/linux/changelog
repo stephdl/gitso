@@ -1,4 +1,4 @@
-PACKAGE (0.6) karmic; urgency=low
+gitso (0.6) karmic; urgency=low
 
   * Complete rewrite of process management.
   * Actually stop VNC Processes (Windows)
@@ -19,7 +19,7 @@ PACKAGE (0.6) karmic; urgency=low
 
  -- Aaron D. Gerber <gerberad@gmail.com>  Sun, 21 Feb 2010 17:32:40 -0600
 
-PACKAGE (0.5) hardy; urgency=low
+gitso (0.5) hardy; urgency=low
 
   * Complete rewrite of the interface
   * Gitso no longer has Zombied VNC processes after it quits.
@@ -34,13 +34,13 @@ PACKAGE (0.5) hardy; urgency=low
 
  -- Aaron D. Gerber <gerberad@gmail.com>  Sat, 26 Jul 2008 16:32:40 -0600
 
-PACKAGE (0.4) hardy; urgency=low
+gitso (0.4) hardy; urgency=low
 
   * Made Deb, updated with icons and much more.
 
  -- Aaron D. Gerber <gerberad@gmail.com>  Sat, 10 May 2008 16:17:43 -0600
 
-PACKAGE (0.3) UNRELEASED; urgency=low
+gitso (0.3) UNRELEASED; urgency=low
 
   * Initial release. (Closes: #XXXXXX)
 
