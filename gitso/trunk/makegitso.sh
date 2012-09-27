@@ -294,7 +294,6 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 		echo -n ".."
 		cp arch/linux/control $DEB_BUILD_DIR/DEBIAN
 		cp arch/linux/gitso $DEB_BUILD_DIR/usr/bin/
-		chmod 755 $DEB_BUILD_DIR/usr/bin/gitso
 		cp Gitso.py $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
 		cp ConnectionWindow.py $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
 		cp AboutWindow.py $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
