@@ -1,3 +1,15 @@
+gitso (0.6.2) precise; urgency=low
+
+  * Cleaned up .deb creation.
+  * Remove CHANGELOG.txt.
+  * Make gitso executable.
+  * Added homepage to .deb control file.
+  * Changed vncviewer dependency to xtightvncviewer.
+  * Fix package name in linux changelog.
+  * Added 8 bit color compression.
+
+ -- Markus Roth <markus.roth@herr-biber.de>  Thu, 27 Sep 2012 03:06:54 +0200
+
 gitso (0.6) karmic; urgency=low
 
   * Complete rewrite of process management.

@@ -37,7 +37,6 @@ function mksrc {
 
 		rm -rf $OSX_BUILD_DIR
 		rm -rf $RPM_BUILD_DIR
-		rm -rf $DEB_BUILD_DIR
 		rm -rf $DEB_TARGZ_PATH
 		rm -rf $P/*.bz2
 		rm -rf $P/*.tar
@@ -53,8 +52,8 @@ function mksrc {
 		mkdir -p $TMP_PKG/trunk/
 		cp -r ./ $TMP_PKG/trunk/
  		find $TMP_PKG/trunk -name ".svn" -exec rm -rf {} 2>&1 > /dev/null ';' 2>&1 > /dev/null
-		mv $TMP_PKG/trunk $TMP_PKG/gitso-0.6
-		tar -cj -C $TMP_PKG/ gitso-0.6 > $P/$SRC
+		mv $TMP_PKG/trunk $TMP_PKG/gitso-0.6.2
+		tar -cj -C $TMP_PKG/ gitso-0.6.2 > $P/$SRC
 		rm -rf $TMP_PKG
 }
 
@@ -201,12 +200,12 @@ function helpMenu {
 ##
 # Initialize values
 ############################
-DMG_OSX_106="Gitso_0.6_mac_SnowLeopard.dmg"
-DMG_OSX_105="Gitso_0.6_mac_Leopard.dmg"
-DEB="gitso_0.6_all.deb"
-TARGZ="gitso_0.6_all.tar.gz"
-SRC="gitso_0.6_src.tar.bz2"
-RPM="gitso-0.6-1.i586.rpm"
+DMG_OSX_106="Gitso_0.6.2_mac_SnowLeopard.dmg"
+DMG_OSX_105="Gitso_0.6.2_mac_Leopard.dmg"
+DEB="../gitso_0.6.2_all.deb"
+TARGZ="../gitso_0.6.2_all.tar.gz"
+SRC="gitso_0.6.2_src.tar.bz2"
+RPM="gitso-0.6.2-1.i586.rpm"
 RPMOUT=""
 
 OSX_BUILD_DIR=`pwd`"/dist"
@@ -228,13 +227,13 @@ do
 		CLEAN="no"
 	elif test "${param}" = "--fedora"; then
 		RPMNAME="fedora"
-		RPMOUT="gitso_0.6-1_fedora.i386.rpm"
+		RPMOUT="gitso_0.6.2-1_fedora.i386.rpm"
 	elif test "${param}" = "--centos"; then
 		RPMNAME="centos"
-		RPMOUT="gitso_0.6-1_centos.i386.rpm"
+		RPMOUT="gitso_0.6.2-1_centos.i386.rpm"
 	elif test "${param}" = "--opensuse"; then
 		RPMNAME="opensuse"
-		RPMOUT="gitso_0.6-1_opensuse.i586.rpm"
+		RPMOUT="gitso_0.6.2-1_opensuse.i586.rpm"
 	elif test "${param}" = "--source"; then
 		USESRC="yes"
 	else
@@ -308,7 +307,7 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 		# RPM version of Gitso
 		if [ "$RPMNAME" = "fedora" ]; then
 			SPEC="gitso_rpm_fedora.spec"
-			# yum --nogpgcheck install gitso_0.6-1_fedora.i386.rpm 
+			# yum --nogpgcheck install gitso_0.6.2-1_fedora.i386.rpm 
 		elif [ "$RPMNAME" = "opensuse" ]; then
 			SPEC="gitso_rpm.spec"
 		elif [ "$RPMNAME" = "centos" ]; then
@@ -339,10 +338,10 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 		if [ "$RPMNAME" = "fedora" ]; then
 			rpmbuild -ba $TMP/$SPEC
 		elif [ "$RPMNAME" = "opensuse" ]; then
-			export RPM_BUILD_ROOT="$HOME/rpmbuild/BUILDROOT/gitso-0.6-1.i386"
+			export RPM_BUILD_ROOT="$HOME/rpmbuild/BUILDROOT/gitso-0.6.2-1.i386"
 			rpmbuild -ba --buildroot=$RPM_BUILD_ROOT $TMP/$SPEC
 		elif [ "$RPMNAME" = "centos" ]; then
-			export RPM_BUILD_ROOT="$HOME/rpmbuild/BUILDROOT/gitso-0.6-1.i386"
+			export RPM_BUILD_ROOT="$HOME/rpmbuild/BUILDROOT/gitso-0.6.2-1.i386"
 			rpmbuild -ba --buildroot=$RPM_BUILD_ROOT $TMP/$SPEC
 		fi	
 		
@@ -357,7 +356,7 @@ fi
 if [ "$CLEAN" = "yes" ]; then
 	echo -e "Cleaning up...."
 	rm -rf $RPM_BUILD_DIR
-	debuild clean
+	dpkg-buildpackage -tc -us -uc -d -b
 	rm -rf $DEB_TARGZ_PATH
 	find . -name "*.pyc" -exec rm {} ';'
 	echo -e " [done]\n"
