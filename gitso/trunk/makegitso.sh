@@ -282,7 +282,7 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 	if test "`which dpkg 2>&1 | grep -v which`"; then
 		# Deb version of Gitso.
 		echo -n "Creating $DEB"
-		debuild -us -uc
+		dpkg-buildpackage -us -uc -d -b
 		echo -e " [done]"
 	
 		# Standalone version of Gitso.
