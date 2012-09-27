@@ -4,6 +4,7 @@ Priority: optional
 Section: utils
 Architecture: all
 Depends: x11vnc, xtightvncviewer, python-wxtools
+Homepage: http://code.google.com/p/gitso/
 Installed-Size: 226132
 Maintainer: Derek Buranen <derek@buranen.info>
 Description: gitso is to support others (using wxPython and reverse vnc)
