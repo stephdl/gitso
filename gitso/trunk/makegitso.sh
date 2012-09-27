@@ -211,8 +211,8 @@ RPMOUT=""
 
 OSX_BUILD_DIR=`pwd`"/dist"
 RPM_BUILD_DIR=`pwd`"/build"
-DEB_BUILD_DIR="gitso"
-DEB_TARGZ_PATH="Gitso"
+DEB_BUILD_DIR="debian/gitso"
+DEB_TARGZ_PATH="gitso"
 
 CLEAN="yes"
 RPMNAME=""
@@ -282,40 +282,7 @@ elif test "`uname -a 2>&1 | grep Linux | grep -v which`"; then
 	if test "`which dpkg 2>&1 | grep -v which`"; then
 		# Deb version of Gitso.
 		echo -n "Creating $DEB"
-		rm -rf $DEB_BUILD_DIR
-	
-		mkdir -p $DEB_BUILD_DIR/DEBIAN
-		mkdir -p $DEB_BUILD_DIR/usr/bin
-		mkdir -p $DEB_BUILD_DIR/usr/share/applications
-		mkdir -p $DEB_BUILD_DIR/usr/share/doc/$DEB_BUILD_DIR
-		mkdir -p $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR
-		mkdir -p $DEB_BUILD_DIR/usr/share/man/man1
-	
-		echo -n ".."
-		cp arch/linux/control $DEB_BUILD_DIR/DEBIAN
-		cp arch/linux/gitso $DEB_BUILD_DIR/usr/bin/
-		cp Gitso.py $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
-		cp ConnectionWindow.py $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
-		cp AboutWindow.py $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
-		cp GitsoThread.py $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
-		cp Processes.py $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
-		cp ArgsParser.py $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
-		cp __init__.py $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
-		cp NATPMP.py $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
-		cp hosts.txt $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
-		cp icon.ico $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
-		cp icon.png $DEB_BUILD_DIR/usr/share/$DEB_BUILD_DIR/
-	
-		echo -n ".."
-		cp arch/linux/gitso.desktop $DEB_BUILD_DIR/usr/share/applications/
-		cp arch/linux/README.txt $DEB_BUILD_DIR/usr/share/doc/$DEB_BUILD_DIR/README
-		cp COPYING $DEB_BUILD_DIR/usr/share/doc/$DEB_BUILD_DIR/
-		gzip -cf arch/linux/changelog > $DEB_BUILD_DIR/usr/share/doc/$DEB_BUILD_DIR/changelog.gz
-		gzip -cf arch/linux/gitso.1 > $DEB_BUILD_DIR/usr/share/man/man1/gitso.1.gz
-	
-		echo -n ".."
-		dpkg -b $DEB_BUILD_DIR/ $DEB 2>&1 > /dev/null
-		
+		debuild -us -uc
 		echo -e " [done]"
 	
 		# Standalone version of Gitso.
@@ -390,7 +357,7 @@ fi
 if [ "$CLEAN" = "yes" ]; then
 	echo -e "Cleaning up...."
 	rm -rf $RPM_BUILD_DIR
-	rm -rf $DEB_BUILD_DIR
+	debuild clean
 	rm -rf $DEB_TARGZ_PATH
 	find . -name "*.pyc" -exec rm {} ';'
 	echo -e " [done]\n"
