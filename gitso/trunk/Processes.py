@@ -40,6 +40,10 @@ class Processes:
 			#self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc','-nopw','-ncache','20','-solid','black','-connect','%s' % host)
 			
 			self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc','-nopw','-ncache','20','-connect','%s' % host)
+			
+			# Added for OpenBSD compatibility
+			import time
+			time.sleep(3)
 		elif sys.platform == 'win32':
 			import subprocess
                         self.returnPID = subprocess.Popen(['WinVNC.exe'])
