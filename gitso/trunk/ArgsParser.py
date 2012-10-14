@@ -28,6 +28,7 @@ import sys
 import signal
 import os.path
 import urllib
+import re
 
 class ArgsParser:
 	def __init__(self):

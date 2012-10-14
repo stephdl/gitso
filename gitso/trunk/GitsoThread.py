@@ -24,7 +24,7 @@ along with Gitso.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import threading, time
-import os, sys, signal, os.path
+import os, sys, signal, os.path, re
 import Processes
 
 if sys.platform == 'darwin' or re.match('(?:open|free|net)bsd|linux',sys.platform):
