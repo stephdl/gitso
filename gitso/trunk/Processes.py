@@ -35,7 +35,7 @@ class Processes:
 	def getSupport(self, host):
 		if sys.platform == 'darwin':
 			self.returnPID = os.spawnl(os.P_NOWAIT, '%sOSXvnc/OSXvnc-server' % self.paths['resources'], '%sOSXvnc/OSXvnc-server' % self.paths['resources'], '-connectHost', '%s' % host)
-		elif sys.platform.find('linux') != -1:
+		elif re.match('(?:open|free|net)bsd|linux',sys.platform):
 			# We should include future versions with options for speed.
 			#self.returnPID = os.spawnlp(os.P_NOWAIT, 'x11vnc', 'x11vnc','-nopw','-ncache','20','-solid','black','-connect','%s' % host)
 			
@@ -59,7 +59,7 @@ class Processes:
 		if sys.platform == 'darwin':
 			vncviewer = '%scotvnc.app/Contents/MacOS/cotvnc' % self.paths['resources']
 			self.returnPID = os.spawnlp(os.P_NOWAIT, vncviewer, vncviewer, '--listen')
-		elif sys.platform.find('linux') != -1:
+		elif re.match('(?:open|free|net)bsd|linux',sys.platform):
 			
 			# These are the options for low-res connections.
 			# In the future, I'd like to support cross-platform low-res options.
@@ -93,11 +93,11 @@ class Processes:
 				handle = win32api.OpenProcess(PROCESS_TERMINATE, False, self.returnPID.pid)
 				win32api.TerminateProcess(handle, -1)
 				win32api.CloseHandle(handle)
-			elif sys.platform.find('linux') != -1:
+			elif re.match('(?:open|free|net)bsd|linux',sys.platform):
 				# New processes are created when you made connections. So if you kill self.returnPID,
 				# you're just killing the dispatch process, not the one actually doing business...
-				os.spawnlp(os.P_NOWAIT, 'killall', 'killall', 'vncviewer')
-				os.spawnlp(os.P_NOWAIT, 'killall', 'killall', 'x11vnc')
+				os.spawnlp(os.P_NOWAIT, 'pkill', 'pkill', '-f', 'vncviewer')
+				os.spawnlp(os.P_NOWAIT, 'pkill', 'pkill', '-f', 'x11vnc')
 			else:
 				os.kill(self.returnPID, signal.SIGKILL)
 			self.returnPID = 0

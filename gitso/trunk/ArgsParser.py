@@ -43,7 +43,7 @@ class ArgsParser:
 		self.paths['mode'] = ''
 		self.paths['low-colors'] = False
 		
-		if sys.platform.find('linux') != -1:
+		if re.match('(?:open|free|net)bsd|linux',sys.platform):
 			self.paths['main'] = os.path.join(sys.path[0], '..', 'share', 'gitso')
 			self.paths['copyright'] = os.path.join(sys.path[0], '..', 'share', 'doc', 'gitso', 'COPYING')
 		elif sys.platform == "darwin":

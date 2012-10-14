@@ -50,7 +50,7 @@ class ConnectionWindow(wx.Frame):
 		# Disable until 0.7 release
 		self.enablePMP = False
 		
-		if sys.platform.find('linux') != -1:
+		if re.match('(?:open|free|net)bsd|linux',sys.platform):
 			width = 165
 			height = 350
 			xval1 = 155
@@ -88,7 +88,7 @@ class ConnectionWindow(wx.Frame):
 		self.Bind(wx.EVT_RADIOBUTTON, self.RadioToggle, id=self.rb2.GetId())
 		
 		# checkbox for natpmp
-		if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
+		if sys.platform == 'darwin' or re.match('(?:open|free|net)bsd|linux',sys.platform):
 			if self.enablePMP:
 				self.cb1 = wx.CheckBox(self, -1, 'Use NAT-PMP', (130, 48))
 				self.cb1.Enable(False)
@@ -135,7 +135,7 @@ class ConnectionWindow(wx.Frame):
 		menuBar.Append(fileMenu, "&File")
 		menuBar.Append(editMenu, "&Edit")
 		
-		if sys.platform.find('linux') != -1 or sys.platform == 'win32':
+		if re.match('(?:open|free|net)bsd|linux',sys.platform) or sys.platform == 'win32':
 			menuBar.Append(helpMenu, "&Help")
 		
 		self.SetMenuBar(menuBar)
@@ -174,14 +174,14 @@ class ConnectionWindow(wx.Frame):
 			self.ToggleValue = 0
 			self.hostField.Enable(True)
 			self.cb2.Enable(False)
-			if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
+			if sys.platform == 'darwin' or re.match('(?:open|free|net)bsd|linux',sys.platform):
 				if self.enablePMP:
 					self.cb1.Enable(False)
 		else:
 			self.ToggleValue = 1
 			self.hostField.Enable(False)
 			self.cb2.Enable(True)
-			if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
+			if sys.platform == 'darwin' or re.match('(?:open|free|net)bsd|linux',sys.platform):
 				if self.enablePMP:
 					self.cb1.Enable(True)
 

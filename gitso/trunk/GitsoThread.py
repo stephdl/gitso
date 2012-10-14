@@ -27,7 +27,7 @@ import threading, time
 import os, sys, signal, os.path
 import Processes
 
-if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
+if sys.platform == 'darwin' or re.match('(?:open|free|net)bsd|linux',sys.platform):
 	import NATPMP
 
 class GitsoThread(threading.Thread):
@@ -59,7 +59,7 @@ class GitsoThread(threading.Thread):
 				self.error = True
 		else:
 			# Give Support
-			if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
+			if sys.platform == 'darwin' or re.match('(?:open|free|net)bsd|linux',sys.platform):
 				if self.window.enablePMP:
 					self.window.cb1.Enable(False)
 					if self.window.cb1.GetValue() == True:
@@ -99,7 +99,7 @@ class GitsoThread(threading.Thread):
 		
 		@author: Aaron Gerber
 		"""
-		if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
+		if sys.platform == 'darwin' or re.match('(?:open|free|net)bsd|linux',sys.platform):
 			if self.window.enablePMP:
 				if self.window.rb1.GetValue() == False: #give support
 					if self.window.cb1.GetValue() == True:
@@ -122,7 +122,7 @@ class GitsoThread(threading.Thread):
 		
 		connection = []
 		listen = []
-		if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
+		if sys.platform == 'darwin' or re.match('(?:open|free|net)bsd|linux',sys.platform):
 			if self.host <> "":
 				connection = os.popen('LANG=C netstat -an | grep 5500 | grep ESTABLISHED').readlines()
 			else:
@@ -149,7 +149,7 @@ class GitsoThread(threading.Thread):
 		
 		@author: Dennis Koot
 		"""
-		if sys.platform == 'darwin' or sys.platform.find('linux') != -1:
+		if sys.platform == 'darwin' or re.match('(?:open|free|net)bsd|linux',sys.platform):
 			if self.window.enablePMP:
 				if action == 'request':
 					lifetime = 3600
