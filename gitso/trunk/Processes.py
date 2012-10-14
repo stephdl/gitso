@@ -24,7 +24,7 @@ along with Gitso.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import wx
-import os, sys, signal, os.path
+import os, sys, signal, os.path, re
 
 class Processes:
 	def __init__(self, window, paths):
