@@ -51,13 +51,13 @@ class ConnectionWindow(wx.Frame):
 		self.enablePMP = False
 		
 		if re.match('(?:open|free|net)bsd|linux',sys.platform):
-			width = 165
-			height = 350
+			width = 220
+			height = 450
 			xval1 = 155
 			xval2 = 250
 		else:
-			height = 350
-			width = 175
+			height = 450
+			width = 220
 			xval1 = 180
 			xval2 = 265
 		
