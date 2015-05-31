@@ -1,12 +1,51 @@
-We currently support Windows XP and higher.
-  # Install:
+﻿We currently support Windows XP and higher.
+Install:
     * [http://www.python.org/download/releases/2.5/ Python 2.5]
     * [http://www.py2exe.org/ py2exe],
     * [http://www.python.org/download/ python],
     * [http://wxpython.org/ wxwidgets],
     * [http://nsis.sf.net nsis]
     * [http://sourceforge.net/project/showfiles.php?group_id=78018&package_id=79063&release_id=661475 pywin32]
-  # From within the src directory:
-  # Update hosts.txt to have preset options for the client. Hosts are comma separated and optional.
-  # Run:./makegitso.bat
+From within the src directory:
+
+Update hosts.txt to have preset options for the client. Hosts are comma separated and optional.
+
+Run:./makegitso.bat
+
+
+
+Comment by Louis.Me...@gmail.com, May 18, 2010
+
+ To build a customized Windows version with edited host file you must install Python2.5 and all related versions of the other listed software.
+ 
+ I've managed to get it to compile successfully and generate an .exe file but it still is missing some dll's.
+
+Comment by Louis.Me...@gmail.com, May 18, 2010
+
+ I had to edit the makegitso.nsi file to include the missing dll's to get the .exe to work with my edited host file. I figure this is most likely because I started with Python 2.6 but I'm leaving it out here in case anyone else runs into the problem.
+ 
+ Also I'm now experiencing an icon error but the program works, it just doesn't load the icon from the library.zip.
+ Comment by project member gerbe...@gmail.com, May 22, 2010
+ 
+ Indeed, it requires python 2.5, however, now that python 2.5 is aging, it may be worth updating that... :) Regardless, you are correct, the steps on how to build are not complete... I added the link to Python 2.5, but even past that, the wiki in general, could use updated docs!
+ 
+ It sounds like you have your environment set up correctly, if you are able to build the gitso installer and install it. Another thing to try, to confirm this, is to run 'Gitso.py --dev' from the source folder after downloading the source or checking out a version from svn.
+
+ I remember getting this same error a while ago when I was rewriting Gitso to be multi-threaded, but at the time, it was just because the paths were incorrect. I thought that issue was solved. To help debug, you could add print statements for the path when using the icon file (before line 67 in ConnectionWindow?.py). Then build and install gitso from the updated source. If you manually run the installed version of gitso (probably in C:\Program Files\) from the command line, you should see the values of the print statement. That may help track down the issue.
+
+ Also what version of Windows are you on?
+
+Comment by Louis.Me...@gmail.com, May 23, 2010
+
+ I feel silly the icon problem was simply not having the correct 48x48 .ico file... mine was a bit bigger.
+
+ I am using Windows 7.
+
+ Everything works now, and I know most people were probably not trying to build a custom version for Windows, but this is a great and more important very simple solution to hand to my clients.
+
+ Thank you for the quick response though.
+
+Comment by project member gerbe...@gmail.com, May 31, 2010
+
+ It's becoming clearer and clearer that we need to upgrade to a newer version of python and leave 2.5 behind. As for issues that folks are having with py2exe not being found, I'll upgrade the script to use a newer version of python and make sure it works with py2exe.
   

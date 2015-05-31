@@ -1,12 +1,15 @@
-If you are just curious about using Gitso, there is no need to build it from Source. Please see the [http://code.google.com/p/gitso/downloads/list Downloads Page].
+﻿If you are just curious about using Gitso, there is no need to build it from Source. Please see the [https://github.com/stephdl/gitso-download Downloads Page].
 
 If you're interested in digging around in the code or submitting a patch, I'd recommend grabbing a snapshot from [http://code.google.com/p/gitso/source/checkout SVN]. 
-Patches are definitely welcome! However, if you want to create a specialized build for yourself, I'd recomment download the [http://gitso.googlecode.com/files/gitso_0.6_src.tar.bz2 latest stable version of the source].
+Patches are definitely welcome! However, if you want to create a specialized build for yourself, I'd recomment download the [https://github.com/stephdl/gitso-download/blob/master/gitso_0.6_src.tar.bz2 latest stable version of the source].
 
 ==Instructions:==
-  * [BuildOSX Mac OS X]
-  * [BuildWin32 Windows]
-  * [BuildLinux Linux (Ubuntu, Fedora, OpenSUSE)]
+[https://github.com/stephdl/gitso/blob/master/wiki/BuildOSX.wiki Build Mac OSx]
+
+[https://github.com/stephdl/gitso/blob/master/wiki/BuildWin32.wiki Build Windows]
+
+[https://github.com/stephdl/gitso/blob/master/wiki/BuildLinux.wiki Linux (Ubuntu, Fedora, OpenSUSE)]
+
 
 ==How it Works==
 Using Python and wxWidgets, Gitso utilizes other applications for the actual VNC work:
@@ -16,11 +19,11 @@ Using Python and wxWidgets, Gitso utilizes other applications for the actual VNC
 
 ==Command line options==
 There are a number of command line switches that Gitso supports.
-  * *--dev* This should be used when calling gitso from the source. This enables the code to look in the appropriate place for various assets.
-  * *--listen* Gitso will start and automatically listen for connections (AKA give support)..
-  * *--connect IP* Gitso will start and automatically try to connect to the IP address.
-  * *--list list_file* Gitso will look to this external list, can be local or via HTTP for the hosts lists. Ex: You could add a list to your web server so every time the user connected with this option, they would get an up-to-date support list from your server.
-    * *list_file* Should be something like http://www.myserver.com/path/to/support_ips.txt
-    * *support_ips.txt* Should be a comma separated list of IP's. These will then show up in the menu of support IP addresses in Gitso.
-  * *--version* Show the current release of Gitso.
-  * *--help* Show these options.
+  --dev This should be used when calling gitso from the source. This enables the code to look in the appropriate place for various assets.
+  --listen Gitso will start and automatically listen for connections (AKA give support)..
+  --connect IP Gitso will start and automatically try to connect to the IP address.
+  --list list_file Gitso will look to this external list, can be local or via HTTP for the hosts lists. Ex: You could add a list to your web server so every time the user connected with this option, they would get an up-to-date support list from your server.
+    list_file Should be something like http://www.myserver.com/path/to/support_ips.txt
+    support_ips.txt Should be a comma separated list of IP's. These will then show up in the menu of support IP addresses in Gitso.
+  --version Show the current release of Gitso.
+  --help Show these options.

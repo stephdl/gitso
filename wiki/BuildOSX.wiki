@@ -1,14 +1,33 @@
-===Build Gitso===
-  # Install Developer Tools (Xcode) from the OS X System CD
-  # Install [http://pypi.python.org/pypi/py2app/ py2app]
+﻿===Build Gitso===
+
+Install Developer Tools (Xcode) from the OS X System CD
+
+Install [http://pypi.python.org/pypi/py2app/ py2app]
     * From the command line type:
       * curl -O http://peak.telecommunity.com/dist/ez_setup.py
       * sudo python ez_setup.py -U setuptools
       * sudo easy_install -U py2app
-  # From within the src directory:
-  # Update hosts.txt to have preset options for the client. Hosts are comma separated and optional.
-  # Run:./makegitso.pl --> Gitso.dmg
+From within the src directory:
 
-===Notes====
-   # If you get a python gdb error try typing the following at the command line: 
+Update hosts.txt to have preset options for the client. Hosts are comma separated and optional.
+Run:
+  ./makegitso.pl --> Gitso.dmg
+
+===Notes===
+If you get a python gdb error try typing the following at the command line: 
      * defaults write com.apple.versioner.python Prefer-32-Bit -bool yes
+
+
+Comment by 4enzyp...@gmail.com, May 12, 2011
+
+ Can you please update this documentation or point us in the right direction on these two details?
+
+ There is no src directory within gitso_0.6_src.tar.bz2. There is a trunk directory which contains the hosts.txt file indicated however. 2. There is no file named makegitso.pl within gitso_0.6_src.tar.bz2. There are other files named makegitso.bat, makegitso.sh, and makegitso.nsi.
+
+Comment by toddejoh...@gmail.com, Jun 4, 2011
+
+ It is just inside the gitso-0.6 directory for you.
+
+ Run ./makegitso.sh
+
+

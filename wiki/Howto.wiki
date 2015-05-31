@@ -1,48 +1,116 @@
-First, the person giving support needs to:
+﻿First, the person giving support needs to:
 
-  # Launch Gitso.
-  # Click on "Give Support"
-  # Click "Start"
+The person who is giving support needs to have port 5500 open to their machine which requires a port forward on a NATed network and a port allowed in the firewall.
+
+  Launch Gitso.
+  Click on "Give Support"
+  Click "Start"
 
 Second, the person who needs help, needs to:
   
-  # Launch Gitso.
-  # Click on "Get Help"
-  # Type in the "IP Address" provided by the supporter
-  # Click "Start"
+  Launch Gitso.
+  Click on "Get Help"
+  Type in the "IP Address" provided by the supporter
+  Click "Start"
    
 Now the person who needs help sits back and watches as someone else moves their mouse and operates their pc from afar.  
 
-Note: The person who is giving support needs to have port 5500 open to their machine which requires a port forward on a NATed network.
-
 ==FAQ==
- * *Q:* I want to help someone, but I’m behind a router, and it doesn’t work!
- * *A:* The person who is going to “give support” must have port 5500 open to their PC. This usually means enabling port forwarding on your router and poking holes through any firewalls.
+ Q: I want to help someone, but I’m behind a router, and it doesn’t work!
+ A: The person who is going to “give support” must have port 5500 open to their PC. This usually means enabling port forwarding on your router and poking holes through any firewalls.
 
- * *Q:* How do I get an IP that can be reached by a person who is in another city or simply another ISP(network)? I don't have an IP. The public IP that I get from a whatismyip type website is actually common to everybody around me.
- * *A:* In order to give support through Gitso, you need to be able to have access to the firewall/router of the subnet you're on. If you don't have access to that, you unfortunately won't be able to use Gitso. If you do have access, then you forward the external IP/port to your internal IP/port. Usually in VNC, it's the person "getting support" who has to do this, but with Gitso, we reverse this and have the person "giving support" set this up. For example, that's what I do at home. But when I'm at work and don't have access to the router, I can't use Gitso to give support.
+ Q: How do I get an IP that can be reached by a person who is in another city or simply another ISP(network)? I don't have an IP. The public IP that I get from a whatismyip type website is actually common to everybody around me.
+ A: In order to give support through Gitso, you need to be able to have access to the firewall/router of the subnet you're on. If you don't have access to that, you unfortunately won't be able to use Gitso. If you do have access, then you forward the external IP/port to your internal IP/port. Usually in VNC, it's the person "getting support" who has to do this, but with Gitso, we reverse this and have the person "giving support" set this up. For example, that's what I do at home. But when I'm at work and don't have access to the router, I can't use Gitso to give support.
 
- * *Q:* (Ubuntu) When I try to install Gitso, it says "Dependency is not satisfiable: x11vnc". What's up?
- * *A:* This is because that program isn't enabled for install by default, please follow these steps to enable it.
+ Q: (Ubuntu) When I try to install Gitso, it says "Dependency is not satisfiable: x11vnc". What's up?
+ A: This is because that program isn't enabled for install by default, please follow these steps to enable it.
    # Enable universe repository by going to the following menu:
      System > Administration > Software Sources > check all > Close > Reload
    # Now you should be able to install Gitso by double clicking gitso_0.6_all.deb and then clicking "Install Package".
 
- * *Q:* (Windows  - Get help) I'm not able to get help, I know I have IP's and the support guys says his network is set-up correctly.
- * *A:* Selecting "Unblock" when prompted by Windows Firewall or disable the firewall on that port.
+ Q: (Windows  - Get help) I'm not able to get help, I know I have IP's and the support guys says his network is set-up correctly.
+ A: Selecting "Unblock" when prompted by Windows Firewall or disable the firewall on that port.
 
- * *Q:* Why is there no temporary shared secret needed to make sure the connection is legitimate and not accidental or manipulative?
- * *A:* Because Gitso is based on reverse VNC, you have to connect to someone to share your screen, not the other-way around; as such it reduces the need for a password. Specifically, the server that is running, allows you to connect to other peoples' screens, not to share your screen (which is traditionally used).
+ Q: Why is there no temporary shared secret needed to make sure the connection is legitimate and not accidental or manipulative?
+ A: Because Gitso is based on reverse VNC, you have to connect to someone to share your screen, not the other-way around; as such it reduces the need for a password. Specifically, the server that is running, allows you to connect to other peoples' screens, not to share your screen (which is traditionally used).
 
 
 ==Advanced==
 There are a number of command line switches that Gitso supports.
-  * *--dev* This should be used when calling gitso from the source. This enables the code to look in the appropriate place for various assets.
-  * *--listen* Gitso will start and automatically listen for connections (AKA give support)..
-  * *--connect IP* Gitso will start and automatically try to connect to the IP address.
-  * *--list list_file* Gitso will look to this external list, can be local or via HTTP for the hosts lists. Ex: You could add a list to your web server so every time the user connected with this option, they would get an up-to-date support list from your server.
-    * *list_file* Should be something like http://www.myserver.com/path/to/support_ips.txt
-    * *support_ips.txt* Should be a comma separated list of IP's. These will then show up in the menu of support IP addresses in Gitso.
-  * *--low-colors* Use 8bit colors (for slow connections). Linux only.
-  * *--version* Show the current release of Gitso.
-  * *--help* Show these options.
+ --dev This should be used when calling gitso from the source. This enables the code to look in the appropriate place for various assets.
+ --listen Gitso will start and automatically listen for connections (AKA give support)..
+ --connect IP Gitso will start and automatically try to connect to the IP address.
+ --list list_file Gitso will look to this external list, can be local or via HTTP for the hosts lists. Ex: You could add a list to your web server so every time the user connected with this option, they would get an up-to-date support list from your server.
+    list_file Should be something like http://www.myserver.com/path/to/support_ips.txt
+    support_ips.txt Should be a comma separated list of IP's. These will then show up in the menu of support IP addresses in Gitso.
+ --low-colors Use 8bit colors (for slow connections). Linux only.
+ --version Show the current release of Gitso.
+ --help Show these options.
+
+
+
+
+Comment by amshepp...@gmail.com, Jun 5, 2010
+
+ SUggestion: Until SSH Tunneling is in some future release, could I suggest someone compose a good article on setting up gitso to run over a ssh tunnel on the various support operating systems?
+
+Comment by Riks...@gmail.com, Jun 30, 2010
+
+ Scaling is not supported, right?
+
+Comment by project member gerbe...@gmail.com, Jun 30, 2010
+
+ Correct, scaling is not supported, or at least to the best of my knowledge by any of the VNC clients Gitso is using. It'd be awesome if it did though!
+
+Comment by dserba...@gmail.com, Jul 12, 2010
+
+ I don't know about compatibility with MacOSX and Win32, I've only used x11vnc in combination with the vncviewer that is part of the tightvnc package on Linux. Some time after an x11vnc upgrade, I hit this really difficult bug to hunt down, and eventually found the solution on this blog post: http://www.bramschoenmakers.nl/en/node/714
+
+Comment by project member gerbe...@gmail.com, Jul 12, 2010
+
+ Created a ticket in the issues tracker: http://code.google.com/p/gitso/issues/detail?id=61
+
+Comment by p.gwill...@gmail.com, Feb 17, 2011
+
+ Is there any way to change the port number from 5500? I would rather select my own port number.
+
+ It seems like a security issue if 5500 is known to potentially connect to an active Gitso server.
+
+Comment by project member gerbe...@gmail.com, Feb 17, 2011
+
+ Because the server is the side that can see the other person's screen, the security seems like less of an issue, outside of any VNC bugs... Ex: If a hacker found out that the port was open, the worst they could do is show their screen to the person running the server...
+
+ The point of wanting to change ports is still legit though. There is a ticket open for this feature request: http://code.google.com/p/gitso/issues/detail?id=17
+
+Comment by emcpol...@gmail.com, Apr 27, 2011
+
+ Much better than other alternatives (and faster), And a simple clean interface The only thing is it definitely needs some quality preferences, to save bandwidth
+
+ thanks for a great product
+
+Comment by darcy...@gmail.com, Feb 23, 2012
+
+ Great product. It would be nice to be able to create a client that had an IP or a --list URL built in. That way we can build a custom client that connects to us. Saves having to explain things to the user we are trying to help. Maybe it could use a config file if it found one and we could distribute that with the standard executible. Splitting out the client would be cool too.
+
+Comment by rula...@gmail.com, May 28, 2013
+
+ > If a hacker found out that the port was open, the worst > they could do is show their screen to the person running > the server...
+
+ No, the worst they could do is open 3.7*10^6 support requests and DOS the machine running the server, and this is actually pretty bad. PLEASE DO implement a shared secret!
+Comment by nicolas....@gmail.com, Dec 4, 2013
+
+ hello,
+ 
+ I want to run more than one instance of gitso "helper chair" on the same network. it is possible to make client connect to mydomain:5500 or mydomain:5501 and so on, so the router can route the client (from the internet) to the right helper depending on what the customer enter on the support box.
+
+ Or any suggestions ?? thanks :)
+
+Comment by sloyan.a...@gmail.com, Jan 16, 2015
+
+ hello the screen is too small I can see all the screen how can i modify the size ?
+
+ thank's
+Comment by thierrym...@yahoo.ca, Mar 18, 2015
+
+ Hi I cannot enlarge the size of the window on the server so I can see all the screen of the remote(netbook) without scrolling...
+
